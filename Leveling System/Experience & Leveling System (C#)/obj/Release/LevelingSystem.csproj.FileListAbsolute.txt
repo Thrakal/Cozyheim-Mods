@@ -1,0 +1,4 @@
+D:\Steam Games\steamapps\common\Valheim\BepInEx\scripts\LevelingSystem.dll
+D:\Valheim Mods (Custom mods)\Custom Mods - Patches (VS C#)\LevelingSystem\obj\Release\LevelingSystem.csproj.AssemblyReference.cache
+D:\Valheim Mods (Custom mods)\Custom Mods - Patches (VS C#)\LevelingSystem\obj\Release\LevelingSystem.csproj.CoreCompileInputs.cache
+D:\Valheim Mods (Custom mods)\Custom Mods - Patches (VS C#)\LevelingSystem\obj\Release\LevelingSystem.dll

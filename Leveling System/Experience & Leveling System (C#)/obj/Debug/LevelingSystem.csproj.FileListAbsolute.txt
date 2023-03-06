@@ -1,0 +1,4 @@
+D:\Cozyheim\Mod Projects\LevelingSystem\Experience & Leveling System (C#)\obj\Debug\LevelingSystem.csproj.AssemblyReference.cache
+D:\Cozyheim\Mod Projects\LevelingSystem\Experience & Leveling System (C#)\obj\Debug\LevelingSystem.csproj.CoreCompileInputs.cache
+D:\Cozyheim\Builds\Cozyheim_LevelingSystem.dll
+D:\Cozyheim\Mod Projects\LevelingSystem\Experience & Leveling System (C#)\obj\Debug\Cozyheim_LevelingSystem.dll
