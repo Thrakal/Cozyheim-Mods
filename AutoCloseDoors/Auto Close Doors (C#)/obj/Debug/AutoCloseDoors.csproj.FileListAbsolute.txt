@@ -1,0 +1,4 @@
+D:\Cozyheim\Builds\AutoCloseDoors_Cozyheim.dll
+D:\Cozyheim\Mod Projects\AutoCloseDoors\Auto Close Doors (C#)\obj\Debug\AutoCloseDoors.csproj.AssemblyReference.cache
+D:\Cozyheim\Mod Projects\AutoCloseDoors\Auto Close Doors (C#)\obj\Debug\AutoCloseDoors.csproj.CoreCompileInputs.cache
+D:\Cozyheim\Mod Projects\AutoCloseDoors\Auto Close Doors (C#)\obj\Debug\AutoCloseDoors_Cozyheim.dll
