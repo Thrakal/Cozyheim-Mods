@@ -1,0 +1,4 @@
+D:\Cozyheim\Builds\TameAll_Cozyheim.dll
+D:\Cozyheim\Mod Projects\TameAll\Tame All (C#)\obj\Debug\TameAll.csproj.AssemblyReference.cache
+D:\Cozyheim\Mod Projects\TameAll\Tame All (C#)\obj\Debug\TameAll.csproj.CoreCompileInputs.cache
+D:\Cozyheim\Mod Projects\TameAll\Tame All (C#)\obj\Debug\TameAll_Cozyheim.dll
