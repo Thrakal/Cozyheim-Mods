@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cozyheim.AddingNPCs
+namespace Cozyheim.NPCVendors
 {
     internal class Utils
     {

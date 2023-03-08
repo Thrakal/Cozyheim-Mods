@@ -5,7 +5,7 @@ using System;
 using HarmonyLib;
 
 
-namespace Cozyheim.AddingNPCs
+namespace Cozyheim.NPCVendors
 {
     internal class NpcZDO : MonoBehaviour
     {

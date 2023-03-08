@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Cozyheim.AddingNPCs
+namespace Cozyheim.NPCVendors
 {
     [HarmonyPatch]
     internal class NPCEquipment : MonoBehaviour

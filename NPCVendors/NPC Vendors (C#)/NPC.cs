@@ -11,7 +11,7 @@ using UnityEngine;
 
 // Mangler at få Custom NPC Recipes til at enable/disable ved global keys
 
-namespace Cozyheim.AddingNPCs
+namespace Cozyheim.NPCVendors
 {
     [HarmonyPatch]
     internal class NPC : MonoBehaviour

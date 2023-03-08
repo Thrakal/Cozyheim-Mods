@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 using Log = Jotunn.Logger;
 
-namespace Cozyheim.AddingNPCs
+namespace Cozyheim.NPCVendors
 {
     internal class ConsoleLog : ConsoleCommand
     {

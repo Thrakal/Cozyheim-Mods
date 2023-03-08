@@ -1,0 +1,4 @@
+D:\Cozyheim Mods\Cozyheim-Repository\_Builds\Cozyheim_NPCVendors.dll
+D:\Cozyheim Mods\Cozyheim-Repository\NPCVendors\NPC Vendors (C#)\obj\Debug\NPCVendors.csproj.AssemblyReference.cache
+D:\Cozyheim Mods\Cozyheim-Repository\NPCVendors\NPC Vendors (C#)\obj\Debug\NPCVendors.csproj.CoreCompileInputs.cache
+D:\Cozyheim Mods\Cozyheim-Repository\NPCVendors\NPC Vendors (C#)\obj\Debug\Cozyheim_NPCVendors.dll

@@ -5,9 +5,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Cozyheim.AddingNPCs.NPC;
+using static Cozyheim.NPCVendors.NPC;
 
-namespace Cozyheim.AddingNPCs
+namespace Cozyheim.NPCVendors
 {
     internal class NPCList
     {

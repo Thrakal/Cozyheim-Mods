@@ -12,7 +12,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using Jotunn;
 
-namespace Cozyheim.AddingNPCs
+namespace Cozyheim.NPCVendors
 {
     [BepInPlugin(GUID, modName, version)]
     [BepInDependency(Jotunn.Main.ModGuid)]
