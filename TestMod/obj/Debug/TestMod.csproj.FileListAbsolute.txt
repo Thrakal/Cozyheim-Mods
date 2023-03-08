@@ -1,0 +1,5 @@
+D:\Cozyheim Mods\Cozyheim-Repository\TestMod\obj\Debug\TestMod.csproj.AssemblyReference.cache
+D:\Cozyheim Mods\Cozyheim-Repository\TestMod\obj\Debug\TestMod.csproj.CoreCompileInputs.cache
+D:\Cozyheim Mods\Cozyheim-Repository\TestMod\obj\Debug\TestMod.csproj.CopyComplete
+D:\Cozyheim Mods\_Builds\Cozyheim_TestMod.dll
+D:\Cozyheim Mods\Cozyheim-Repository\TestMod\obj\Debug\Cozyheim_TestMod.dll

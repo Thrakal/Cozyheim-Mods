@@ -1,0 +1,4 @@
+D:\Cozyheim Mods\Cozyheim-Repository\_Builds\Cozyheim_ModTemplate.dll
+D:\Cozyheim Mods\Cozyheim-Repository\ModTemplate\ModTemplate (C#)\obj\Debug\ModTemplate.csproj.AssemblyReference.cache
+D:\Cozyheim Mods\Cozyheim-Repository\ModTemplate\ModTemplate (C#)\obj\Debug\ModTemplate.csproj.CoreCompileInputs.cache
+D:\Cozyheim Mods\Cozyheim-Repository\ModTemplate\ModTemplate (C#)\obj\Debug\Cozyheim_ModTemplate.dll
