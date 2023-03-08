@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace Cozyheim.ModTemplate
+namespace Cozyheim.TestMod
 {
     internal class PatchClass
     {

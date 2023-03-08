@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 using Log = Jotunn.Logger;
 
-namespace Cozyheim.ModTemplate
+namespace Cozyheim.TestMod
 {
     internal class ConsoleLog : ConsoleCommand
     {

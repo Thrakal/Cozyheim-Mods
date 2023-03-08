@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Cozyheim.ModTemplate
+namespace Cozyheim.TestMod
 {
     internal class ChatCommands : MonoBehaviour
     {
@@ -30,23 +30,25 @@ namespace Cozyheim.ModTemplate
             private static bool Chat_SendText_Prefix(string text)
             {
                 string[] data = text.Split(' ');
-                if(data.Length >= 2 ) {
+                if (data.Length >= 2)
+                {
                     string identifier = data[0].ToLower();
-                    if(identifier.Equals(commandChatSymbol + "tame"))
+                    if (identifier.Equals(commandChatSymbol + "tame"))
                     {
                         string action = data[1].ToLower();
-                        foreach(KeyValuePair<string, Action> kvp in commands)
+                        foreach (KeyValuePair<string, Action> kvp in commands)
                         {
-                            if(kvp.Key.ToLower().Equals(action)) {
+                            if (kvp.Key.ToLower().Equals(action))
+                            {
                                 chatArgs = data.ToList();
                                 chatArgs.RemoveAt(0);
                                 chatArgs.RemoveAt(0);
-                                
+
                                 kvp.Value();
                                 return false;
                             }
                         }
-                    }                    
+                    }
                 }
                 return true;
             }

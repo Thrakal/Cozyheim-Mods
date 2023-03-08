@@ -6,7 +6,7 @@ using Jotunn.Utils;
 using ServerSync;
 using UnityEngine;
 
-namespace Cozyheim.ModTemplate
+namespace Cozyheim.TestMod
 {
     [BepInPlugin(GUID, modName, version)]
     [BepInDependency(Jotunn.Main.ModGuid)]
@@ -14,7 +14,7 @@ namespace Cozyheim.ModTemplate
     internal class Main : BaseUnityPlugin
     {
         // Mod information
-        internal const string modName = "ModTemplate";
+        internal const string modName = "TestMod";
         internal const string version = "0.0.1";
         internal const string GUID = "dk.thrakal." + modName;
 
