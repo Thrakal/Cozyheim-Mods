@@ -27,8 +27,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TameAll", "TameAll\Tame All
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModTemplate", "ModTemplate\ModTemplate (C#)\ModTemplate.csproj", "{1CD42E15-AF59-438F-9DDF-271A1D2994F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMod", "TestMod\TestMod.csproj", "{239B1272-C2F9-43CA-B5A4-768F327A2202}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,10 +81,6 @@ Global
 		{1CD42E15-AF59-438F-9DDF-271A1D2994F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CD42E15-AF59-438F-9DDF-271A1D2994F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CD42E15-AF59-438F-9DDF-271A1D2994F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{239B1272-C2F9-43CA-B5A4-768F327A2202}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{239B1272-C2F9-43CA-B5A4-768F327A2202}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{239B1272-C2F9-43CA-B5A4-768F327A2202}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{239B1272-C2F9-43CA-B5A4-768F327A2202}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
