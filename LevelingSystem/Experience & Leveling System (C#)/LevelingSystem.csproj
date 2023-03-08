@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4D2A4A69-CBCF-4527-B504-7C1D1D3B3696}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LevelingSystem</RootNamespace>
+    <AssemblyName>Cozyheim_LevelingSystem</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>10</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\_Builds\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\Steam Games\steamapps\common\Valheim\BepInEx\scripts\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="LevelingDummy_Patch.cs" />
+    <Compile Include="Resources\ConfigSync.cs" />
+    <Compile Include="Skills\SkillConfig.cs" />
+    <Compile Include="Skills\SkillEitrRegen.cs" />
+    <Compile Include="Skills\SkillStaminaRegen.cs" />
+    <Compile Include="Skills\SkillHPRegen.cs" />
+    <Compile Include="Skills\SkillMovementSpeed.cs" />
+    <Compile Include="Skills\SkillElementalResistance.cs" />
+    <Compile Include="Skills\SkillElementalDamage.cs" />
+    <Compile Include="Skills\SkillPhysicalResistance.cs" />
+    <Compile Include="Skills\SkillPhysicalDamage.cs" />
+    <Compile Include="Skills\SkillOption.cs" />
+    <Compile Include="Skills\SkillStamina.cs" />
+    <Compile Include="Skills\SkillEitr.cs" />
+    <Compile Include="Skills\SkillWoodcutting.cs" />
+    <Compile Include="Skills\SkillHunting.cs" />
+    <Compile Include="Skills\SkillFarming.cs" />
+    <Compile Include="Skills\SkillMining.cs" />
+    <Compile Include="Skills\SkillHP.cs" />
+    <Compile Include="Skills\SkillCarryWeight.cs" />
+    <Compile Include="Skills\SkillBase.cs" />
+    <Compile Include="Skills\SkillManager.cs" />
+    <Compile Include="XP\XPBarFade_Patch.cs" />
+    <Compile Include="XP\XPText.cs" />
+    <Compile Include="Resources\ChatCommands.cs" />
+    <Compile Include="XP\XPTable.cs" />
+    <Compile Include="XP\MonsterXP.cs" />
+    <Compile Include="XP\XPManager.cs" />
+    <Compile Include="UIManager.cs" />
+    <Compile Include="XP\PatchXP.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\SimpleJSON.cs" />
+    <Compile Include="Resources\ConsoleLog.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\leveling_assets" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\leveling_system" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\_Reference DLLs\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="assembly_guiutils">
+      <HintPath>..\..\_Reference DLLs\assembly_guiutils.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="assembly_utils">
+      <HintPath>..\..\_Reference DLLs\assembly_utils.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="assembly_valheim">
+      <HintPath>..\..\_Reference DLLs\assembly_valheim.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>..\..\_Reference DLLs\BepInEx.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CozyheimTweaks">
+      <HintPath>..\..\_Reference DLLs\CozyheimTweaks.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Jotunn">
+      <HintPath>..\..\_Reference DLLs\Jotunn.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\_Reference DLLs\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>..\..\_Reference DLLs\UnityEngine.AnimationModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>..\..\_Reference DLLs\UnityEngine.AssetBundleModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\_Reference DLLs\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>..\..\_Reference DLLs\UnityEngine.ImageConversionModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>..\..\_Reference DLLs\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>..\..\_Reference DLLs\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\_Reference DLLs\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\_Reference DLLs\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>..\..\_Reference DLLs\UnityEngine.UIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
