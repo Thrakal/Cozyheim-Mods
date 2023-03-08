@@ -6,3 +6,4 @@ D:\Cozyheim Mods\Cozyheim-Repository\AutoCloseDoors\Auto Close Doors (C#)\obj\De
 D:\Cozyheim Mods\Cozyheim-Repository\AutoCloseDoors\Auto Close Doors (C#)\obj\Debug\AutoCloseDoors.csproj.CoreCompileInputs.cache
 D:\Cozyheim Mods\Builds\Cozyheim_AutoCloseDoors.dll
 D:\Cozyheim Mods\Cozyheim-Repository\AutoCloseDoors\Auto Close Doors (C#)\obj\Debug\Cozyheim_AutoCloseDoors.dll
+D:\Cozyheim Mods\Cozyheim-Repository\_Builds\Cozyheim_AutoCloseDoors.dll
