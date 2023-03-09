@@ -73,9 +73,6 @@
     <EmbeddedResource Include="Resources\leveling_assets" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\leveling_system" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\..\_Reference DLLs\0Harmony.dll</HintPath>
       <Private>False</Private>
@@ -143,6 +140,9 @@
       <HintPath>..\..\_Reference DLLs\UnityEngine.UIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\leveling_system" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
