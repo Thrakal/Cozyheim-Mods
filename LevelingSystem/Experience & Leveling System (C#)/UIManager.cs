@@ -288,11 +288,15 @@ namespace Cozyheim.LevelingSystem
 
         private static IEnumerator RPC_LevelUpEffect(long sender, ZPackage package)
         {
-            if(Player.m_localPlayer != null)
+            if (Main.levelUpVFX.Value)
             {
-                Player player = Player.GetPlayer(sender);
-                GameObject newEffect = Instantiate(levelUpEffect, player.GetCenterPoint(), Quaternion.identity, Player.m_localPlayer.transform);
-                Destroy(newEffect, 5f);
+                if (Player.m_localPlayer != null)
+                {
+                    long playerID = package.ReadLong();
+                    Player player = Player.GetPlayer(playerID);
+                    GameObject newEffect = Instantiate(levelUpEffect, player.GetCenterPoint(), Quaternion.identity, player.transform);
+                    Destroy(newEffect, 6f);
+                }
             }
 
             yield return null;
@@ -300,10 +304,9 @@ namespace Cozyheim.LevelingSystem
 
         IEnumerator LevelUpFadeIn()
         {
-            if (Main.levelUpVFX.Value)
-            {
-                rpc_LevelUpEffect.SendPackage(ZRoutedRpc.Everybody, new ZPackage());
-            }
+            ZPackage package = new ZPackage();
+            package.Write(Player.m_localPlayer.GetPlayerID());
+            rpc_LevelUpEffect.SendPackage(ZRoutedRpc.Everybody, package);
             
             levelUpGroup.alpha = 0f;
             levelUpText.text = "Level " + playerLevel;
@@ -437,6 +440,18 @@ namespace Cozyheim.LevelingSystem
 
                 UpdateUI();
             }
+        }
+
+        public void LevelUp()
+        {
+            playerXP = 0;
+            playerLevel++;
+            XPManager.Instance.SetPlayerLevel(playerLevel);
+            StartCoroutine(LevelUpFadeIn());
+            SkillManager.Instance.UpdateUnspendPoints();
+
+            XPManager.Instance.SetPlayerXP(playerXP);
+            UpdateUI();
         }
 
         public void UpdateUI(bool instantUpdate = false)

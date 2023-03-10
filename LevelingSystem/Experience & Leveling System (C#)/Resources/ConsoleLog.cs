@@ -30,7 +30,8 @@ namespace Cozyheim.LevelingSystem
         {
             new CommandList("ReloadConfig", ReloadConfig),
             new CommandList("ResetOwnLevel", ResetOwnLevel),
-            new CommandList("SetLevel", SetLevel)
+            new CommandList("SetLevel", SetLevel),
+            new CommandList("LevelUp", LevelUp)
         };
 
         public static void Init()
@@ -45,6 +46,11 @@ namespace Cozyheim.LevelingSystem
             {
                 rpc_SetLevel = NetworkManager.Instance.AddRPC("SetLevel", RPC_SetLevel, RPC_SetLevel);
             }
+        }
+
+        public static void LevelUp()
+        {
+            UIManager.Instance.LevelUp();
         }
 
         public static void ReloadConfig()
