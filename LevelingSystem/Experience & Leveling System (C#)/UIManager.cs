@@ -45,6 +45,7 @@ namespace Cozyheim.LevelingSystem
 
         public static CustomRPC rpc_AddExperience;
         public static CustomRPC rpc_ReloadConfig;
+        public static CustomRPC rpc_LevelUpEffect;
 
         public static UIManager Instance;
 
@@ -54,6 +55,7 @@ namespace Cozyheim.LevelingSystem
         {
             rpc_AddExperience = NetworkManager.Instance.AddRPC("AddExperience", RPC_AddExperience, RPC_AddExperience);
             rpc_ReloadConfig = NetworkManager.Instance.AddRPC("ReloadConfig", RPC_ReloadConfig, RPC_ReloadConfig);
+            rpc_LevelUpEffect = NetworkManager.Instance.AddRPC("LevelUpEffect", RPC_LevelUpEffect, RPC_LevelUpEffect);
         }
 
         void Awake()
@@ -284,13 +286,27 @@ namespace Cozyheim.LevelingSystem
             xpBarGroup.alpha = 0f;
         }
 
-        IEnumerator LevelUpFadeIn()
+        private static IEnumerator RPC_LevelUpEffect(long sender, ZPackage package)
         {
             if (Main.levelUpVFX.Value)
             {
-                GameObject newEffect = Instantiate(levelUpEffect, Player.m_localPlayer.GetCenterPoint(), Quaternion.identity, Player.m_localPlayer.transform);
-                Destroy(newEffect, 5f);
+                if (Player.m_localPlayer != null)
+                {
+                    long playerID = package.ReadLong();
+                    Player player = Player.GetPlayer(playerID);
+                    GameObject newEffect = Instantiate(levelUpEffect, player.GetCenterPoint(), Quaternion.identity, player.transform);
+                    Destroy(newEffect, 6f);
+                }
             }
+
+            yield return null;
+        }
+
+        IEnumerator LevelUpFadeIn()
+        {
+            ZPackage package = new ZPackage();
+            package.Write(Player.m_localPlayer.GetPlayerID());
+            rpc_LevelUpEffect.SendPackage(ZRoutedRpc.Everybody, package);
             
             levelUpGroup.alpha = 0f;
             levelUpText.text = "Level " + playerLevel;
@@ -424,6 +440,18 @@ namespace Cozyheim.LevelingSystem
 
                 UpdateUI();
             }
+        }
+
+        public void LevelUp()
+        {
+            playerXP = 0;
+            playerLevel++;
+            XPManager.Instance.SetPlayerLevel(playerLevel);
+            StartCoroutine(LevelUpFadeIn());
+            SkillManager.Instance.UpdateUnspendPoints();
+
+            XPManager.Instance.SetPlayerXP(playerXP);
+            UpdateUI();
         }
 
         public void UpdateUI(bool instantUpdate = false)
