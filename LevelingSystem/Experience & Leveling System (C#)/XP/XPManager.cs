@@ -131,8 +131,12 @@ namespace Cozyheim.LevelingSystem
             long playerID = package.ReadLong();
             int xpAmount = package.ReadInt();
 
+            float baseXpSpreadMin = Mathf.Min(1 - (Main.baseXpSpreadMin.Value / 100f), 1f);
+            float baseXpSpreadMax = Mathf.Max(1 + (Main.baseXpSpreadMax.Value / 100f), 1f);
+            float xpMultiplier = Mathf.Max(0f, Main.allXPMultiplier.Value / 100f);
+
             newPackage.Write(playerID);
-            newPackage.Write(xpAmount);
+            newPackage.Write((int)(xpAmount * xpMultiplier * Random.Range(baseXpSpreadMin, baseXpSpreadMax)));
 
             UIManager.rpc_AddExperience.SendPackage(ZRoutedRpc.Everybody, newPackage);
         } 
@@ -167,8 +171,8 @@ namespace Cozyheim.LevelingSystem
                     // Reward with xp based on monster type killed
                     float baseXpSpreadMin = Mathf.Min(1 - (Main.baseXpSpreadMin.Value / 100f), 1f);
                     float baseXpSpreadMax = Mathf.Max(1 + (Main.baseXpSpreadMax.Value / 100f), 1f);
-                    float xpMultiplier = Mathf.Max(0f, Main.allXPMultiplier.Value / 100f);
                     float monsterLvlMultiplier = Mathf.Max(0f, Main.monsterLvlXPMultiplier.Value / 100f);
+                    float xpMultiplier = Mathf.Max(0f, Main.allXPMultiplier.Value / 100f);
                     float restedMultiplier = Mathf.Max(0f, Main.restedXPMultiplier.Value / 100f);
 
 

@@ -389,8 +389,10 @@ namespace Cozyheim.LevelingSystem
 
             if (Player.m_localPlayer != null)
             {
+
                 if (playerID == Player.m_localPlayer.GetPlayerID())
                 {
+
                     Instance.AddExperience(awardedXP);
                     SpawnFloatingXPText(awardedXP);
                 }

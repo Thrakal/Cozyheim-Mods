@@ -152,8 +152,8 @@ namespace Cozyheim.LevelingSystem
             pickableXpTable = CreateConfigEntry("XP Table", "pickableXpTable", pickableTableDefault, "The base xp of pickables. (Changes requires to realod the config file)", true);
 
 
-            miningXpEnabled = CreateConfigEntry("XP Table", "miningXpEnabled", true, "Gain XP when mining", true);
-            woodcuttingXpEnabled = CreateConfigEntry("XP Table", "woodcuttingXpEnabled", true, "Gain XP when chopping trees", true);
+           // miningXpEnabled = CreateConfigEntry("XP Table", "miningXpEnabled", true, "Gain XP when mining", true);
+           // woodcuttingXpEnabled = CreateConfigEntry("XP Table", "woodcuttingXpEnabled", true, "Gain XP when chopping trees", true);
 
             // Generate monsterXPTable default
             int counter = 0;
