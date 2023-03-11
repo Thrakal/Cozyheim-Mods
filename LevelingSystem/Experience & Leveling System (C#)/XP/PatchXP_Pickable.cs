@@ -14,6 +14,11 @@ namespace Cozyheim.LevelingSystem
             [HarmonyPatch(typeof(Pickable), "Interact")]
             private static void Pickable_Interact_Prefix(Pickable __instance, Humanoid character, ZNetView ___m_nview, bool ___m_tarPreventsPicking)
             {
+                if(!Main.pickableXpEnabled.Value)
+                {
+                    return;
+                }
+
                 if(!___m_nview.IsValid())
                 {
                     return;

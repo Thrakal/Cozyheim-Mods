@@ -48,23 +48,33 @@ namespace Cozyheim.LevelingSystem
 
             private static void MiningXP(string name, HitData hit)
             {
+                // Check if the XP system is enabled
+                if (!Main.miningXpEnabled.Value)
+                {
+                    return;
+                }
+
+                // Check if the attacker is a player
                 Player player = hit.GetAttacker().GetComponent<Player>();
                 if (player == null)
                 {
                     return;
                 }
 
+                // Check if the hit did any damage
                 if (hit.GetTotalDamage() <= 0)
                 {
                     return;
                 }
 
+                // Get xp from the table
                 int xp = XPTable.GetMiningXP(name);
                 if(xp <= 0)
                 {
                     return;
                 }
 
+                // Send xp to the player
                 ZPackage newPackage = new ZPackage();
                 long playerID = player.GetPlayerID();
                 newPackage.Write(playerID);
