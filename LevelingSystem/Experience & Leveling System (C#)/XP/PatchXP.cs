@@ -95,8 +95,38 @@ namespace Cozyheim.LevelingSystem
                     newPackage.Write(__instance.GetLevel());
                     newPackage.Write(__instance.name);
 
-                    XPManager.rpc_RewardXP.SendPackage(ZRoutedRpc.Everybody, newPackage);
+                    XPManager.rpc_RewardXPMonster.SendPackage(ZRoutedRpc.Everybody, newPackage);
                 }
+            }
+
+            [HarmonyPrefix]
+            [HarmonyPatch(typeof(Pickable), "Interact")]
+            private static void Pickable_Interact_Prefix(Pickable __instance, Humanoid character, ZNetView ___m_nview, bool ___m_tarPreventsPicking)
+            {
+                if(!___m_nview.IsValid())
+                {
+                    return;
+                }
+
+                if(___m_tarPreventsPicking)
+                {
+                    return;
+                }
+
+                Player player = character.gameObject.GetComponent<Player>();
+                if (player == null)
+                {
+                    return;
+                }
+
+                int xp = XPTable.GetPickableXP(__instance.name);
+
+                ZPackage newPackage = new ZPackage();
+                long playerID = player.GetPlayerID();
+                newPackage.Write(playerID);
+                newPackage.Write(xp);
+
+                XPManager.rpc_RewardXP.SendPackage(ZRoutedRpc.Everybody, newPackage);
             }
 
             [HarmonyPostfix]

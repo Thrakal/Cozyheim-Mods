@@ -20,6 +20,7 @@ namespace Cozyheim.LevelingSystem
 
         // Network communication RPC
         public static CustomRPC rpc_AddMonsterDamage = null;
+        public static CustomRPC rpc_RewardXPMonster = null;
         public static CustomRPC rpc_RewardXP = null;
         public static CustomRPC rpc_PlayerLevelUp = null;
 
@@ -38,6 +39,7 @@ namespace Cozyheim.LevelingSystem
         {
             // Register RPC Methods
             rpc_AddMonsterDamage = NetworkManager.Instance.AddRPC("AddMonsterDamage", RPC_AddMonsterDamage, RPC_AddMonsterDamage);
+            rpc_RewardXPMonster = NetworkManager.Instance.AddRPC("RewardXPMonster", RPC_RewardXPMonsters, RPC_RewardXPMonsters);
             rpc_RewardXP = NetworkManager.Instance.AddRPC("RewardXP", RPC_RewardXP, RPC_RewardXP);
             rpc_PlayerLevelUp = NetworkManager.Instance.AddRPC("LevelUp", RPC_LevelUp, RPC_LevelUp);
         }
@@ -125,6 +127,23 @@ namespace Cozyheim.LevelingSystem
                 yield break;
             }
 
+            ZPackage newPackage = new ZPackage();
+            long playerID = package.ReadLong();
+            int xpAmount = package.ReadInt();
+
+            newPackage.Write(playerID);
+            newPackage.Write(xpAmount);
+
+            UIManager.rpc_AddExperience.SendPackage(ZRoutedRpc.Everybody, newPackage);
+        } 
+
+        private static IEnumerator RPC_RewardXPMonsters(long sender, ZPackage package)
+        {
+            if (!ZNet.instance.IsServer())
+            {
+                yield break;
+            }
+
             ConsoleLog.Print("Monster died (Server)");
 
             uint monsterID = package.ReadUInt();
@@ -165,7 +184,7 @@ namespace Cozyheim.LevelingSystem
 
                     ConsoleLog.Print("Sending " + (xpPercentage * 100f).ToString("N1") + "% xp to " + damage.playerName + ". (Awarded: " + (int)awardedXP + ", Level bonus: " + (int)monsterLevelBonusXp + ", Rested bonus: " + (int)restedBonusXp + ")");
 
-                    UIManager.rpc_AddExperience.SendPackage(ZRoutedRpc.Everybody, newPackage);
+                    UIManager.rpc_AddExperienceMonster.SendPackage(ZRoutedRpc.Everybody, newPackage);
                 }
 
                 Instance.xpObjects.Remove(obj);
@@ -182,7 +201,7 @@ namespace Cozyheim.LevelingSystem
             newPackage.Write(monster.GetLevel());
             newPackage.Write(monster.name);
 
-            rpc_RewardXP.SendPackage(ZRoutedRpc.Everybody, newPackage);
+            rpc_RewardXPMonster.SendPackage(ZRoutedRpc.Everybody, newPackage);
         }
 
         private MonsterXP GetMonsterXP(uint monsterID)

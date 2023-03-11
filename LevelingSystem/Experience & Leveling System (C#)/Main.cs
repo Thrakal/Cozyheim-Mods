@@ -76,6 +76,13 @@ namespace Cozyheim.LevelingSystem
         internal static ConfigEntry<string> monsterXpTable;
         internal static ConfigEntry<string> playerXpTable;
 
+        internal static ConfigEntry<bool> pickableXpEnabled;
+        internal static ConfigEntry<string> pickableXpTable;
+        internal static ConfigEntry<bool> miningXpEnabled;
+        internal static ConfigEntry<string> miningXpTable;
+        internal static ConfigEntry<bool> woodcuttingXpEnabled;
+        internal static ConfigEntry<string> woodcuttingXpTable;
+
         // XP Multipliers
         internal static ConfigEntry<float> allXPMultiplier;
         internal static ConfigEntry<float> monsterLvlXPMultiplier;
@@ -130,6 +137,24 @@ namespace Cozyheim.LevelingSystem
             SkillConfig.Init();
 
 
+
+            // Generate pickableXPTable default
+            pickableXpEnabled = CreateConfigEntry("XP Table", "pickableXpEnabled", true, "Gain XP when interacting with Pickables", true);
+
+            int counterPickable = 0;
+            string pickableTableDefault = "";
+            foreach (KeyValuePair<string, int> kvp in XPTable.pickableXPTable)
+            {
+                pickableTableDefault += counterPickable != 0 ? ", " : "";
+                pickableTableDefault += kvp.Key + ":" + kvp.Value.ToString();
+                counterPickable++;
+            }
+            pickableXpTable = CreateConfigEntry("XP Table", "pickableXpTable", pickableTableDefault, "The base xp of pickables. (Changes requires to realod the config file)", true);
+
+
+            miningXpEnabled = CreateConfigEntry("XP Table", "miningXpEnabled", true, "Gain XP when mining", true);
+            woodcuttingXpEnabled = CreateConfigEntry("XP Table", "woodcuttingXpEnabled", true, "Gain XP when chopping trees", true);
+
             // Generate monsterXPTable default
             int counter = 0;
             string monsterTableDefault = "";
@@ -152,9 +177,9 @@ namespace Cozyheim.LevelingSystem
             }
             playerXpTable = CreateConfigEntry("XP Table", "playerXpTable", playerTableDefault, "The xp needed for each level. To reach a higher max level, simply add more values to the table. (Changes requires to realod the config file, which can be done in two ways. 1. Restart the server.  -  2. Admins can open the console in-game and type LevelingSystem ReloadConfig)", true);
 
+
             CommandManager.Instance.AddConsoleCommand(new ConsoleLog());
             ConsoleLog.Init();
-
 
             UIManager.Init();
             XPManager.Init();

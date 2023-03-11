@@ -8,6 +8,92 @@ namespace Cozyheim.LevelingSystem
 {
     internal class XPTable
     {
+        public static Dictionary<string, int> pickableXPTable = new Dictionary<string, int>()
+        {
+            // Tier 1 Pickable: Meadows
+            {"Pickable_Branch", 2},
+            {"Pickable_Stone", 2},
+            {"Pickable_Dandelion", 2},
+            {"Pickable_Mushroom", 2},
+            {"RaspberryBush", 3},
+            
+
+            // Tier 2 Pickable: Black Forest
+            {"BlueberryBush", 6},
+            {"Pickable_Carrot", 4},
+            {"Pickable_SeedCarrot", 4},
+            {"Pickable_Flint", 4},
+            {"Pickable_ForestCryptRemains01", 8},
+            {"Pickable_ForestCryptRemains02", 8},
+            {"Pickable_ForestCryptRemains03", 8},
+            {"Pickable_ForestCryptRemains04", 8},
+            {"Pickable_ForestCryptRandom", 8},
+            {"Pickable_Mushroom_yellow", 4},
+            {"Pickable_Thistle", 4},
+            {"Pickable_Tin", 4},
+            {"Pickable_SurtlingCoreStand", 30},
+
+
+            // Tier 3 Pickable: Swamps
+            {"Pickable_BogIronOre", 6},
+            {"Pickable_Turnip", 6},
+            {"Pickable_SeedTurnip", 6},
+            {"Pickable_SunkenCryptRandom", 12},
+
+
+            // Tier 4 Pickable: Mountains
+            {"Pickable_Obsidian", 8},
+            {"Pickable_Onion", 8},
+            {"Pickable_SeedOnion", 8},
+            {"hanging_hairstrands", 16},
+            {"Pickable_Hairstrands01", 16},
+            {"Pickable_Hairstrands02", 16},
+            {"Pickable_MeatPile", 16},
+            {"Pickable_MountainCaveCrystal", 16},
+            {"Pickable_MountainCaveObsidian", 16},
+            {"Pickable_MountainCaveRandom", 16},
+            {"Pickable_MountainRemains01_buried", 16},
+            {"Pickable_DragonEgg", 1200},
+
+
+            // Tier 5 Pickable: Plains
+            {"CloudberryBush", 10},
+            {"Pickable_Barley", 10},
+            {"Pickable_Barley_Wild", 10},
+            {"Pickable_Flax", 10},
+            {"Pickable_Flax_Wild", 10},
+            {"Pickable_Tar", 10},
+            {"Pickable_TarBig", 20},
+            {"goblin_totempole", 3000},
+
+
+            // Tier 6 Pickable: Mistlands
+            {"Pickable_Mushroom_JotunPuffs", 12},
+            {"Pickable_Mushroom_Magecap", 12},
+            {"Pickable_RoyalJelly", 12},
+            {"Pickable_DvergrMineTreasure", 24},
+            {"Pickable_BlackCoreStand", 6000},
+
+
+            // Tier X Pickable: Valueables
+            {"Pickable_Item", 10},
+            {"Pickable_DolmenTreasure", 10},
+
+
+            // Tier X Pickable: Ashlands, Deep North, Other
+            {"Pickable_Meteorite", 10}
+
+
+            // Other pickables that are not awarding XP
+//            {"Pickable_DvergrLantern", 10},
+//            {"Pickable_DvergerThing", 10},
+//            {"Pickable_DvergrStein", 10},
+//            {"Pickable_Fishingrod", 10},
+//            {"Pickable_Mushroom_blue", 10},
+//            {"Pickable_RandomFood", 10},
+//            {"LuredWisp", 10}
+        };
+
         public static Dictionary<string, int> monsterXPTable = new Dictionary<string, int>()
         {
             // Tier 1 Mobs: Meadows (Lv. 1-10)
@@ -131,6 +217,22 @@ namespace Cozyheim.LevelingSystem
             playerXPTable = levels.ToArray(); 
         }
 
+        public static void UpdatePickableXPTable()
+        {
+            ConsoleLog.Print("Level System: Setting pickable base XP", LogType.Message);
+            pickableXPTable.Clear();
+            string[] pickableXpString = Main.pickableXpTable.Value.Split(',');
+            foreach (string s in pickableXpString)
+            {
+                int value;
+                string[] data = s.Split(':');
+                string key = data[0].Replace("\n", "").Replace(" ", "");
+                int.TryParse(data[1], out value);
+                pickableXPTable[key] = value;
+                ConsoleLog.Print("-> " + key + ": " + value + "xp");
+            }
+        }
+
         public static void UpdateMonsterXPTable()
         {
             ConsoleLog.Print("Level System: Setting monster base XP", LogType.Message);
@@ -170,6 +272,12 @@ namespace Cozyheim.LevelingSystem
         {
             name = name.Replace("(Clone)", "");
             return monsterXPTable.ContainsKey(name) ? monsterXPTable[name] : 0;
+        }
+
+        public static int GetPickableXP(string name)
+        {
+            name = name.Replace("(Clone)", "");
+            return pickableXPTable.ContainsKey(name) ? pickableXPTable[name] : 0;
         }
     }
 }

@@ -43,6 +43,7 @@ namespace Cozyheim.LevelingSystem
 
         public bool skillsUIVisible = false;
 
+        public static CustomRPC rpc_AddExperienceMonster;
         public static CustomRPC rpc_AddExperience;
         public static CustomRPC rpc_ReloadConfig;
         public static CustomRPC rpc_LevelUpEffect;
@@ -54,6 +55,7 @@ namespace Cozyheim.LevelingSystem
 
         public static void Init()
         {
+            rpc_AddExperienceMonster = NetworkManager.Instance.AddRPC("AddExperienceMonster", RPC_AddExperienceMonster, RPC_AddExperienceMonster);
             rpc_AddExperience = NetworkManager.Instance.AddRPC("AddExperience", RPC_AddExperience, RPC_AddExperience);
             rpc_ReloadConfig = NetworkManager.Instance.AddRPC("ReloadConfig", RPC_ReloadConfig, RPC_ReloadConfig);
             rpc_LevelUpEffect = NetworkManager.Instance.AddRPC("LevelUpEffect", RPC_LevelUpEffect, RPC_LevelUpEffect);
@@ -382,6 +384,25 @@ namespace Cozyheim.LevelingSystem
         {
             ConsoleLog.Print("Received Expereience");
 
+            long playerID = package.ReadLong();
+            int awardedXP = package.ReadInt();
+
+            if (Player.m_localPlayer != null)
+            {
+                if (playerID == Player.m_localPlayer.GetPlayerID())
+                {
+                    Instance.AddExperience(awardedXP);
+                    SpawnFloatingXPText(awardedXP);
+                }
+            }
+
+            yield return null;
+        }
+
+        private static IEnumerator RPC_AddExperienceMonster(long sender, ZPackage package)
+        {
+            ConsoleLog.Print("Received Expereience Monster");
+
             int awardedXP = package.ReadInt();
             int monsterLevelBonusXp = package.ReadInt();
             int restedBonusXp = package.ReadInt();
@@ -413,20 +434,22 @@ namespace Cozyheim.LevelingSystem
                         totalXpGained += restedBonusXp;
                     }
 
-                    if(totalXpGained > 0 && Main.displayXPFloatingText.Value)
-                    {
-                        Vector3 spawnPosition = Player.m_localPlayer.GetTopPoint() + new Vector3(Random.Range(-1f, 1f), Random.Range(0, 1f), Random.Range(-1f, 1f)).normalized * Random.Range(-0.2f, 0.2f);
-                        
-                        XPText xpText = Instantiate(xpTextFloating, spawnPosition, Quaternion.identity).GetComponent<XPText>();
-                        xpText.XPGained(totalXpGained);
-                    }
-
-                    XPManager.Instance.SavePlayerLevel();
-                    XPManager.Instance.SavePlayerXP();
+                    SpawnFloatingXPText(totalXpGained);
                 }
             }
 
             yield return null;
+        }
+
+        private static void SpawnFloatingXPText(int totalXpGained)
+        {
+            if (totalXpGained > 0 && Main.displayXPFloatingText.Value)
+            {
+                Vector3 spawnPosition = Player.m_localPlayer.GetTopPoint() + new Vector3(Random.Range(-1f, 1f), Random.Range(0, 1f), Random.Range(-1f, 1f)).normalized * Random.Range(-0.2f, 0.2f);
+
+                XPText xpText = Instantiate(xpTextFloating, spawnPosition, Quaternion.identity).GetComponent<XPText>();
+                xpText.XPGained(totalXpGained);
+            }
         }
 
         public void AddExperience(int xp, XPType type = XPType.Regular)
@@ -471,6 +494,9 @@ namespace Cozyheim.LevelingSystem
                 XPManager.Instance.SetPlayerXP(playerXP);
 
                 UpdateUI();
+
+                XPManager.Instance.SavePlayerLevel();
+                XPManager.Instance.SavePlayerXP();
             }
         }
 
