@@ -75,7 +75,7 @@ namespace Cozyheim.LevelingSystem
 
         public void UpdateInformation(SkillBase skillInfo)
         {
-            ConsoleLog.Print("UpdateInformation called", LogType.Message);
+//            ConsoleLog.Print("UpdateInformation called", LogType.Message);
 
             UpdateAllButtonVisibility(skillInfo);
 

@@ -50,7 +50,7 @@ namespace Cozyheim.LevelingSystem
 
         public static void LevelUp()
         {
-            UIManager.Instance.LevelUp();
+            UIManager.Instance.LevelUpVFX();
         }
 
         public static void ReloadConfig()
@@ -88,6 +88,9 @@ namespace Cozyheim.LevelingSystem
         {
             XPTable.UpdatePlayerXPTable();
             XPTable.UpdateMonsterXPTable();
+            XPTable.UpdatePickableXPTable();
+            XPTable.UpdateMiningXPTable();
+            XPTable.UpdateWoodcuttingXPTable();
             SkillManager.Instance.ReloadAllSkills();
         }
 

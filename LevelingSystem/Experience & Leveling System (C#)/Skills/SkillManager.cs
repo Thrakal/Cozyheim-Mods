@@ -71,7 +71,7 @@ namespace Cozyheim.LevelingSystem
         
         public void UpdateAllSkillInformation()
         {
-            ConsoleLog.Print("UpdateAllSkillInformation called", LogType.Message);
+//            ConsoleLog.Print("UpdateAllSkillInformation called", LogType.Message);
             foreach (KeyValuePair<SkillType, SkillBase> kvp in skills)
             {
                 kvp.Value.UpdateSkillInformation();

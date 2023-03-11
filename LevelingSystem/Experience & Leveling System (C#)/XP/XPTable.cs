@@ -8,11 +8,263 @@ namespace Cozyheim.LevelingSystem
 {
     internal class XPTable
     {
+        public static Dictionary<string, string> miningXPMappingTable = new Dictionary<string, string>()
+        {
+            // Other rocks that are not awarding XP
+//            {"Ice_floor_fractured", 3},
+//            {"ice_rock1_frac", 3},
+//            {"stoneblock_fracture", 3},
+//            {"Rock_destructible_test", 3},
+
+            // Tier 1: Stone
+            {"rock4_coast", "Stone"},
+            {"rock4_coast_frac", "Stone"},
+            {"HeathRockPillar", "Stone"},
+            {"HeathRockPillar_frac", "Stone"},
+            {"highstone", "Stone"},
+            {"highstone_frac", "Stone"},
+            {"Rock_3", "Stone"},
+            {"Rock_3_frac", "Stone"},
+            {"rock2_heath", "Stone"},
+            {"rock2_heath_frac", "Stone"},
+            {"rock4_forest_", "Stone"},
+            {"rock4_forest_frac", "Stone"},
+            {"rock4_heath", "Stone"},
+            {"rock4_heath_frac", "Stone"},
+            {"RockFinger", "Stone"},
+            {"RockFinger_frac", "Stone"},
+            {"RockFingerBroken", "Stone"},
+            {"RockFingerBroken_frac", "Stone"},
+            {"RockThumb", "Stone"},
+            {"RockThumb_frac", "Stone"},
+            {"widestone", "Stone"},
+            {"widestone_frac", "Stone"},
+            {"rock1_mountain", "Stone"},
+            {"rock1_mountain_frac", "Stone"},
+            {"rock2_mountain", "Stone"},
+            {"rock2_mountain_frac", "Stone"},
+            {"rock3_mountain_", "Stone"},
+            {"rock3_mountain_frac", "Stone"},
+            {"tarlump1", "Stone"},
+            {"tarlump1_frac", "Stone"},
+            {"rock_mistlands1", "Stone"},
+            {"rock_mistlands1_frac", "Stone"},
+            {"cliff_mistlands1_creep", "Stone"},
+            {"cliff_mistlands1_creep_frac", "Stone"},
+            {"cliff_mistlands1", "Stone"},
+            {"cliff_mistlands1_frac", "Stone"},
+            {"MineRock_Stone", "Stone"},
+
+            // Tier 2: Copper & Tin
+            {"MineRock_Tin", "Tin"},
+
+            {"MineRock_Copper", "Copper"},
+            {"rock4_copper", "Copper"},
+            {"rock4_copper_frac", "Copper"},
+
+            // Tier 3: Iron
+            {"MineRock_Iron", "Iron"},
+            {"mudpile_old", "Iron"},
+            {"mudpile", "Iron"},
+            {"mudpile_frac", "Iron"},
+            {"mudpile2", "Iron"},
+            {"mudpile2_frac", "Iron"},
+            {"giant_helmet1", "Iron"},
+            {"giant_helmet1_destruction", "Iron"},
+            {"giant_helmet2", "Iron"},
+            {"giant_helmet2_destruction", "Iron"},
+            {"giant_sword1", "Iron"},
+            {"giant_sword1_destruction", "Iron"},
+            {"giant_sword2", "Iron"},
+            {"giant_sword2_destruction", "Iron"},
+
+            // Tier 4: Obsidian & Chitin
+            {"MineRock_Obsidian", "Obsidian"},
+            {"Leviathan", "Chitin"},
+
+            // Tier 5: Silver & Flametal
+            {"rock3_silver", "Silver"},
+            {"rock3_silver_frac", "Silver"},
+            {"silvervein", "Silver"},
+            {"silvervein_frac", "Silver"},
+
+            {"MineRock_Meteorite", "Flametal"},
+
+            // Tier 6: Black Marble & Soft Tissue 
+            {"giant_brain", "SoftTissue"},
+            {"giant_brain_frac", "SoftTissue"},
+            {"giant_ribs", "BlackMarble"},
+            {"giant_ribs_frac", "BlackMarble"},
+            {"giant_skull", "BlackMarble"},
+            {"giant_skull_frac", "BlackMarble"},
+        };
+
+        public static Dictionary<string, string> woodcuttingXPMappingTable = new Dictionary<string, string>()
+        {
+            // Beech Tree
+            {"beech_log", "Beech"},
+            {"beech_log_half", "Beech"},
+            {"Beech_Stub", "Beech"},
+            {"Beech1", "Beech"},
+
+            // Fir Tree
+            {"FirTree_log", "Fir"},
+            {"FirTree_log_half", "Fir"},
+            {"FirTree", "Fir"},
+            {"FirTree_Stub", "Fir"},
+
+            // Pine Tree
+            {"PineTree_log", "Pine"},
+            {"PineTree_log_half", "Pine"},
+            {"PineTree_log_halfOLD", "Pine"},
+            {"PineTree_logOLD", "Pine"},
+            {"PineTree", "Pine"},
+            {"Pinetree_01", "Pine"},
+            {"Pinetree_01_Stub", "Pine"},
+
+            // Birch Tree
+            {"Birch_log", "Birch"},
+            {"Birch_log_half", "Birch"},
+            {"Birch1", "Birch"},
+            {"Birch1_aut", "Birch"},
+            {"Birch2", "Birch"},
+            {"Birch2_aut", "Birch"},
+            {"BirchStub", "Birch"},
+
+            // Oak Tree
+            {"Oak_log", "Oak"},
+            {"Oak_log_half", "Oak"},
+            {"Oak1", "Oak"},
+            {"OakStub", "Oak"},
+
+            // Ancient Tree
+            {"SwampTree1_log", "Ancient"},
+            {"SwampTree1", "Ancient"},
+            {"SwampTree1_Stub", "Ancient"},
+
+            // Yggdrasil Tree
+            {"yggashoot_log", "Yggdrasil"},
+            {"yggashoot_log_half", "Yggdrasil"},
+            {"YggaShoot1", "Yggdrasil"},
+            {"YggaShoot2", "Yggdrasil"},
+            {"YggaShoot3", "Yggdrasil"},
+        };
+
+        public static Dictionary<string, int> miningXPTable = new Dictionary<string, int>()
+        {
+            {"Stone", 3},
+            {"Copper", 6},
+            {"Tin", 6},
+            {"Iron", 9},
+            {"Obsidian", 12},
+            {"Chitin", 12},
+            {"Silver", 15},
+            {"Flametal", 15},
+            {"BlackMarble", 18},
+            {"SoftTissue", 18}
+        };
+
+        public static Dictionary<string, int> woodcuttingXPTable = new Dictionary<string, int>()
+        {
+            {"Beech", 6},
+            {"Fir", 12},
+            {"Pine", 18},
+            {"Birch", 24},
+            {"Ancient", 30},
+            {"Oak", 40},
+            {"Yggdrasil", 100}
+        };
+
+        public static Dictionary<string, int> pickableXPTable = new Dictionary<string, int>()
+        {
+            // Tier 1 Pickable: Meadows
+            {"Pickable_Branch", 2},
+            {"Pickable_Stone", 2},
+            {"Pickable_Dandelion", 2},
+            {"Pickable_Mushroom", 2},
+            {"RaspberryBush", 3},
+            
+
+            // Tier 2 Pickable: Black Forest
+            {"BlueberryBush", 6},
+            {"Pickable_Carrot", 4},
+            {"Pickable_SeedCarrot", 4},
+            {"Pickable_Flint", 4},
+            {"Pickable_ForestCryptRemains01", 8},
+            {"Pickable_ForestCryptRemains02", 8},
+            {"Pickable_ForestCryptRemains03", 8},
+            {"Pickable_ForestCryptRemains04", 8},
+            {"Pickable_ForestCryptRandom", 8},
+            {"Pickable_Mushroom_yellow", 4},
+            {"Pickable_Thistle", 4},
+            {"Pickable_Tin", 4},
+            {"Pickable_SurtlingCoreStand", 30},
+
+
+            // Tier 3 Pickable: Swamps
+            {"Pickable_BogIronOre", 6},
+            {"Pickable_Turnip", 6},
+            {"Pickable_SeedTurnip", 6},
+            {"Pickable_SunkenCryptRandom", 12},
+
+
+            // Tier 4 Pickable: Mountains
+            {"Pickable_Obsidian", 8},
+            {"Pickable_Onion", 8},
+            {"Pickable_SeedOnion", 8},
+            {"hanging_hairstrands", 16},
+            {"Pickable_Hairstrands01", 16},
+            {"Pickable_Hairstrands02", 16},
+            {"Pickable_MeatPile", 16},
+            {"Pickable_MountainCaveCrystal", 16},
+            {"Pickable_MountainCaveObsidian", 16},
+            {"Pickable_MountainCaveRandom", 16},
+            {"Pickable_MountainRemains01_buried", 16},
+            {"Pickable_DragonEgg", 1200},
+
+
+            // Tier 5 Pickable: Plains
+            {"CloudberryBush", 10},
+            {"Pickable_Barley", 10},
+            {"Pickable_Barley_Wild", 10},
+            {"Pickable_Flax", 10},
+            {"Pickable_Flax_Wild", 10},
+            {"Pickable_Tar", 10},
+            {"Pickable_TarBig", 20},
+            {"goblin_totempole", 3000},
+
+
+            // Tier 6 Pickable: Mistlands
+            {"Pickable_Mushroom_JotunPuffs", 12},
+            {"Pickable_Mushroom_Magecap", 12},
+            {"Pickable_RoyalJelly", 12},
+            {"Pickable_DvergrMineTreasure", 24},
+            {"Pickable_BlackCoreStand", 6000},
+
+
+            // Tier X Pickable: Valueables
+            {"Pickable_Item", 10},
+            {"Pickable_DolmenTreasure", 10},
+
+
+            // Tier X Pickable: Ashlands, Deep North, Other
+            {"Pickable_Meteorite", 10}
+
+
+            // Other pickables that are not awarding XP
+//            {"Pickable_DvergrLantern", 10},
+//            {"Pickable_DvergerThing", 10},
+//            {"Pickable_DvergrStein", 10},
+//            {"Pickable_Fishingrod", 10},
+//            {"Pickable_Mushroom_blue", 10},
+//            {"Pickable_RandomFood", 10},
+//            {"LuredWisp", 10}
+        };
+
         public static Dictionary<string, int> monsterXPTable = new Dictionary<string, int>()
         {
             // Tier 1 Mobs: Meadows (Lv. 1-10)
             // (80xp -> 895xp,  Total: 4.817xp)
-            {"Gull", 3},                  // Difficulty: 0  
             {"Deer", 5},                  // Difficulty: 0   
             {"Neck", 5},                  // Difficulty: 1   
             {"Boar", 8},                  // Difficulty: 1  
@@ -60,12 +312,12 @@ namespace Cozyheim.LevelingSystem
 
             // Tier 5 Mobs: Plains (Lv. 71-80)
             // (74.508xp -> 189.009xp,  Total: 1.234.664xp)
-            {"Deathsquito", 310},         // Difficulty: 3  
-            {"BlobTar", 392},             // Difficulty: 4  
-            {"GoblinShaman", 490},        // Difficulty: 4
-            {"Goblin", 563},              // Difficulty: 5   
-            {"GoblinBrute", 1731},        // Difficulty: 9   
-            {"Lox", 2058},                // Difficulty: 10   
+            {"Deathsquito", 620},         // Difficulty: 3  
+            {"BlobTar", 782},             // Difficulty: 4  
+            {"GoblinShaman", 980},        // Difficulty: 4
+            {"Goblin", 1126},              // Difficulty: 5   
+            {"GoblinBrute", 1904},        // Difficulty: 9   
+            {"Lox", 2264},                // Difficulty: 10   
             {"GoblinKing", 24693},        // Yagluth        
 
 
@@ -98,7 +350,6 @@ namespace Cozyheim.LevelingSystem
         Lv81:210294,  Lv82:234108,  Lv83:260759,  Lv84:290595,  Lv85:324009,  Lv86:361440,  Lv87:403385,  Lv88:450404,  Lv89:503125,  Lv90:562259       (Total: 5.655.683xp   Diff: 3.600.378xp)
         */
 
-
         public static void GenerateDefaultPlayerXPTable()
         {
             int totalLevels = 90;
@@ -130,6 +381,70 @@ namespace Cozyheim.LevelingSystem
             ConsoleLog.Print("Lv. " + totalLevels + " (max): " + totalXpNeeded + "xp total, (diff: " + (totalXpNeeded - lastTotal) + "xp)");
 
             playerXPTable = levels.ToArray(); 
+        }
+
+        public static void UpdatePickableXPTable()
+        {
+            if (Main.pickableXpTable.Value == "")
+            {
+                return;
+            }
+
+            ConsoleLog.Print("Level System: Setting pickable base XP", LogType.Message);
+            pickableXPTable.Clear();
+
+            string[] pickableXpString = Main.pickableXpTable.Value.Split(',');
+            foreach (string s in pickableXpString)
+            {
+                int value;
+                string[] data = s.Split(':');
+                string key = data[0].Replace("\n", "").Replace(" ", "");
+                int.TryParse(data[1], out value);
+                pickableXPTable[key] = value;
+                ConsoleLog.Print("-> " + key + ": " + value + "xp");
+            }
+        }
+
+        public static void UpdateWoodcuttingXPTable()
+        {
+            if (Main.woodcuttingXpTable.Value == "")
+            {
+                return;
+            }
+
+            ConsoleLog.Print("Level System: Setting woodcutting base XP", LogType.Message);
+            woodcuttingXPTable.Clear();
+            string[] woodcuttingXpString = Main.woodcuttingXpTable.Value.Split(',');
+            foreach (string s in woodcuttingXpString)
+            {
+                int value;
+                string[] data = s.Split(':');
+                string key = data[0].Replace("\n", "").Replace(" ", "");
+                int.TryParse(data[1], out value);
+                woodcuttingXPTable[key] = value;
+                ConsoleLog.Print("-> " + key + ": " + value + "xp");
+            }
+        }
+
+        public static void UpdateMiningXPTable()
+        {
+            if (Main.miningXpTable.Value == "")
+            {
+                return;
+            }
+
+            ConsoleLog.Print("Level System: Setting mining base XP", LogType.Message);
+            miningXPTable.Clear();
+            string[] miningXpString = Main.miningXpTable.Value.Split(',');
+            foreach (string s in miningXpString)
+            {
+                int value;
+                string[] data = s.Split(':');
+                string key = data[0].Replace("\n", "").Replace(" ", "");
+                int.TryParse(data[1], out value);
+                miningXPTable[key] = value;
+                ConsoleLog.Print("-> " + key + ": " + value + "xp");
+            }
         }
 
         public static void UpdateMonsterXPTable()
@@ -171,6 +486,26 @@ namespace Cozyheim.LevelingSystem
         {
             name = name.Replace("(Clone)", "");
             return monsterXPTable.ContainsKey(name) ? monsterXPTable[name] : 0;
+        }
+
+        public static int GetPickableXP(string name)
+        {
+            name = name.Replace("(Clone)", "");
+            return pickableXPTable.ContainsKey(name) ? pickableXPTable[name] : 0;
+        }
+
+        public static int GetMiningXP(string name)
+        {
+            name = name.Replace("(Clone)", "");
+            string material = miningXPMappingTable.ContainsKey(name) ? miningXPMappingTable[name] : "";
+            return miningXPTable.ContainsKey(material) ? miningXPTable[material] : 0;
+        }
+
+        public static int GetWoodcuttingXP(string name)
+        {
+            name = name.Replace("(Clone)", "");
+            string material = woodcuttingXPMappingTable.ContainsKey(name) ? woodcuttingXPMappingTable[name] : "";
+            return woodcuttingXPTable.ContainsKey(material) ? woodcuttingXPTable[material] : 0;
         }
     }
 }

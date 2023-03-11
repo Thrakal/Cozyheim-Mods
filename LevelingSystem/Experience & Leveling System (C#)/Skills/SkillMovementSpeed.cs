@@ -23,14 +23,17 @@ namespace Cozyheim.LevelingSystem
         {
             [HarmonyPostfix]
             [HarmonyPatch(typeof(Player), "UpdateMovementModifier")]
-            static void Player_UpdateMovementModifier_Postfix(ref float ___m_equipmentMovementModifier)
+            static void Player_UpdateMovementModifier_Postfix(Player __instance, ref float ___m_equipmentMovementModifier)
             {
                 if (Instance == null)
                 {
                     return;
                 }
 
-                ___m_equipmentMovementModifier += (Instance.level * Instance.bonusPerLevel) / 100f;
+                if (__instance == Player.m_localPlayer)
+                {
+                    ___m_equipmentMovementModifier += (Instance.level * Instance.bonusPerLevel) / 100f;
+                }
             }
         }
     }
