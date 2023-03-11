@@ -19,6 +19,11 @@ namespace Cozyheim.LevelingSystem
                     return;
                 }
 
+                if (hit.m_toolTier < __instance.m_minToolTier)
+                {
+                    return;
+                }
+
                 MiningXP(__instance.name, hit);
             }
 
@@ -31,6 +36,11 @@ namespace Cozyheim.LevelingSystem
                     return;
                 }
 
+                if (hit.m_toolTier < __instance.m_minToolTier)
+                {
+                    return;
+                }
+
                 MiningXP(__instance.name, hit);
             }
 
@@ -39,6 +49,11 @@ namespace Cozyheim.LevelingSystem
             private static void Destructible_Damage_Prefix(Destructible __instance, HitData hit, ZNetView ___m_nview)
             {
                 if (!___m_nview.IsValid())
+                {
+                    return;
+                }
+
+                if(hit.m_toolTier < __instance.m_minToolTier)
                 {
                     return;
                 }

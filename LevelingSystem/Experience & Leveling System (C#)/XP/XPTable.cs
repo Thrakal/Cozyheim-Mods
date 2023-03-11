@@ -10,105 +10,108 @@ namespace Cozyheim.LevelingSystem
     {
         public static Dictionary<string, int> woodcuttingXPTable = new Dictionary<string, int>()
         {
-            // Tier 1 Mining: Meadows
+            // Tier 1: Wood
+            {"beech_log", 10}
+
+            // Tier 2: Core Wood
 
 
-
-            // Tier 2 Mining: Black Forest
-
+            // Tier 3: Fine Wood
 
 
-            // Tier 3 Mining: Swamps
+            // Tier 4: Ancient Bark
 
 
-
-            // Tier 4 Mining: Mountains
-
-
-
-            // Tier 5 Mining: Plains
-
-
-
-            // Tier 6 Mining: Mistlands
-
-
-
-            // Tier X Mining: Ashlands, Deep North, Other
-
+            // Tier 5: Yggdrasil Wood
         };
 
         public static Dictionary<string, int> miningXPTable = new Dictionary<string, int>()
         {
-            // Tier 1 Mining: Meadows
-            {"cliff_mistlands1_creep_frac", 3},
-            {"cliff_mistlands1_frac", 3},
-            {"giant_brain_frac", 3},
-            {"giant_helmet1_destruction", 3},
-            {"giant_helmet2_destruction", 3},
-            {"giant_ribs_frac", 3},
-            {"giant_skull_frac", 3},
-            {"giant_sword1_destruction", 3},
-            {"giant_sword2_destruction", 3},
-            {"HeathRockPillar_frac", 3},
-            {"highstone_frac", 3},
-            {"Ice_floor_fractured", 3},
-            {"ice_rock1_frac", 3},
-            {"mudpile_frac", 3},
-            {"mudpile2_frac", 3},
-            {"Rock_3_frac", 3},
-            {"rock_mistlands1_frac", 3},
-            {"rock1_mountain_frac", 3},
-            {"rock2_heath_frac", 3},
-            {"rock2_mountain_frac", 3},
-            {"rock3_mountain_frac", 3},
-            {"rock3_silver_frac", 3},
+            // Other rocks that are not awarding XP
+//            {"Ice_floor_fractured", 3},
+//            {"ice_rock1_frac", 3},
+//            {"stoneblock_fracture", 3},
+//            {"Rock_destructible_test", 3},
+
+            // Tier 1: Stone
+            {"rock4_coast", 3},
             {"rock4_coast_frac", 3},
-            {"rock4_copper_frac", 3},
+            {"HeathRockPillar", 3},
+            {"HeathRockPillar_frac", 3},
+            {"highstone", 3},
+            {"highstone_frac", 3},
+            {"Rock_3", 3},
+            {"Rock_3_frac", 3},
+            {"rock2_heath", 3},
+            {"rock2_heath_frac", 3},
+            {"rock4_forest_", 3},
             {"rock4_forest_frac", 3},
+            {"rock4_heath", 3},
             {"rock4_heath_frac", 3},
+            {"RockFinger", 3},
             {"RockFinger_frac", 3},
+            {"RockFingerBroken", 3},
             {"RockFingerBroken_frac", 3},
+            {"RockThumb", 3},
             {"RockThumb_frac", 3},
-            {"silvervein_frac", 3},
-            {"tarlump1_frac", 3},
+            {"widestone", 3},
             {"widestone_frac", 3},
-
-
-            {"stoneblock_fracture", 3},
-            {"Rock_destructible_test", 3},
-            {"mudpile_old", 3},
-            {"Leviathan", 3},
+            {"rock1_mountain", 3},
+            {"rock1_mountain_frac", 3},
+            {"rock2_mountain", 3},
+            {"rock2_mountain_frac", 3},
+            {"rock3_mountain_", 3},
+            {"rock3_mountain_frac", 3},
+            {"tarlump1", 3},
+            {"tarlump1_frac", 3},
+            {"rock_mistlands1", 3},
+            {"rock_mistlands1_frac", 3},
+            {"cliff_mistlands1_creep", 3},
+            {"cliff_mistlands1_creep_frac", 3},
+            {"cliff_mistlands1", 3},
+            {"cliff_mistlands1_frac", 3},
             {"MineRock_Stone", 3},
-            {"MineRock_Meteorite", 3},
-            {"MineRock_Iron", 3},
-            {"MineRock_Copper", 3},
-            {"MineRock_Obsidian", 3},
-            {"MineRock_Tin", 3},
 
+            // Tier 2: Copper & Tin
+            {"MineRock_Tin", 6},
+            {"MineRock_Copper", 6},
+            {"rock4_copper", 6},
+            {"rock4_copper_frac", 6},
 
-            // Tier 2 Mining: Black Forest
+            // Tier 3: Iron
+            {"MineRock_Iron", 9},
+            {"mudpile_old", 9},
+            {"mudpile", 9},
+            {"mudpile_frac", 9},
+            {"mudpile2", 9},
+            {"mudpile2_frac", 9},
+            {"giant_helmet1", 9},
+            {"giant_helmet1_destruction", 9},
+            {"giant_helmet2", 9},
+            {"giant_helmet2_destruction", 9},
+            {"giant_sword1", 9},
+            {"giant_sword1_destruction", 9},
+            {"giant_sword2", 9},
+            {"giant_sword2_destruction", 9},
 
+            // Tier 4: Obsidian & Chitin
+            {"MineRock_Obsidian", 12},
+            {"Leviathan", 12},
 
+            // Tier 5: Silver & Flametal
+            {"rock3_silver", 15},
+            {"rock3_silver_frac", 15},
+            {"silvervein", 15},
+            {"silvervein_frac", 15},
+            {"MineRock_Meteorite", 15},
 
-            // Tier 3 Mining: Swamps
-
-
-
-            // Tier 4 Mining: Mountains
-
-
-
-            // Tier 5 Mining: Plains
-
-
-
-            // Tier 6 Mining: Mistlands
-
-
-
-            // Tier X Mining: Ashlands, Deep North, Other
-
+            // Tier 6: Black Marble & Soft Tissue 
+            {"giant_brain", 18},
+            {"giant_brain_frac", 18},
+            {"giant_ribs", 18},
+            {"giant_ribs_frac", 18},
+            {"giant_skull", 18},
+            {"giant_skull_frac", 18},
         };
 
         public static Dictionary<string, int> pickableXPTable = new Dictionary<string, int>()
@@ -286,7 +289,6 @@ namespace Cozyheim.LevelingSystem
         Lv81:210294,  Lv82:234108,  Lv83:260759,  Lv84:290595,  Lv85:324009,  Lv86:361440,  Lv87:403385,  Lv88:450404,  Lv89:503125,  Lv90:562259       (Total: 5.655.683xp   Diff: 3.600.378xp)
         */
 
-
         public static void GenerateDefaultPlayerXPTable()
         {
             int totalLevels = 90;
@@ -322,8 +324,14 @@ namespace Cozyheim.LevelingSystem
 
         public static void UpdatePickableXPTable()
         {
+            if (Main.pickableXpTable.Value == "")
+            {
+                return;
+            }
+
             ConsoleLog.Print("Level System: Setting pickable base XP", LogType.Message);
             pickableXPTable.Clear();
+
             string[] pickableXpString = Main.pickableXpTable.Value.Split(',');
             foreach (string s in pickableXpString)
             {
@@ -336,9 +344,13 @@ namespace Cozyheim.LevelingSystem
             }
         }
 
-
         public static void UpdateWoodcuttingXPTable()
         {
+            if (Main.woodcuttingXpTable.Value == "")
+            {
+                return;
+            }
+
             ConsoleLog.Print("Level System: Setting woodcutting base XP", LogType.Message);
             woodcuttingXPTable.Clear();
             string[] woodcuttingXpString = Main.woodcuttingXpTable.Value.Split(',');
@@ -353,9 +365,13 @@ namespace Cozyheim.LevelingSystem
             }
         }
 
-
         public static void UpdateMiningXPTable()
         {
+            if (Main.miningXpTable.Value == "")
+            {
+                return;
+            }
+
             ConsoleLog.Print("Level System: Setting mining base XP", LogType.Message);
             miningXPTable.Clear();
             string[] miningXpString = Main.miningXpTable.Value.Split(',');
@@ -369,7 +385,6 @@ namespace Cozyheim.LevelingSystem
                 ConsoleLog.Print("-> " + key + ": " + value + "xp");
             }
         }
-
 
         public static void UpdateMonsterXPTable()
         {

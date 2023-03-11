@@ -165,44 +165,18 @@ namespace Cozyheim.LevelingSystem
 
 
             // Generate pickableXPTable default
+            string pickableTableDefault = GenerateDefaultXPTableString(XPTable.pickableXPTable);
             pickableXpEnabled = CreateConfigEntry("XP Table", "pickableXpEnabled", true, "Gain XP when interacting with Pickables", true);
-
-            int counterPickable = 0;
-            string pickableTableDefault = "";
-            foreach (KeyValuePair<string, int> kvp in XPTable.pickableXPTable)
-            {
-                pickableTableDefault += counterPickable != 0 ? ", " : "";
-                pickableTableDefault += kvp.Key + ":" + kvp.Value.ToString();
-                counterPickable++;
-            }
             pickableXpTable = CreateConfigEntry("XP Table", "pickableXpTable", pickableTableDefault, "The base xp of pickables. (Changes requires to realod the config file)", true);
 
-
             // Mining
+            string miningTableDefault = GenerateDefaultXPTableString(XPTable.miningXPTable);
             miningXpEnabled = CreateConfigEntry("XP Table", "miningXpEnabled", true, "Gain XP when mining", true);
-
-            int counterMining = 0;
-            string miningTableDefault = "";
-            foreach (KeyValuePair<string, int> kvp in XPTable.miningXPTable)
-            {
-                miningTableDefault += counterMining != 0 ? ", " : "";
-                miningTableDefault += kvp.Key + ":" + kvp.Value.ToString();
-                counterMining++;
-            }
             miningXpTable = CreateConfigEntry("XP Table", "miningXpTable", miningTableDefault, "The base xp for mining. (Changes requires to realod the config file)", true);
 
-
             // Woodcutting
+            string woodcuttingTableDefault = GenerateDefaultXPTableString(XPTable.woodcuttingXPTable);
             woodcuttingXpEnabled = CreateConfigEntry("XP Table", "woodcuttingXpEnabled", true, "Gain XP when chopping trees", true);
-
-            int counterWoodcutting = 0;
-            string woodcuttingTableDefault = "";
-            foreach (KeyValuePair<string, int> kvp in XPTable.miningXPTable)
-            {
-                woodcuttingTableDefault += counterWoodcutting != 0 ? ", " : "";
-                woodcuttingTableDefault += kvp.Key + ":" + kvp.Value.ToString();
-                counterWoodcutting++;
-            }
             woodcuttingXpTable = CreateConfigEntry("XP Table", "woodcuttingXpTable", woodcuttingTableDefault, "The base xp for woodcutting. (Changes requires to realod the config file)", true);
 
 
@@ -211,6 +185,20 @@ namespace Cozyheim.LevelingSystem
 
             UIManager.Init();
             XPManager.Init();
+        }
+
+        private string GenerateDefaultXPTableString(Dictionary<string, int> xpTable)
+        {
+            int counter = 0;
+            string returnValue = "";
+            foreach (KeyValuePair<string, int> kvp in xpTable)
+            {
+                returnValue += counter != 0 ? ", " : "";
+                returnValue += kvp.Key + ":" + kvp.Value.ToString();
+                counter++;
+            }
+
+            return returnValue;
         }
 
 
