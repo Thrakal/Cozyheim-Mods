@@ -50,7 +50,7 @@ namespace Cozyheim.LevelingSystem
 
         public static void LevelUp()
         {
-            UIManager.Instance.LevelUp();
+            UIManager.Instance.LevelUpVFX();
         }
 
         public static void ReloadConfig()

@@ -46,7 +46,7 @@ namespace Cozyheim.LevelingSystem
                 return _level;
             }
             set {
-                ConsoleLog.Print(skillType.ToString() + ": Level (" + _level + " -> " + value + ")");
+//                ConsoleLog.Print(skillType.ToString() + ": Level (" + _level + " -> " + value + ")");
                 _level = value;
             }
         }
@@ -67,7 +67,7 @@ namespace Cozyheim.LevelingSystem
             uiSettings.removePointButton.onClick.RemoveAllListeners();
             uiSettings.resetPointButton.onClick.RemoveAllListeners();
 
-            ConsoleLog.Print("Setting up skill");
+//            ConsoleLog.Print("Setting up skill");
             this.uiSettings = uiSettings;
             uiSettings.addPointButton.onClick.AddListener(delegate ()
             {
@@ -115,7 +115,7 @@ namespace Cozyheim.LevelingSystem
             }
 
             level++;
-            ConsoleLog.Print("Added skill point to " + skillType.ToString() + " - now level " + level);
+//            ConsoleLog.Print("Added skill point to " + skillType.ToString() + " - now level " + level);
             return true;
         }
 
@@ -161,7 +161,7 @@ namespace Cozyheim.LevelingSystem
 
         public void UpdateSkillInformation()
         {
-            ConsoleLog.Print(skillType.ToString() + ": UpdateSkillInformation called", LogType.Message);
+//            ConsoleLog.Print(skillType.ToString() + ": UpdateSkillInformation called", LogType.Message);
 
             if (uiSettings != null)
             {

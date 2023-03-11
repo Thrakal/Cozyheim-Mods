@@ -14,13 +14,24 @@ namespace Cozyheim.LevelingSystem
 
         private static Dictionary<string, Action> commands = new Dictionary<string, Action>()
         {
-            {"Reload", Reload }
+            {"Reload", Reload },
+            {"LevelUp", LevelUp },
+            {"Test", Test }
         };
 
+        private static void Test()
+        {
+            UIManager.Instance.CallRPCTest();
+        }
 
         private static void Reload()
         {
             ConsoleLog.ReloadConfig();
+        }
+
+        private static void LevelUp()
+        {
+            UIManager.Instance.LevelUpVFX();
         }
 
         [HarmonyPatch]

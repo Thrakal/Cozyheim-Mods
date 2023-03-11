@@ -12,7 +12,6 @@ namespace Cozyheim.LevelingSystem
         {
             // Tier 1 Mobs: Meadows (Lv. 1-10)
             // (80xp -> 895xp,  Total: 4.817xp)
-            {"Gull", 3},                  // Difficulty: 0  
             {"Deer", 5},                  // Difficulty: 0   
             {"Neck", 5},                  // Difficulty: 1   
             {"Boar", 8},                  // Difficulty: 1  
@@ -60,12 +59,12 @@ namespace Cozyheim.LevelingSystem
 
             // Tier 5 Mobs: Plains (Lv. 71-80)
             // (74.508xp -> 189.009xp,  Total: 1.234.664xp)
-            {"Deathsquito", 310},         // Difficulty: 3  
-            {"BlobTar", 392},             // Difficulty: 4  
-            {"GoblinShaman", 490},        // Difficulty: 4
-            {"Goblin", 563},              // Difficulty: 5   
-            {"GoblinBrute", 1731},        // Difficulty: 9   
-            {"Lox", 2058},                // Difficulty: 10   
+            {"Deathsquito", 620},         // Difficulty: 3  
+            {"BlobTar", 782},             // Difficulty: 4  
+            {"GoblinShaman", 980},        // Difficulty: 4
+            {"Goblin", 1126},              // Difficulty: 5   
+            {"GoblinBrute", 1904},        // Difficulty: 9   
+            {"Lox", 2264},                // Difficulty: 10   
             {"GoblinKing", 24693},        // Yagluth        
 
 
