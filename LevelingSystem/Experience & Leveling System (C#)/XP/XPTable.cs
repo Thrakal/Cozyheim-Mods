@@ -8,6 +8,109 @@ namespace Cozyheim.LevelingSystem
 {
     internal class XPTable
     {
+        public static Dictionary<string, int> woodcuttingXPTable = new Dictionary<string, int>()
+        {
+            // Tier 1 Mining: Meadows
+
+
+
+            // Tier 2 Mining: Black Forest
+
+
+
+            // Tier 3 Mining: Swamps
+
+
+
+            // Tier 4 Mining: Mountains
+
+
+
+            // Tier 5 Mining: Plains
+
+
+
+            // Tier 6 Mining: Mistlands
+
+
+
+            // Tier X Mining: Ashlands, Deep North, Other
+
+        };
+
+        public static Dictionary<string, int> miningXPTable = new Dictionary<string, int>()
+        {
+            // Tier 1 Mining: Meadows
+            {"cliff_mistlands1_creep_frac", 3},
+            {"cliff_mistlands1_frac", 3},
+            {"giant_brain_frac", 3},
+            {"giant_helmet1_destruction", 3},
+            {"giant_helmet2_destruction", 3},
+            {"giant_ribs_frac", 3},
+            {"giant_skull_frac", 3},
+            {"giant_sword1_destruction", 3},
+            {"giant_sword2_destruction", 3},
+            {"HeathRockPillar_frac", 3},
+            {"highstone_frac", 3},
+            {"Ice_floor_fractured", 3},
+            {"ice_rock1_frac", 3},
+            {"mudpile_frac", 3},
+            {"mudpile2_frac", 3},
+            {"Rock_3_frac", 3},
+            {"rock_mistlands1_frac", 3},
+            {"rock1_mountain_frac", 3},
+            {"rock2_heath_frac", 3},
+            {"rock2_mountain_frac", 3},
+            {"rock3_mountain_frac", 3},
+            {"rock3_silver_frac", 3},
+            {"rock4_coast_frac", 3},
+            {"rock4_copper_frac", 3},
+            {"rock4_forest_frac", 3},
+            {"rock4_heath_frac", 3},
+            {"RockFinger_frac", 3},
+            {"RockFingerBroken_frac", 3},
+            {"RockThumb_frac", 3},
+            {"silvervein_frac", 3},
+            {"tarlump1_frac", 3},
+            {"widestone_frac", 3},
+
+
+            {"stoneblock_fracture", 3},
+            {"Rock_destructible_test", 3},
+            {"mudpile_old", 3},
+            {"Leviathan", 3},
+            {"MineRock_Stone", 3},
+            {"MineRock_Meteorite", 3},
+            {"MineRock_Iron", 3},
+            {"MineRock_Copper", 3},
+            {"MineRock_Obsidian", 3},
+            {"MineRock_Tin", 3},
+
+
+            // Tier 2 Mining: Black Forest
+
+
+
+            // Tier 3 Mining: Swamps
+
+
+
+            // Tier 4 Mining: Mountains
+
+
+
+            // Tier 5 Mining: Plains
+
+
+
+            // Tier 6 Mining: Mistlands
+
+
+
+            // Tier X Mining: Ashlands, Deep North, Other
+
+        };
+
         public static Dictionary<string, int> pickableXPTable = new Dictionary<string, int>()
         {
             // Tier 1 Pickable: Meadows
@@ -233,6 +336,41 @@ namespace Cozyheim.LevelingSystem
             }
         }
 
+
+        public static void UpdateWoodcuttingXPTable()
+        {
+            ConsoleLog.Print("Level System: Setting woodcutting base XP", LogType.Message);
+            woodcuttingXPTable.Clear();
+            string[] woodcuttingXpString = Main.woodcuttingXpTable.Value.Split(',');
+            foreach (string s in woodcuttingXpString)
+            {
+                int value;
+                string[] data = s.Split(':');
+                string key = data[0].Replace("\n", "").Replace(" ", "");
+                int.TryParse(data[1], out value);
+                woodcuttingXPTable[key] = value;
+                ConsoleLog.Print("-> " + key + ": " + value + "xp");
+            }
+        }
+
+
+        public static void UpdateMiningXPTable()
+        {
+            ConsoleLog.Print("Level System: Setting mining base XP", LogType.Message);
+            miningXPTable.Clear();
+            string[] miningXpString = Main.miningXpTable.Value.Split(',');
+            foreach (string s in miningXpString)
+            {
+                int value;
+                string[] data = s.Split(':');
+                string key = data[0].Replace("\n", "").Replace(" ", "");
+                int.TryParse(data[1], out value);
+                miningXPTable[key] = value;
+                ConsoleLog.Print("-> " + key + ": " + value + "xp");
+            }
+        }
+
+
         public static void UpdateMonsterXPTable()
         {
             ConsoleLog.Print("Level System: Setting monster base XP", LogType.Message);
@@ -278,6 +416,18 @@ namespace Cozyheim.LevelingSystem
         {
             name = name.Replace("(Clone)", "");
             return pickableXPTable.ContainsKey(name) ? pickableXPTable[name] : 0;
+        }
+
+        public static int GetMiningXP(string name)
+        {
+            name = name.Replace("(Clone)", "");
+            return miningXPTable.ContainsKey(name) ? miningXPTable[name] : 0;
+        }
+
+        public static int GetWoodcuttingXP(string name)
+        {
+            name = name.Replace("(Clone)", "");
+            return woodcuttingXPTable.ContainsKey(name) ? woodcuttingXPTable[name] : 0;
         }
     }
 }

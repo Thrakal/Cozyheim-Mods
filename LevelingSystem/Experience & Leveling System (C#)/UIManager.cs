@@ -113,6 +113,9 @@ namespace Cozyheim.LevelingSystem
 
             XPTable.UpdateMonsterXPTable();
             XPTable.UpdatePlayerXPTable();
+            XPTable.UpdatePickableXPTable();
+            XPTable.UpdateMiningXPTable();
+            XPTable.UpdateWoodcuttingXPTable();
 
             levelUpGroup.alpha = 0f;
 

@@ -56,6 +56,8 @@
     <Compile Include="Skills\SkillCarryWeight.cs" />
     <Compile Include="Skills\SkillBase.cs" />
     <Compile Include="Skills\SkillManager.cs" />
+    <Compile Include="XP\PatchXP_Mining.cs" />
+    <Compile Include="XP\PatchXP_Pickable.cs" />
     <Compile Include="XP\XPBarFade_Patch.cs" />
     <Compile Include="XP\XPText.cs" />
     <Compile Include="Resources\ChatCommands.cs" />
@@ -63,7 +65,7 @@
     <Compile Include="XP\MonsterXP.cs" />
     <Compile Include="XP\XPManager.cs" />
     <Compile Include="UIManager.cs" />
-    <Compile Include="XP\PatchXP.cs" />
+    <Compile Include="XP\PatchXP_Monster.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\SimpleJSON.cs" />

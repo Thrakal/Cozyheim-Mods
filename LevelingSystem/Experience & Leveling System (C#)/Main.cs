@@ -138,27 +138,11 @@ namespace Cozyheim.LevelingSystem
 
 
 
-            // Generate pickableXPTable default
-            pickableXpEnabled = CreateConfigEntry("XP Table", "pickableXpEnabled", true, "Gain XP when interacting with Pickables", true);
-
-            int counterPickable = 0;
-            string pickableTableDefault = "";
-            foreach (KeyValuePair<string, int> kvp in XPTable.pickableXPTable)
-            {
-                pickableTableDefault += counterPickable != 0 ? ", " : "";
-                pickableTableDefault += kvp.Key + ":" + kvp.Value.ToString();
-                counterPickable++;
-            }
-            pickableXpTable = CreateConfigEntry("XP Table", "pickableXpTable", pickableTableDefault, "The base xp of pickables. (Changes requires to realod the config file)", true);
-
-
-           // miningXpEnabled = CreateConfigEntry("XP Table", "miningXpEnabled", true, "Gain XP when mining", true);
-           // woodcuttingXpEnabled = CreateConfigEntry("XP Table", "woodcuttingXpEnabled", true, "Gain XP when chopping trees", true);
-
             // Generate monsterXPTable default
             int counter = 0;
             string monsterTableDefault = "";
-            foreach(KeyValuePair<string, int> kvp in XPTable.monsterXPTable) {
+            foreach (KeyValuePair<string, int> kvp in XPTable.monsterXPTable)
+            {
                 monsterTableDefault += counter != 0 ? ", " : "";
                 monsterTableDefault += kvp.Key + ":" + kvp.Value.ToString();
                 counter++;
@@ -176,6 +160,50 @@ namespace Cozyheim.LevelingSystem
                 playerTableDefault += "Lv" + (i + 1).ToString() + ":" + XPTable.playerXPTable[i];
             }
             playerXpTable = CreateConfigEntry("XP Table", "playerXpTable", playerTableDefault, "The xp needed for each level. To reach a higher max level, simply add more values to the table. (Changes requires to realod the config file, which can be done in two ways. 1. Restart the server.  -  2. Admins can open the console in-game and type LevelingSystem ReloadConfig)", true);
+
+
+
+
+            // Generate pickableXPTable default
+            pickableXpEnabled = CreateConfigEntry("XP Table", "pickableXpEnabled", true, "Gain XP when interacting with Pickables", true);
+
+            int counterPickable = 0;
+            string pickableTableDefault = "";
+            foreach (KeyValuePair<string, int> kvp in XPTable.pickableXPTable)
+            {
+                pickableTableDefault += counterPickable != 0 ? ", " : "";
+                pickableTableDefault += kvp.Key + ":" + kvp.Value.ToString();
+                counterPickable++;
+            }
+            pickableXpTable = CreateConfigEntry("XP Table", "pickableXpTable", pickableTableDefault, "The base xp of pickables. (Changes requires to realod the config file)", true);
+
+
+            // Mining
+            miningXpEnabled = CreateConfigEntry("XP Table", "miningXpEnabled", true, "Gain XP when mining", true);
+
+            int counterMining = 0;
+            string miningTableDefault = "";
+            foreach (KeyValuePair<string, int> kvp in XPTable.miningXPTable)
+            {
+                miningTableDefault += counterMining != 0 ? ", " : "";
+                miningTableDefault += kvp.Key + ":" + kvp.Value.ToString();
+                counterMining++;
+            }
+            miningXpTable = CreateConfigEntry("XP Table", "miningXpTable", miningTableDefault, "The base xp for mining. (Changes requires to realod the config file)", true);
+
+
+            // Woodcutting
+            woodcuttingXpEnabled = CreateConfigEntry("XP Table", "woodcuttingXpEnabled", true, "Gain XP when chopping trees", true);
+
+            int counterWoodcutting = 0;
+            string woodcuttingTableDefault = "";
+            foreach (KeyValuePair<string, int> kvp in XPTable.miningXPTable)
+            {
+                woodcuttingTableDefault += counterWoodcutting != 0 ? ", " : "";
+                woodcuttingTableDefault += kvp.Key + ":" + kvp.Value.ToString();
+                counterWoodcutting++;
+            }
+            woodcuttingXpTable = CreateConfigEntry("XP Table", "woodcuttingXpTable", woodcuttingTableDefault, "The base xp for woodcutting. (Changes requires to realod the config file)", true);
 
 
             CommandManager.Instance.AddConsoleCommand(new ConsoleLog());
