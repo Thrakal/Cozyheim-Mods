@@ -8,24 +8,7 @@ namespace Cozyheim.LevelingSystem
 {
     internal class XPTable
     {
-        public static Dictionary<string, int> woodcuttingXPTable = new Dictionary<string, int>()
-        {
-            // Tier 1: Wood
-            {"beech_log", 10}
-
-            // Tier 2: Core Wood
-
-
-            // Tier 3: Fine Wood
-
-
-            // Tier 4: Ancient Bark
-
-
-            // Tier 5: Yggdrasil Wood
-        };
-
-        public static Dictionary<string, int> miningXPTable = new Dictionary<string, int>()
+        public static Dictionary<string, string> miningXPMappingTable = new Dictionary<string, string>()
         {
             // Other rocks that are not awarding XP
 //            {"Ice_floor_fractured", 3},
@@ -34,84 +17,162 @@ namespace Cozyheim.LevelingSystem
 //            {"Rock_destructible_test", 3},
 
             // Tier 1: Stone
-            {"rock4_coast", 3},
-            {"rock4_coast_frac", 3},
-            {"HeathRockPillar", 3},
-            {"HeathRockPillar_frac", 3},
-            {"highstone", 3},
-            {"highstone_frac", 3},
-            {"Rock_3", 3},
-            {"Rock_3_frac", 3},
-            {"rock2_heath", 3},
-            {"rock2_heath_frac", 3},
-            {"rock4_forest_", 3},
-            {"rock4_forest_frac", 3},
-            {"rock4_heath", 3},
-            {"rock4_heath_frac", 3},
-            {"RockFinger", 3},
-            {"RockFinger_frac", 3},
-            {"RockFingerBroken", 3},
-            {"RockFingerBroken_frac", 3},
-            {"RockThumb", 3},
-            {"RockThumb_frac", 3},
-            {"widestone", 3},
-            {"widestone_frac", 3},
-            {"rock1_mountain", 3},
-            {"rock1_mountain_frac", 3},
-            {"rock2_mountain", 3},
-            {"rock2_mountain_frac", 3},
-            {"rock3_mountain_", 3},
-            {"rock3_mountain_frac", 3},
-            {"tarlump1", 3},
-            {"tarlump1_frac", 3},
-            {"rock_mistlands1", 3},
-            {"rock_mistlands1_frac", 3},
-            {"cliff_mistlands1_creep", 3},
-            {"cliff_mistlands1_creep_frac", 3},
-            {"cliff_mistlands1", 3},
-            {"cliff_mistlands1_frac", 3},
-            {"MineRock_Stone", 3},
+            {"rock4_coast", "Stone"},
+            {"rock4_coast_frac", "Stone"},
+            {"HeathRockPillar", "Stone"},
+            {"HeathRockPillar_frac", "Stone"},
+            {"highstone", "Stone"},
+            {"highstone_frac", "Stone"},
+            {"Rock_3", "Stone"},
+            {"Rock_3_frac", "Stone"},
+            {"rock2_heath", "Stone"},
+            {"rock2_heath_frac", "Stone"},
+            {"rock4_forest_", "Stone"},
+            {"rock4_forest_frac", "Stone"},
+            {"rock4_heath", "Stone"},
+            {"rock4_heath_frac", "Stone"},
+            {"RockFinger", "Stone"},
+            {"RockFinger_frac", "Stone"},
+            {"RockFingerBroken", "Stone"},
+            {"RockFingerBroken_frac", "Stone"},
+            {"RockThumb", "Stone"},
+            {"RockThumb_frac", "Stone"},
+            {"widestone", "Stone"},
+            {"widestone_frac", "Stone"},
+            {"rock1_mountain", "Stone"},
+            {"rock1_mountain_frac", "Stone"},
+            {"rock2_mountain", "Stone"},
+            {"rock2_mountain_frac", "Stone"},
+            {"rock3_mountain_", "Stone"},
+            {"rock3_mountain_frac", "Stone"},
+            {"tarlump1", "Stone"},
+            {"tarlump1_frac", "Stone"},
+            {"rock_mistlands1", "Stone"},
+            {"rock_mistlands1_frac", "Stone"},
+            {"cliff_mistlands1_creep", "Stone"},
+            {"cliff_mistlands1_creep_frac", "Stone"},
+            {"cliff_mistlands1", "Stone"},
+            {"cliff_mistlands1_frac", "Stone"},
+            {"MineRock_Stone", "Stone"},
 
             // Tier 2: Copper & Tin
-            {"MineRock_Tin", 6},
-            {"MineRock_Copper", 6},
-            {"rock4_copper", 6},
-            {"rock4_copper_frac", 6},
+            {"MineRock_Tin", "Tin"},
+
+            {"MineRock_Copper", "Copper"},
+            {"rock4_copper", "Copper"},
+            {"rock4_copper_frac", "Copper"},
 
             // Tier 3: Iron
-            {"MineRock_Iron", 9},
-            {"mudpile_old", 9},
-            {"mudpile", 9},
-            {"mudpile_frac", 9},
-            {"mudpile2", 9},
-            {"mudpile2_frac", 9},
-            {"giant_helmet1", 9},
-            {"giant_helmet1_destruction", 9},
-            {"giant_helmet2", 9},
-            {"giant_helmet2_destruction", 9},
-            {"giant_sword1", 9},
-            {"giant_sword1_destruction", 9},
-            {"giant_sword2", 9},
-            {"giant_sword2_destruction", 9},
+            {"MineRock_Iron", "Iron"},
+            {"mudpile_old", "Iron"},
+            {"mudpile", "Iron"},
+            {"mudpile_frac", "Iron"},
+            {"mudpile2", "Iron"},
+            {"mudpile2_frac", "Iron"},
+            {"giant_helmet1", "Iron"},
+            {"giant_helmet1_destruction", "Iron"},
+            {"giant_helmet2", "Iron"},
+            {"giant_helmet2_destruction", "Iron"},
+            {"giant_sword1", "Iron"},
+            {"giant_sword1_destruction", "Iron"},
+            {"giant_sword2", "Iron"},
+            {"giant_sword2_destruction", "Iron"},
 
             // Tier 4: Obsidian & Chitin
-            {"MineRock_Obsidian", 12},
-            {"Leviathan", 12},
+            {"MineRock_Obsidian", "Obsidian"},
+            {"Leviathan", "Chitin"},
 
             // Tier 5: Silver & Flametal
-            {"rock3_silver", 15},
-            {"rock3_silver_frac", 15},
-            {"silvervein", 15},
-            {"silvervein_frac", 15},
-            {"MineRock_Meteorite", 15},
+            {"rock3_silver", "Silver"},
+            {"rock3_silver_frac", "Silver"},
+            {"silvervein", "Silver"},
+            {"silvervein_frac", "Silver"},
+
+            {"MineRock_Meteorite", "Flametal"},
 
             // Tier 6: Black Marble & Soft Tissue 
-            {"giant_brain", 18},
-            {"giant_brain_frac", 18},
-            {"giant_ribs", 18},
-            {"giant_ribs_frac", 18},
-            {"giant_skull", 18},
-            {"giant_skull_frac", 18},
+            {"giant_brain", "SoftTissue"},
+            {"giant_brain_frac", "SoftTissue"},
+            {"giant_ribs", "BlackMarble"},
+            {"giant_ribs_frac", "BlackMarble"},
+            {"giant_skull", "BlackMarble"},
+            {"giant_skull_frac", "BlackMarble"},
+        };
+
+        public static Dictionary<string, string> woodcuttingXPMappingTable = new Dictionary<string, string>()
+        {
+            // Beech Tree
+            {"beech_log", "Beech"},
+            {"beech_log_half", "Beech"},
+            {"Beech_Stub", "Beech"},
+            {"Beech1", "Beech"},
+
+            // Fir Tree
+            {"FirTree_log", "Fir"},
+            {"FirTree_log_half", "Fir"},
+            {"FirTree", "Fir"},
+            {"FirTree_Stub", "Fir"},
+
+            // Pine Tree
+            {"PineTree_log", "Pine"},
+            {"PineTree_log_half", "Pine"},
+            {"PineTree_log_halfOLD", "Pine"},
+            {"PineTree_logOLD", "Pine"},
+            {"PineTree", "Pine"},
+            {"Pinetree_01", "Pine"},
+            {"Pinetree_01_Stub", "Pine"},
+
+            // Birch Tree
+            {"Birch_log", "Birch"},
+            {"Birch_log_half", "Birch"},
+            {"Birch1", "Birch"},
+            {"Birch1_aut", "Birch"},
+            {"Birch2", "Birch"},
+            {"Birch2_aut", "Birch"},
+            {"BirchStub", "Birch"},
+
+            // Oak Tree
+            {"Oak_log", "Oak"},
+            {"Oak_log_half", "Oak"},
+            {"Oak1", "Oak"},
+            {"OakStub", "Oak"},
+
+            // Ancient Tree
+            {"SwampTree1_log", "Ancient"},
+            {"SwampTree1", "Ancient"},
+            {"SwampTree1_Stub", "Ancient"},
+
+            // Yggdrasil Tree
+            {"yggashoot_log", "Yggdrasil"},
+            {"yggashoot_log_half", "Yggdrasil"},
+            {"YggaShoot1", "Yggdrasil"},
+            {"YggaShoot2", "Yggdrasil"},
+            {"YggaShoot3", "Yggdrasil"},
+        };
+
+        public static Dictionary<string, int> miningXPTable = new Dictionary<string, int>()
+        {
+            {"Stone", 3},
+            {"Copper", 6},
+            {"Tin", 6},
+            {"Iron", 9},
+            {"Obsidian", 12},
+            {"Chitin", 12},
+            {"Silver", 15},
+            {"Flametal", 15},
+            {"BlackMarble", 18},
+            {"SoftTissue", 18}
+        };
+
+        public static Dictionary<string, int> woodcuttingXPTable = new Dictionary<string, int>()
+        {
+            {"Beech", 6},
+            {"Fir", 12},
+            {"Pine", 18},
+            {"Birch", 24},
+            {"Ancient", 30},
+            {"Oak", 40},
+            {"Yggdrasil", 100}
         };
 
         public static Dictionary<string, int> pickableXPTable = new Dictionary<string, int>()
@@ -436,13 +497,15 @@ namespace Cozyheim.LevelingSystem
         public static int GetMiningXP(string name)
         {
             name = name.Replace("(Clone)", "");
-            return miningXPTable.ContainsKey(name) ? miningXPTable[name] : 0;
+            string material = miningXPMappingTable.ContainsKey(name) ? miningXPMappingTable[name] : "";
+            return miningXPTable.ContainsKey(material) ? miningXPTable[material] : 0;
         }
 
         public static int GetWoodcuttingXP(string name)
         {
             name = name.Replace("(Clone)", "");
-            return woodcuttingXPTable.ContainsKey(name) ? woodcuttingXPTable[name] : 0;
+            string material = woodcuttingXPMappingTable.ContainsKey(name) ? woodcuttingXPMappingTable[name] : "";
+            return woodcuttingXPTable.ContainsKey(material) ? woodcuttingXPTable[material] : 0;
         }
     }
 }

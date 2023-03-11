@@ -56,6 +56,7 @@
     <Compile Include="Skills\SkillCarryWeight.cs" />
     <Compile Include="Skills\SkillBase.cs" />
     <Compile Include="Skills\SkillManager.cs" />
+    <Compile Include="XP\PatchXP_Woodcutting.cs" />
     <Compile Include="XP\PatchXP_Mining.cs" />
     <Compile Include="XP\PatchXP_Pickable.cs" />
     <Compile Include="XP\XPBarFade_Patch.cs" />

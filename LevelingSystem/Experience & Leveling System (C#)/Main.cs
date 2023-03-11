@@ -28,7 +28,7 @@ namespace Cozyheim.LevelingSystem
 
         // Mod information
         internal const string modName = "LevelingSystem";
-        internal const string version = "0.1.3";
+        internal const string version = "0.2.0";
         internal const string GUID = "dk.thrakal." + modName;
 
         // Core objects that is required to patch and configure the mod
@@ -159,25 +159,23 @@ namespace Cozyheim.LevelingSystem
                 playerTableDefault += i != 0 ? ", " : "";
                 playerTableDefault += "Lv" + (i + 1).ToString() + ":" + XPTable.playerXPTable[i];
             }
-            playerXpTable = CreateConfigEntry("XP Table", "playerXpTable", playerTableDefault, "The xp needed for each level. To reach a higher max level, simply add more values to the table. (Changes requires to realod the config file, which can be done in two ways. 1. Restart the server.  -  2. Admins can open the console in-game and type LevelingSystem ReloadConfig)", true);
-
-
+            playerXpTable = CreateConfigEntry("XP Table", "playerXpTable", playerTableDefault, "The xp needed for each level. To reach a higher max level, simply add more values to the table. (Changes requires to reload the config file, which can be done in two ways. 1. Restart the server.  -  2. Admins can open the console in-game and type LevelingSystem ReloadConfig)", true);
 
 
             // Generate pickableXPTable default
             string pickableTableDefault = GenerateDefaultXPTableString(XPTable.pickableXPTable);
             pickableXpEnabled = CreateConfigEntry("XP Table", "pickableXpEnabled", true, "Gain XP when interacting with Pickables", true);
-            pickableXpTable = CreateConfigEntry("XP Table", "pickableXpTable", pickableTableDefault, "The base xp of pickables. (Changes requires to realod the config file)", true);
+            pickableXpTable = CreateConfigEntry("XP Table", "pickableXpTable", pickableTableDefault, "The base xp of pickables. (Changes requires to reload the config file)", true);
 
             // Mining
             string miningTableDefault = GenerateDefaultXPTableString(XPTable.miningXPTable);
             miningXpEnabled = CreateConfigEntry("XP Table", "miningXpEnabled", true, "Gain XP when mining", true);
-            miningXpTable = CreateConfigEntry("XP Table", "miningXpTable", miningTableDefault, "The base xp for mining. (Changes requires to realod the config file)", true);
+            miningXpTable = CreateConfigEntry("XP Table", "miningXpTable", miningTableDefault, "The base xp for mining. (Changes requires to reload the config file)", true);
 
             // Woodcutting
             string woodcuttingTableDefault = GenerateDefaultXPTableString(XPTable.woodcuttingXPTable);
             woodcuttingXpEnabled = CreateConfigEntry("XP Table", "woodcuttingXpEnabled", true, "Gain XP when chopping trees", true);
-            woodcuttingXpTable = CreateConfigEntry("XP Table", "woodcuttingXpTable", woodcuttingTableDefault, "The base xp for woodcutting. (Changes requires to realod the config file)", true);
+            woodcuttingXpTable = CreateConfigEntry("XP Table", "woodcuttingXpTable", woodcuttingTableDefault, "The base xp for woodcutting. (Changes requires to reload the config file)", true);
 
 
             CommandManager.Instance.AddConsoleCommand(new ConsoleLog());
