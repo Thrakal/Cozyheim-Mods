@@ -29,6 +29,7 @@ namespace Cozyheim.LevelingSystem
         // Floating text
         private static GameObject xpTextFloating;
         private static GameObject levelUpEffect;
+        private static Vector3 lastXPTextSpawnPosition = Vector3.zero;
 
         // Skills UI
         public CanvasGroup skillsUI;
@@ -446,12 +447,24 @@ namespace Cozyheim.LevelingSystem
             yield return null;
         }
 
+
         private static void SpawnFloatingXPText(int totalXpGained)
         {
             if (totalXpGained > 0 && Main.displayXPFloatingText.Value)
             {
-                Vector3 spawnPosition = Player.m_localPlayer.GetTopPoint() + new Vector3(Random.Range(-1f, 1f), Random.Range(0, 1f), Random.Range(-1f, 1f)).normalized * Random.Range(-0.2f, 0.2f);
+                float spread = 0.35f;                
+                Vector3 spawnSpread;
 
+                do {
+                    spawnSpread = Vector3.zero;
+                    spawnSpread += Random.Range(-spread, spread) * Camera.main.transform.right; // Randomize x
+                    spawnSpread += Random.Range(0f, spread) * Camera.main.transform.up; // Randomize y
+                    spawnSpread += Random.Range(0f, spread / 2f) * Camera.main.transform.forward; // Randomize z 
+                } while (Vector3.Distance(spawnSpread, lastXPTextSpawnPosition) < spread * 0.5f);
+
+                lastXPTextSpawnPosition = spawnSpread;
+
+                Vector3 spawnPosition = Player.m_localPlayer.GetTopPoint() + spawnSpread;
                 XPText xpText = Instantiate(xpTextFloating, spawnPosition, Quaternion.identity).GetComponent<XPText>();
                 xpText.XPGained(totalXpGained);
             }

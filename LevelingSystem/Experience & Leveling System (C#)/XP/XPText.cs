@@ -20,7 +20,7 @@ namespace Cozyheim.LevelingSystem
 
         void Update()
         {
-            transform.eulerAngles = new Vector3(0f, Camera.main.transform.eulerAngles.y, 0f);
+            transform.eulerAngles = Camera.main.transform.eulerAngles;
         }
 
         IEnumerator Start()
