@@ -11,17 +11,13 @@ public class XPTextAnim : MonoBehaviour
     public float moveDistance = 0.5f;
     public int xpGained;
 
-    public Transform objectToLookAt;
-
     void Update() {
-        transform.eulerAngles = new Vector3(0f, Camera.main.transform.eulerAngles.y, 0f);
+        transform.eulerAngles = Camera.main.transform.eulerAngles;
     }
 
     IEnumerator Start()
     {
         SetXPText(xpGained);
-
-        yield break;
 
         CanvasGroup canvasGroup = GetComponentInChildren<CanvasGroup>();
         float startSize = transform.localScale.x;

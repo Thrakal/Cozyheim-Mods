@@ -12,7 +12,12 @@ namespace Cozyheim.LevelingSystem
             [HarmonyPatch(typeof(TreeBase), "Damage")]
             private static void MineRock5_Damage_Prefix(TreeBase __instance, HitData hit, ZNetView ___m_nview)
             {
-                if(!___m_nview.IsValid())
+                if (__instance == null || hit == null || ___m_nview == null)
+                {
+                    return;
+                }
+
+                if (!___m_nview.IsValid())
                 {
                     return;
                 }
@@ -29,6 +34,11 @@ namespace Cozyheim.LevelingSystem
             [HarmonyPatch(typeof(TreeLog), "Damage")]
             private static void MineRock_Damage_Prefix(TreeLog __instance, HitData hit, ZNetView ___m_nview)
             {
+                if (__instance == null || hit == null || ___m_nview == null)
+                {
+                    return;
+                }
+
                 if (!___m_nview.IsValid())
                 {
                     return;
@@ -44,9 +54,14 @@ namespace Cozyheim.LevelingSystem
 
             [HarmonyPrefix]
             [HarmonyPatch(typeof(Destructible), "Damage")]
-            private static void Destructible_Damage_Prefix(Destructible __instance, HitData hit, ZNetView ___m_nview)
+            private static void Destructible_Damage_Prefix(Destructible __instance, HitData hit, ZNetView ___m_nview, bool ___m_firstFrame)
             {
-                if (!___m_nview.IsValid())
+                if (__instance == null || hit == null || ___m_nview == null)
+                {
+                    return;
+                }
+
+                if (!___m_nview.IsValid() || ___m_firstFrame)
                 {
                     return;
                 }
@@ -63,6 +78,11 @@ namespace Cozyheim.LevelingSystem
             {
                 // Check if the XP system is enabled
                 if (!Main.woodcuttingXpEnabled.Value)
+                {
+                    return;
+                }
+
+                if (hit.m_damage.m_chop <= 0)
                 {
                     return;
                 }
