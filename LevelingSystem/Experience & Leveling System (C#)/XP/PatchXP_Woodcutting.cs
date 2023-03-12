@@ -67,6 +67,11 @@ namespace Cozyheim.LevelingSystem
                     return;
                 }
 
+                if (hit.m_damage.m_chop <= 0)
+                {
+                    return;
+                }
+
                 // Check if the attacker is a player
                 Player player = hit.GetAttacker().GetComponent<Player>();
                 if (player == null)
