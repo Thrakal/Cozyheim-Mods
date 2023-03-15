@@ -144,8 +144,5 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\leveling_system" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\leveling_assets" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

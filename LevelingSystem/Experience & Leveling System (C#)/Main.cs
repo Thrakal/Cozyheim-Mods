@@ -28,7 +28,7 @@ namespace Cozyheim.LevelingSystem
 
         // Mod information
         internal const string modName = "LevelingSystem";
-        internal const string version = "0.2.1";
+        internal const string version = "0.2.2";
         internal const string GUID = "dk.thrakal." + modName;
 
         // Core objects that is required to patch and configure the mod
@@ -37,10 +37,8 @@ namespace Cozyheim.LevelingSystem
         internal static ConfigFile configFile;
 
         // Asset bundles
-        internal static string assetsPath = "Assets/Leveling System/";
+        internal static string assetsPath = "Assets/_Leveling System/";
         internal static AssetBundle assetBundle;
-        internal static string assetsItemPath = "Assets/_CustomItems/05_LevelingSystem/";
-        internal static AssetBundle assetItemBundle;
 
         // Check for other mods loaded
         internal static bool modAugaLoaded = false;
@@ -100,7 +98,6 @@ namespace Cozyheim.LevelingSystem
 
             // Asset Bundle loaded
             assetBundle = GetAssetBundleFromResources("leveling_system");
-            assetItemBundle = GetAssetBundleFromResources("leveling_assets");
             PrefabManager.OnVanillaPrefabsAvailable += LoadAssets;
 
             // Assigning config entries
@@ -232,10 +229,10 @@ namespace Cozyheim.LevelingSystem
             GameObject skillUI = assetBundle.LoadAsset<GameObject>(assetsPath + "Prefabs/SkillUI.prefab");
             PrefabManager.Instance.AddPrefab(skillUI);
 
-            GameObject trainingDummy = assetItemBundle.LoadAsset<GameObject>(assetsItemPath + "Prefabs/LevelingDummy.prefab");
+            GameObject trainingDummy = assetBundle.LoadAsset<GameObject>(assetsPath + "Prefabs/LevelingDummy.prefab");
             PieceManager.Instance.AddPiece(new CustomPiece(trainingDummy, "Hammer", false));
 
-            GameObject trainingDummyStrawman = assetItemBundle.LoadAsset<GameObject>(assetsItemPath + "Prefabs/LevelingDummyStrawman.prefab");
+            GameObject trainingDummyStrawman = assetBundle.LoadAsset<GameObject>(assetsPath + "Prefabs/LevelingDummyStrawman.prefab");
             PieceManager.Instance.AddPiece(new CustomPiece(trainingDummyStrawman, "Hammer", false));
 
             PrefabManager.OnVanillaPrefabsAvailable -= LoadAssets;
