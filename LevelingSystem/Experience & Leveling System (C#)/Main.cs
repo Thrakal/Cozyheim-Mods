@@ -28,7 +28,7 @@ namespace Cozyheim.LevelingSystem
 
         // Mod information
         internal const string modName = "LevelingSystem";
-        internal const string version = "0.2.2";
+        internal const string version = "0.3.0";
         internal const string GUID = "dk.thrakal." + modName;
 
         // Core objects that is required to patch and configure the mod
@@ -65,6 +65,8 @@ namespace Cozyheim.LevelingSystem
         // VFX
         internal static ConfigEntry<bool> levelUpVFX;
         internal static ConfigEntry<bool> criticalHitVFX;
+        internal static ConfigEntry<bool> criticalHitShake;
+        internal static ConfigEntry<float> criticalHitShakeIntensity;
 
         // XP Text
         internal static ConfigEntry<bool> displayXPInCorner;
@@ -120,6 +122,8 @@ namespace Cozyheim.LevelingSystem
             // VFX
             levelUpVFX = CreateConfigEntry("VFX", "levelUpVFX", true, "Display visual effects when leveling up", false);
             criticalHitVFX = CreateConfigEntry("VFX", "criticalHitVFX", true, "Display visual effects when dealing a critical hit", false);
+            criticalHitShake = CreateConfigEntry("VFX", "criticalHitShake", true, "Shake the camera when dealing a critical hit", false);
+            criticalHitShakeIntensity = CreateConfigEntry("VFX", "criticalHitShakeIntensity", 3f, "Intensity of the camera shake", false);
 
             // XP Text
             displayXPInCorner = CreateConfigEntry("XP Text", "displayXPInCorner", true, "Display XP gained in top left corner", false);

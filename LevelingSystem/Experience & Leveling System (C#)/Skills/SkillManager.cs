@@ -85,6 +85,11 @@ namespace Cozyheim.LevelingSystem
                 return;
             }
 
+            if(Main.criticalHitShake.Value)
+            {
+                GameCamera.instance.AddShake(Player.m_localPlayer.transform.position, 10f, Main.criticalHitShakeIntensity.Value, false);
+            }
+
             GameObject newVFX = Instantiate(criticalHitVFX, position, Quaternion.identity);
             Destroy(newVFX, 4f);
         }
