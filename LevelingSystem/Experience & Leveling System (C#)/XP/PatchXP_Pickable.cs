@@ -30,7 +30,7 @@ namespace Cozyheim.LevelingSystem
                     return;
                 }
 
-                Player player = character.gameObject.GetComponent<Player>();
+                Player player = character.GetComponent<Player>();
                 if (player == null)
                 {
                     return;

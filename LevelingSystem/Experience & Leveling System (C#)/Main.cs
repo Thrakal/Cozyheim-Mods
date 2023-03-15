@@ -135,21 +135,10 @@ namespace Cozyheim.LevelingSystem
 
 
 
-            // Generate monsterXPTable default
-            int counter = 0;
-            string monsterTableDefault = "";
-            foreach (KeyValuePair<string, int> kvp in XPTable.monsterXPTable)
-            {
-                monsterTableDefault += counter != 0 ? ", " : "";
-                monsterTableDefault += kvp.Key + ":" + kvp.Value.ToString();
-                counter++;
-            }
-            monsterXpTable = CreateConfigEntry("XP Table", "monsterXpTable", monsterTableDefault, "The base xp of monsters. (Changes requires to realod the config file)", true);
+            // Generate config entires for XP Tables
 
-
-            // Generate playerXPTable default
+            // Player
             XPTable.GenerateDefaultPlayerXPTable();
-
             string playerTableDefault = "";
             for (int i = 0; i < XPTable.playerXPTable.Length; i++)
             {
@@ -158,21 +147,28 @@ namespace Cozyheim.LevelingSystem
             }
             playerXpTable = CreateConfigEntry("XP Table", "playerXpTable", playerTableDefault, "The xp needed for each level. To reach a higher max level, simply add more values to the table. (Changes requires to reload the config file, which can be done in two ways. 1. Restart the server.  -  2. Admins can open the console in-game and type LevelingSystem ReloadConfig)", true);
 
+            // Monsters
+            string monsterTableDefault = GenerateXPTableString(XPTable.monsterXPTable);
+            monsterXpTable = CreateConfigEntry("XP Table", "monsterXpTable", monsterTableDefault, "The base xp of monsters. (Changes requires to realod the config file)", true);
+            monsterXpTable.Value = AddNewEntriesToXPTable(XPTable.monsterXPTable, monsterXpTable.Value);
 
-            // Generate pickableXPTable default
-            string pickableTableDefault = GenerateDefaultXPTableString(XPTable.pickableXPTable);
+            // Pickables
+            string pickableTableDefault = GenerateXPTableString(XPTable.pickableXPTable);
             pickableXpEnabled = CreateConfigEntry("XP Table", "pickableXpEnabled", true, "Gain XP when interacting with Pickables", true);
             pickableXpTable = CreateConfigEntry("XP Table", "pickableXpTable", pickableTableDefault, "The base xp of pickables. (Changes requires to reload the config file)", true);
+            pickableXpTable.Value = AddNewEntriesToXPTable(XPTable.pickableXPTable, pickableXpTable.Value);
 
             // Mining
-            string miningTableDefault = GenerateDefaultXPTableString(XPTable.miningXPTable);
+            string miningTableDefault = GenerateXPTableString(XPTable.miningXPTable);
             miningXpEnabled = CreateConfigEntry("XP Table", "miningXpEnabled", true, "Gain XP when mining", true);
             miningXpTable = CreateConfigEntry("XP Table", "miningXpTable", miningTableDefault, "The base xp for mining. (Changes requires to reload the config file)", true);
+            miningXpTable.Value = AddNewEntriesToXPTable(XPTable.miningXPTable, miningXpTable.Value);
 
             // Woodcutting
-            string woodcuttingTableDefault = GenerateDefaultXPTableString(XPTable.woodcuttingXPTable);
+            string woodcuttingTableDefault = GenerateXPTableString(XPTable.woodcuttingXPTable);
             woodcuttingXpEnabled = CreateConfigEntry("XP Table", "woodcuttingXpEnabled", true, "Gain XP when chopping trees", true);
             woodcuttingXpTable = CreateConfigEntry("XP Table", "woodcuttingXpTable", woodcuttingTableDefault, "The base xp for woodcutting. (Changes requires to reload the config file)", true);
+            woodcuttingXpTable.Value = AddNewEntriesToXPTable(XPTable.woodcuttingXPTable, woodcuttingXpTable.Value);
 
 
             CommandManager.Instance.AddConsoleCommand(new ConsoleLog());
@@ -182,7 +178,37 @@ namespace Cozyheim.LevelingSystem
             XPManager.Init();
         }
 
-        private string GenerateDefaultXPTableString(Dictionary<string, int> xpTable)
+        private string AddNewEntriesToXPTable(Dictionary<string, int> xpTable, string configEntry)
+        {
+            Dictionary<string, int> configXPTable = new Dictionary<string, int>();
+
+            string[] entries = configEntry.Split(',');
+            foreach (string entry in entries)
+            {
+                string[] entryData = entry.Split(':');
+                if (entryData.Length == 2)
+                {
+                    string key = entryData[0].Trim();
+                    int value = 0;
+                    if (int.TryParse(entryData[1].Trim(), out value))
+                    {
+                        configXPTable.Add(key, value);
+                    }
+                }
+            }
+
+            foreach(KeyValuePair<string, int> kvp in xpTable)
+            {
+                if(!configXPTable.ContainsKey(kvp.Key))
+                {
+                    configXPTable.Add(kvp.Key, kvp.Value);
+                }
+            }
+
+            return GenerateXPTableString(configXPTable);
+        }
+
+        private string GenerateXPTableString(Dictionary<string, int> xpTable)
         {
             int counter = 0;
             string returnValue = "";
