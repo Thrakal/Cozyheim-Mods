@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Jotunn.Managers;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Cozyheim.LevelingSystem
@@ -8,6 +9,8 @@ namespace Cozyheim.LevelingSystem
         public int unspendPoints = 0;
 
         public static SkillManager Instance;
+
+        private GameObject criticalHitVFX;
 
         internal static Dictionary<SkillType, SkillBase> skills;
 
@@ -62,6 +65,12 @@ namespace Cozyheim.LevelingSystem
                         case SkillType.MovementSpeed:
                             skills.Add(skill.skillType, new SkillMovementSpeed(skill.GetMaxLevel(), skill.GetBonusValue(), "MovementSpeed", "Movement Speed", "%"));
                             break;
+                        case SkillType.CriticalChance:
+                            skills.Add(skill.skillType, new SkillCriticalHitChance(skill.GetMaxLevel(), skill.GetBonusValue(), "MovementSpeed", "Critical Hit Chance", "%"));
+                            break;
+                        case SkillType.CriticalDamage:
+                            skills.Add(skill.skillType, new SkillCriticalHitDamage(skill.GetMaxLevel(), skill.GetBonusValue(), "MovementSpeed", "Critical Hit Damage", "%"));
+                            break;
                         default:
                             break;
                     }
@@ -69,9 +78,19 @@ namespace Cozyheim.LevelingSystem
             }
         }
         
+        public void SpawnCriticalHitVFX(Vector3 position)
+        {
+            if (!Main.criticalHitVFX.Value)
+            {
+                return;
+            }
+
+            GameObject newVFX = Instantiate(criticalHitVFX, position, Quaternion.identity);
+            Destroy(newVFX, 4f);
+        }
+
         public void UpdateAllSkillInformation()
         {
-//            ConsoleLog.Print("UpdateAllSkillInformation called", LogType.Message);
             foreach (KeyValuePair<SkillType, SkillBase> kvp in skills)
             {
                 kvp.Value.UpdateSkillInformation();
@@ -159,6 +178,8 @@ namespace Cozyheim.LevelingSystem
         {
             InitSkills();
             LoadSkills();
+
+            criticalHitVFX = PrefabManager.Instance.GetPrefab("CriticalHitEffect");
         }
 
         internal void UpdateUnspendPoints()

@@ -104,6 +104,20 @@ namespace Cozyheim.LevelingSystem
                 enabled = true,
                 defaultMaxLevel = 20,
                 defaultBonusValue = 1f
+            },
+            new SkillSettings()
+            {
+                skillType = SkillType.CriticalChance,
+                enabled = true,
+                defaultMaxLevel = 20,
+                defaultBonusValue = 0.5f
+            },
+            new SkillSettings()
+            {
+                skillType = SkillType.CriticalDamage,
+                enabled = true,
+                defaultMaxLevel = 20,
+                defaultBonusValue = 5f
             }
         };
     

@@ -64,6 +64,7 @@ namespace Cozyheim.LevelingSystem
 
         // VFX
         internal static ConfigEntry<bool> levelUpVFX;
+        internal static ConfigEntry<bool> criticalHitVFX;
 
         // XP Text
         internal static ConfigEntry<bool> displayXPInCorner;
@@ -118,6 +119,7 @@ namespace Cozyheim.LevelingSystem
 
             // VFX
             levelUpVFX = CreateConfigEntry("VFX", "levelUpVFX", true, "Display visual effects when leveling up", false);
+            criticalHitVFX = CreateConfigEntry("VFX", "criticalHitVFX", true, "Display visual effects when dealing a critical hit", false);
 
             // XP Text
             displayXPInCorner = CreateConfigEntry("XP Text", "displayXPInCorner", true, "Display XP gained in top left corner", false);
@@ -251,6 +253,9 @@ namespace Cozyheim.LevelingSystem
 
             GameObject levelUpEffect = assetBundle.LoadAsset<GameObject>(assetsPath + "Prefabs/LevelUpEffectNew.prefab");
             PrefabManager.Instance.AddPrefab(levelUpEffect);
+
+            GameObject criticalHitEffect = assetBundle.LoadAsset<GameObject>(assetsPath + "Prefabs/CriticalHitEffect.prefab");
+            PrefabManager.Instance.AddPrefab(criticalHitEffect);
 
             GameObject skillUI = assetBundle.LoadAsset<GameObject>(assetsPath + "Prefabs/SkillUI.prefab");
             PrefabManager.Instance.AddPrefab(skillUI);

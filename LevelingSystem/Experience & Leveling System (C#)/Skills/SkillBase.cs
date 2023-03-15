@@ -23,6 +23,8 @@ namespace Cozyheim.LevelingSystem
         ElementalDamage,
         PhysicalResistance,
         ElementalResistance,
+        CriticalChance,
+        CriticalDamage,
         Hunting,
         Farming,
         EndOfEnum
@@ -115,7 +117,6 @@ namespace Cozyheim.LevelingSystem
             }
 
             level++;
-//            ConsoleLog.Print("Added skill point to " + skillType.ToString() + " - now level " + level);
             return true;
         }
 
@@ -161,8 +162,6 @@ namespace Cozyheim.LevelingSystem
 
         public void UpdateSkillInformation()
         {
-//            ConsoleLog.Print(skillType.ToString() + ": UpdateSkillInformation called", LogType.Message);
-
             if (uiSettings != null)
             {
                 uiSettings.UpdateAllButtonVisibility(this);
