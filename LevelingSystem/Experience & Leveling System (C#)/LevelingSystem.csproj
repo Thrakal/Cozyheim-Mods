@@ -36,24 +36,26 @@
   <ItemGroup>
     <Compile Include="LevelingDummy_Patch.cs" />
     <Compile Include="Resources\ConfigSync.cs" />
+    <Compile Include="Skills\Skill Patches\SkillCriticalHitDamage.cs" />
     <Compile Include="Skills\SkillConfig.cs" />
-    <Compile Include="Skills\SkillEitrRegen.cs" />
-    <Compile Include="Skills\SkillStaminaRegen.cs" />
-    <Compile Include="Skills\SkillHPRegen.cs" />
-    <Compile Include="Skills\SkillMovementSpeed.cs" />
-    <Compile Include="Skills\SkillElementalResistance.cs" />
-    <Compile Include="Skills\SkillElementalDamage.cs" />
-    <Compile Include="Skills\SkillPhysicalResistance.cs" />
-    <Compile Include="Skills\SkillPhysicalDamage.cs" />
+    <Compile Include="Skills\Skill Patches\SkillCriticalHitChance.cs" />
+    <Compile Include="Skills\Skill Patches\SkillEitrRegen.cs" />
+    <Compile Include="Skills\Skill Patches\SkillStaminaRegen.cs" />
+    <Compile Include="Skills\Skill Patches\SkillHPRegen.cs" />
+    <Compile Include="Skills\Skill Patches\SkillMovementSpeed.cs" />
+    <Compile Include="Skills\Skill Patches\SkillElementalResistance.cs" />
+    <Compile Include="Skills\Skill Patches\SkillElementalDamage.cs" />
+    <Compile Include="Skills\Skill Patches\SkillPhysicalResistance.cs" />
+    <Compile Include="Skills\Skill Patches\SkillPhysicalDamage.cs" />
     <Compile Include="Skills\SkillOption.cs" />
-    <Compile Include="Skills\SkillStamina.cs" />
-    <Compile Include="Skills\SkillEitr.cs" />
-    <Compile Include="Skills\SkillWoodcutting.cs" />
-    <Compile Include="Skills\SkillHunting.cs" />
-    <Compile Include="Skills\SkillFarming.cs" />
-    <Compile Include="Skills\SkillMining.cs" />
-    <Compile Include="Skills\SkillHP.cs" />
-    <Compile Include="Skills\SkillCarryWeight.cs" />
+    <Compile Include="Skills\Skill Patches\SkillStamina.cs" />
+    <Compile Include="Skills\Skill Patches\SkillEitr.cs" />
+    <Compile Include="Skills\Skill Patches\SkillWoodcutting.cs" />
+    <Compile Include="Skills\Skill Patches\SkillHunting.cs" />
+    <Compile Include="Skills\Skill Patches\SkillFarming.cs" />
+    <Compile Include="Skills\Skill Patches\SkillMining.cs" />
+    <Compile Include="Skills\Skill Patches\SkillHP.cs" />
+    <Compile Include="Skills\Skill Patches\SkillCarryWeight.cs" />
     <Compile Include="Skills\SkillBase.cs" />
     <Compile Include="Skills\SkillManager.cs" />
     <Compile Include="XP\PatchXP_Woodcutting.cs" />
@@ -71,9 +73,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\SimpleJSON.cs" />
     <Compile Include="Resources\ConsoleLog.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\leveling_assets" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony">

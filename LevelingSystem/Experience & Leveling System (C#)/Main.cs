@@ -28,7 +28,7 @@ namespace Cozyheim.LevelingSystem
 
         // Mod information
         internal const string modName = "LevelingSystem";
-        internal const string version = "0.2.1";
+        internal const string version = "0.3.0";
         internal const string GUID = "dk.thrakal." + modName;
 
         // Core objects that is required to patch and configure the mod
@@ -37,10 +37,8 @@ namespace Cozyheim.LevelingSystem
         internal static ConfigFile configFile;
 
         // Asset bundles
-        internal static string assetsPath = "Assets/Leveling System/";
+        internal static string assetsPath = "Assets/_Leveling System/";
         internal static AssetBundle assetBundle;
-        internal static string assetsItemPath = "Assets/_CustomItems/05_LevelingSystem/";
-        internal static AssetBundle assetItemBundle;
 
         // Check for other mods loaded
         internal static bool modAugaLoaded = false;
@@ -66,6 +64,9 @@ namespace Cozyheim.LevelingSystem
 
         // VFX
         internal static ConfigEntry<bool> levelUpVFX;
+        internal static ConfigEntry<bool> criticalHitVFX;
+        internal static ConfigEntry<bool> criticalHitShake;
+        internal static ConfigEntry<float> criticalHitShakeIntensity;
 
         // XP Text
         internal static ConfigEntry<bool> displayXPInCorner;
@@ -100,7 +101,6 @@ namespace Cozyheim.LevelingSystem
 
             // Asset Bundle loaded
             assetBundle = GetAssetBundleFromResources("leveling_system");
-            assetItemBundle = GetAssetBundleFromResources("leveling_assets");
             PrefabManager.OnVanillaPrefabsAvailable += LoadAssets;
 
             // Assigning config entries
@@ -121,6 +121,9 @@ namespace Cozyheim.LevelingSystem
 
             // VFX
             levelUpVFX = CreateConfigEntry("VFX", "levelUpVFX", true, "Display visual effects when leveling up", false);
+            criticalHitVFX = CreateConfigEntry("VFX", "criticalHitVFX", true, "Display visual effects when dealing a critical hit", false);
+            criticalHitShake = CreateConfigEntry("VFX", "criticalHitShake", true, "Shake the camera when dealing a critical hit", false);
+            criticalHitShakeIntensity = CreateConfigEntry("VFX", "criticalHitShakeIntensity", 3f, "Intensity of the camera shake", false);
 
             // XP Text
             displayXPInCorner = CreateConfigEntry("XP Text", "displayXPInCorner", true, "Display XP gained in top left corner", false);
@@ -138,21 +141,10 @@ namespace Cozyheim.LevelingSystem
 
 
 
-            // Generate monsterXPTable default
-            int counter = 0;
-            string monsterTableDefault = "";
-            foreach (KeyValuePair<string, int> kvp in XPTable.monsterXPTable)
-            {
-                monsterTableDefault += counter != 0 ? ", " : "";
-                monsterTableDefault += kvp.Key + ":" + kvp.Value.ToString();
-                counter++;
-            }
-            monsterXpTable = CreateConfigEntry("XP Table", "monsterXpTable", monsterTableDefault, "The base xp of monsters. (Changes requires to realod the config file)", true);
+            // Generate config entires for XP Tables
 
-
-            // Generate playerXPTable default
+            // Player
             XPTable.GenerateDefaultPlayerXPTable();
-
             string playerTableDefault = "";
             for (int i = 0; i < XPTable.playerXPTable.Length; i++)
             {
@@ -161,21 +153,28 @@ namespace Cozyheim.LevelingSystem
             }
             playerXpTable = CreateConfigEntry("XP Table", "playerXpTable", playerTableDefault, "The xp needed for each level. To reach a higher max level, simply add more values to the table. (Changes requires to reload the config file, which can be done in two ways. 1. Restart the server.  -  2. Admins can open the console in-game and type LevelingSystem ReloadConfig)", true);
 
+            // Monsters
+            string monsterTableDefault = GenerateXPTableString(XPTable.monsterXPTable);
+            monsterXpTable = CreateConfigEntry("XP Table", "monsterXpTable", monsterTableDefault, "The base xp of monsters. (Changes requires to realod the config file)", true);
+            monsterXpTable.Value = AddNewEntriesToXPTable(XPTable.monsterXPTable, monsterXpTable.Value);
 
-            // Generate pickableXPTable default
-            string pickableTableDefault = GenerateDefaultXPTableString(XPTable.pickableXPTable);
+            // Pickables
+            string pickableTableDefault = GenerateXPTableString(XPTable.pickableXPTable);
             pickableXpEnabled = CreateConfigEntry("XP Table", "pickableXpEnabled", true, "Gain XP when interacting with Pickables", true);
             pickableXpTable = CreateConfigEntry("XP Table", "pickableXpTable", pickableTableDefault, "The base xp of pickables. (Changes requires to reload the config file)", true);
+            pickableXpTable.Value = AddNewEntriesToXPTable(XPTable.pickableXPTable, pickableXpTable.Value);
 
             // Mining
-            string miningTableDefault = GenerateDefaultXPTableString(XPTable.miningXPTable);
+            string miningTableDefault = GenerateXPTableString(XPTable.miningXPTable);
             miningXpEnabled = CreateConfigEntry("XP Table", "miningXpEnabled", true, "Gain XP when mining", true);
             miningXpTable = CreateConfigEntry("XP Table", "miningXpTable", miningTableDefault, "The base xp for mining. (Changes requires to reload the config file)", true);
+            miningXpTable.Value = AddNewEntriesToXPTable(XPTable.miningXPTable, miningXpTable.Value);
 
             // Woodcutting
-            string woodcuttingTableDefault = GenerateDefaultXPTableString(XPTable.woodcuttingXPTable);
+            string woodcuttingTableDefault = GenerateXPTableString(XPTable.woodcuttingXPTable);
             woodcuttingXpEnabled = CreateConfigEntry("XP Table", "woodcuttingXpEnabled", true, "Gain XP when chopping trees", true);
             woodcuttingXpTable = CreateConfigEntry("XP Table", "woodcuttingXpTable", woodcuttingTableDefault, "The base xp for woodcutting. (Changes requires to reload the config file)", true);
+            woodcuttingXpTable.Value = AddNewEntriesToXPTable(XPTable.woodcuttingXPTable, woodcuttingXpTable.Value);
 
 
             CommandManager.Instance.AddConsoleCommand(new ConsoleLog());
@@ -185,7 +184,37 @@ namespace Cozyheim.LevelingSystem
             XPManager.Init();
         }
 
-        private string GenerateDefaultXPTableString(Dictionary<string, int> xpTable)
+        private string AddNewEntriesToXPTable(Dictionary<string, int> xpTable, string configEntry)
+        {
+            Dictionary<string, int> configXPTable = new Dictionary<string, int>();
+
+            string[] entries = configEntry.Split(',');
+            foreach (string entry in entries)
+            {
+                string[] entryData = entry.Split(':');
+                if (entryData.Length == 2)
+                {
+                    string key = entryData[0].Trim();
+                    int value = 0;
+                    if (int.TryParse(entryData[1].Trim(), out value))
+                    {
+                        configXPTable.Add(key, value);
+                    }
+                }
+            }
+
+            foreach(KeyValuePair<string, int> kvp in xpTable)
+            {
+                if(!configXPTable.ContainsKey(kvp.Key))
+                {
+                    configXPTable.Add(kvp.Key, kvp.Value);
+                }
+            }
+
+            return GenerateXPTableString(configXPTable);
+        }
+
+        private string GenerateXPTableString(Dictionary<string, int> xpTable)
         {
             int counter = 0;
             string returnValue = "";
@@ -229,11 +258,17 @@ namespace Cozyheim.LevelingSystem
             GameObject levelUpEffect = assetBundle.LoadAsset<GameObject>(assetsPath + "Prefabs/LevelUpEffectNew.prefab");
             PrefabManager.Instance.AddPrefab(levelUpEffect);
 
+            GameObject criticalHitEffect = assetBundle.LoadAsset<GameObject>(assetsPath + "Prefabs/CriticalHitEffect.prefab");
+            PrefabManager.Instance.AddPrefab(criticalHitEffect);
+
             GameObject skillUI = assetBundle.LoadAsset<GameObject>(assetsPath + "Prefabs/SkillUI.prefab");
             PrefabManager.Instance.AddPrefab(skillUI);
 
-            GameObject trainingDummy = assetItemBundle.LoadAsset<GameObject>(assetsItemPath + "Prefabs/LevelingDummy.prefab");
+            GameObject trainingDummy = assetBundle.LoadAsset<GameObject>(assetsPath + "Prefabs/LevelingDummy.prefab");
             PieceManager.Instance.AddPiece(new CustomPiece(trainingDummy, "Hammer", false));
+
+            GameObject trainingDummyStrawman = assetBundle.LoadAsset<GameObject>(assetsPath + "Prefabs/LevelingDummyStrawman.prefab");
+            PieceManager.Instance.AddPiece(new CustomPiece(trainingDummyStrawman, "Hammer", false));
 
             PrefabManager.OnVanillaPrefabsAvailable -= LoadAssets;
         }

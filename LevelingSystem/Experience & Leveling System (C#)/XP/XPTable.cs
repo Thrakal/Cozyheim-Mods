@@ -248,7 +248,9 @@ namespace Cozyheim.LevelingSystem
 
 
             // Tier X Pickable: Ashlands, Deep North, Other
-            {"Pickable_Meteorite", 10}
+            {"Pickable_Meteorite", 10},
+            {"LuredWisp", 100},
+            {"piece_beehive", 10}
 
 
             // Other pickables that are not awarding XP
@@ -258,7 +260,6 @@ namespace Cozyheim.LevelingSystem
 //            {"Pickable_Fishingrod", 10},
 //            {"Pickable_Mushroom_blue", 10},
 //            {"Pickable_RandomFood", 10},
-//            {"LuredWisp", 10}
         };
 
         public static Dictionary<string, int> monsterXPTable = new Dictionary<string, int>()

@@ -10,7 +10,7 @@ namespace Cozyheim.LevelingSystem
         {
             [HarmonyPrefix]
             [HarmonyPatch(typeof(TreeBase), "Damage")]
-            private static void MineRock5_Damage_Prefix(TreeBase __instance, HitData hit, ZNetView ___m_nview)
+            private static void TreeBase_Damage_Prefix(TreeBase __instance, HitData hit, ZNetView ___m_nview)
             {
                 if (__instance == null || hit == null || ___m_nview == null)
                 {
@@ -32,7 +32,7 @@ namespace Cozyheim.LevelingSystem
 
             [HarmonyPrefix]
             [HarmonyPatch(typeof(TreeLog), "Damage")]
-            private static void MineRock_Damage_Prefix(TreeLog __instance, HitData hit, ZNetView ___m_nview)
+            private static void TreeLog_Damage_Prefix(TreeLog __instance, HitData hit, ZNetView ___m_nview)
             {
                 if (__instance == null || hit == null || ___m_nview == null)
                 {
@@ -82,7 +82,7 @@ namespace Cozyheim.LevelingSystem
                     return;
                 }
 
-                if (hit.m_damage.m_chop <= 0)
+                if(hit.GetAttacker() == null)
                 {
                     return;
                 }
@@ -90,6 +90,11 @@ namespace Cozyheim.LevelingSystem
                 // Check if the attacker is a player
                 Player player = hit.GetAttacker().GetComponent<Player>();
                 if (player == null)
+                {
+                    return;
+                }
+
+                if (hit.m_damage.m_chop <= 0)
                 {
                     return;
                 }

@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TheHugin
+  m_Shader: {fileID: 4800000, guid: b4686966a4dee2941b2c88538b7df9cc, type: 3}
+  m_ShaderKeywords: _ADDRAIN_ON _ALPHATEST_ON _METALLICGLOSSMAP _NORMALMAP _TWOSIDEDNORMALS_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: 39105f2395f2c0a46978812bd0577a40, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 2800000, guid: 780b84c1f468f19449c4733e42009467, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 44268a876a3a1b545be4efc2904339fa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 2800000, guid: 01056492ddb1e864083c945e05417b2b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _StyleTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AddRain: 1
+    - _BumpScale: 1
+    - _Cull: 0
+    - _Cutoff: 0.921
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _GlossMapScale: 0.85
+    - _Glossiness: 0.2
+    - _GlossyReflections: 1
+    - _Hue: 0
+    - _MetalGloss: 0.719
+    - _Metallic: 0.528
+    - _Mode: 1
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _Saturation: 0
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _Style: 0
+    - _TwoSidedNormals: 1
+    - _UVSec: 0
+    - _UseGlossmap: 0
+    - _UseStyles: 0
+    - _Value: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 7.4642644, g: 7.4642644, b: 7.4642644, a: 1}
+    - _MetalColor: {r: 1, g: 1, b: 1, a: 1}
