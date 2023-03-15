@@ -235,6 +235,9 @@ namespace Cozyheim.LevelingSystem
             GameObject trainingDummy = assetItemBundle.LoadAsset<GameObject>(assetsItemPath + "Prefabs/LevelingDummy.prefab");
             PieceManager.Instance.AddPiece(new CustomPiece(trainingDummy, "Hammer", false));
 
+            GameObject trainingDummyStrawman = assetItemBundle.LoadAsset<GameObject>(assetsItemPath + "Prefabs/LevelingDummyStrawman.prefab");
+            PieceManager.Instance.AddPiece(new CustomPiece(trainingDummyStrawman, "Hammer", false));
+
             PrefabManager.OnVanillaPrefabsAvailable -= LoadAssets;
         }
 

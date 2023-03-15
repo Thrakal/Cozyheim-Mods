@@ -73,9 +73,6 @@
     <Compile Include="Resources\ConsoleLog.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\leveling_assets" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\..\_Reference DLLs\0Harmony.dll</HintPath>
       <Private>False</Private>
@@ -146,6 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\leveling_system" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\leveling_assets" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
