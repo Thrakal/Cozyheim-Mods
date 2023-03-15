@@ -10,7 +10,7 @@ namespace Cozyheim.LevelingSystem
         {
             [HarmonyPrefix]
             [HarmonyPatch(typeof(TreeBase), "Damage")]
-            private static void MineRock5_Damage_Prefix(TreeBase __instance, HitData hit, ZNetView ___m_nview)
+            private static void TreeBase_Damage_Prefix(TreeBase __instance, HitData hit, ZNetView ___m_nview)
             {
                 if (__instance == null || hit == null || ___m_nview == null)
                 {
@@ -32,7 +32,7 @@ namespace Cozyheim.LevelingSystem
 
             [HarmonyPrefix]
             [HarmonyPatch(typeof(TreeLog), "Damage")]
-            private static void MineRock_Damage_Prefix(TreeLog __instance, HitData hit, ZNetView ___m_nview)
+            private static void TreeLog_Damage_Prefix(TreeLog __instance, HitData hit, ZNetView ___m_nview)
             {
                 if (__instance == null || hit == null || ___m_nview == null)
                 {

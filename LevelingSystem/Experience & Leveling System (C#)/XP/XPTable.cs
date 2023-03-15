@@ -249,7 +249,8 @@ namespace Cozyheim.LevelingSystem
 
             // Tier X Pickable: Ashlands, Deep North, Other
             {"Pickable_Meteorite", 10},
-            {"LuredWisp", 100}
+            {"LuredWisp", 100},
+            {"piece_beehive", 10}
 
 
             // Other pickables that are not awarding XP
