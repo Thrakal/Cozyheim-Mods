@@ -54,7 +54,7 @@ namespace Cozyheim.LevelingSystem
                             hit.m_damage.m_poison *= critDamageMultiplier;
                             hit.m_damage.m_spirit *= critDamageMultiplier;
 
-                            SkillManager.Instance.SpawnCriticalHitVFX(hit.m_point);
+                            SkillManager.Instance.SpawnCriticalHitVFX(hit.m_point, hit.GetTotalDamage());
                         }
                     }
                 }

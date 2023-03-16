@@ -11,6 +11,10 @@ namespace Cozyheim.LevelingSystem
         public static SkillManager Instance;
 
         private GameObject criticalHitVFX;
+        private GameObject criticalHitText;
+        private float critTextOffsetY = 1f;
+        private float critTextOffsetTowardsCam = 0.75f;
+        private float critTextOffsetRandom = 0.25f;
 
         internal static Dictionary<SkillType, SkillBase> skills;
 
@@ -78,7 +82,7 @@ namespace Cozyheim.LevelingSystem
             }
         }
         
-        public void SpawnCriticalHitVFX(Vector3 position)
+        public void SpawnCriticalHitVFX(Vector3 position, float damage)
         {
             if (!Main.criticalHitVFX.Value)
             {
@@ -89,6 +93,12 @@ namespace Cozyheim.LevelingSystem
             {
                 GameCamera.instance.AddShake(Player.m_localPlayer.transform.position, 10f, Main.criticalHitShakeIntensity.Value, false);
             }
+
+            Vector3 dirToCamera = (GameCamera.instance.transform.position - position).normalized;
+            Vector3 critPos = position + Vector3.up * critTextOffsetY + dirToCamera * critTextOffsetTowardsCam;
+
+            GameObject critText = Instantiate(criticalHitText, critPos, Quaternion.identity);
+            critText.GetComponent<CritTextAnim>().SetText(damage, 1);
 
             GameObject newVFX = Instantiate(criticalHitVFX, position, Quaternion.identity);
             Destroy(newVFX, 4f);
@@ -185,6 +195,7 @@ namespace Cozyheim.LevelingSystem
             LoadSkills();
 
             criticalHitVFX = PrefabManager.Instance.GetPrefab("CriticalHitEffect");
+            criticalHitText = PrefabManager.Instance.GetPrefab("CritDamageText");
         }
 
         internal void UpdateUnspendPoints()

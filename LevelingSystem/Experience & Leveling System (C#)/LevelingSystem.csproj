@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Custom Effect Scripts\CritTextAnim.cs" />
     <Compile Include="LevelingDummy_Patch.cs" />
     <Compile Include="Resources\ConfigSync.cs" />
     <Compile Include="Skills\Skill Patches\SkillCriticalHitDamage.cs" />
@@ -62,7 +63,7 @@
     <Compile Include="XP\PatchXP_Mining.cs" />
     <Compile Include="XP\PatchXP_Pickable.cs" />
     <Compile Include="XP\XPBarFade_Patch.cs" />
-    <Compile Include="XP\XPText.cs" />
+    <Compile Include="Custom Effect Scripts\XPText.cs" />
     <Compile Include="Resources\ChatCommands.cs" />
     <Compile Include="XP\XPTable.cs" />
     <Compile Include="XP\MonsterXP.cs" />

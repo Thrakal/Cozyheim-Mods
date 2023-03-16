@@ -48,7 +48,6 @@ namespace Cozyheim.LevelingSystem
                 return _level;
             }
             set {
-//                ConsoleLog.Print(skillType.ToString() + ": Level (" + _level + " -> " + value + ")");
                 _level = value;
             }
         }

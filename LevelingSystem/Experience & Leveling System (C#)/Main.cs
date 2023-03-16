@@ -255,6 +255,10 @@ namespace Cozyheim.LevelingSystem
             xpText.AddComponent<XPText>();
             PrefabManager.Instance.AddPrefab(xpText);
 
+            GameObject critDamageText = assetBundle.LoadAsset<GameObject>(assetsPath + "Prefabs/CritDamageText.prefab");
+            critDamageText.AddComponent<CritTextAnim>();
+            PrefabManager.Instance.AddPrefab(critDamageText);
+
             GameObject levelUpEffect = assetBundle.LoadAsset<GameObject>(assetsPath + "Prefabs/LevelUpEffectNew.prefab");
             PrefabManager.Instance.AddPrefab(levelUpEffect);
 
