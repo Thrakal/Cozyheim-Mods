@@ -276,8 +276,6 @@ namespace Cozyheim.LevelingSystem
             closeButton.onClick.RemoveAllListeners();
             resetPointsButton.onClick.RemoveAllListeners();
 
-            OpenCategory(0);
-
             // Add listener for the buttons
             closeButton.onClick.AddListener(delegate () {
                 ToggleSkillsUI(false);
@@ -287,6 +285,8 @@ namespace Cozyheim.LevelingSystem
             {
                 SkillManager.Instance.SkillResetAll();
             });
+
+            OpenCategory(0);
         }
 
         public void ToggleSkillsUI(bool value)
@@ -308,9 +308,21 @@ namespace Cozyheim.LevelingSystem
 
         void UpdateUIInformation()
         {
-            ConsoleLog.Print("UpdateUIInformation called");
-            remainingPoints.text = "Remaining points: " + SkillManager.Instance.unspendPoints;
+//            ConsoleLog.Print("UpdateUIInformation called");
+//            remainingPoints.text = "Remaining points: " + SkillManager.Instance.unspendPoints;
+
             SkillManager.Instance.UpdateAllSkillInformation();
+            SkillManager.Instance.UpdateUnspendPoints();
+        }
+
+        public void UpdateCategoryPoints()
+        {
+            for (int i = 0; i < skillsCategoryButtons.Count; i++)
+            {
+                int points = SkillManager.Instance.GetSkillPointSpendOnCategory((SkillCategory)i);
+                string categoryName = ((SkillCategory)i).ToString();
+                skillsCategoryButtons[i].GetComponentInChildren<Text>().text = categoryName + " (" + points + ")";
+            }
         }
 
         private bool xpBarVisible = false;

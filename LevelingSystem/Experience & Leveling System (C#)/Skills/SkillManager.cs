@@ -14,7 +14,6 @@ namespace Cozyheim.LevelingSystem
         private GameObject criticalHitText;
         private float critTextOffsetY = 1f;
         private float critTextOffsetTowardsCam = 0.75f;
-        private float critTextOffsetRandom = 0.25f;
 
         internal static Dictionary<SkillType, SkillBase> skills;
 
@@ -30,17 +29,17 @@ namespace Cozyheim.LevelingSystem
                         case SkillType.HP:
                             skills.Add(skill.skillType, new SkillHP(skill.GetMaxLevel(), skill.GetBonusValue(), "HP", "Health"));
                             break;
-                        case SkillType.HPRegen:
-                            skills.Add(skill.skillType, new SkillHPRegen(skill.GetMaxLevel(), skill.GetBonusValue(), "HPRegen", "Health Regen", "%"));
-                            break;
                         case SkillType.Stamina:
                             skills.Add(skill.skillType, new SkillStamina(skill.GetMaxLevel(), skill.GetBonusValue(), "Stamina", "Stamina"));
                             break;
-                        case SkillType.StaminaRegen:
-                            skills.Add(skill.skillType, new SkillStaminaRegen(skill.GetMaxLevel(), skill.GetBonusValue(), "StaminaRegen", "Stamina Regen", "%"));
-                            break;
                         case SkillType.Eitr:
                             skills.Add(skill.skillType, new SkillEitr(skill.GetMaxLevel(), skill.GetBonusValue(), "Eitr", "Eitr"));
+                            break;
+                        case SkillType.HPRegen:
+                            skills.Add(skill.skillType, new SkillHPRegen(skill.GetMaxLevel(), skill.GetBonusValue(), "HPRegen", "Health Regen", "%"));
+                            break;
+                        case SkillType.StaminaRegen:
+                            skills.Add(skill.skillType, new SkillStaminaRegen(skill.GetMaxLevel(), skill.GetBonusValue(), "StaminaRegen", "Stamina Regen", "%"));
                             break;
                         case SkillType.EitrRegen:
                             skills.Add(skill.skillType, new SkillEitrRegen(skill.GetMaxLevel(), skill.GetBonusValue(), "EitrRegen", "Eitr Regen", "%"));
@@ -70,10 +69,10 @@ namespace Cozyheim.LevelingSystem
                             skills.Add(skill.skillType, new SkillMovementSpeed(skill.GetMaxLevel(), skill.GetBonusValue(), "MovementSpeed", "Movement Speed", "%"));
                             break;
                         case SkillType.CriticalChance:
-                            skills.Add(skill.skillType, new SkillCriticalHitChance(skill.GetMaxLevel(), skill.GetBonusValue(), "MovementSpeed", "Critical Hit Chance", "%"));
+                            skills.Add(skill.skillType, new SkillCriticalHitChance(skill.GetMaxLevel(), skill.GetBonusValue(), "CriticalHitChance", "Critical Hit Chance", "%", 1f));
                             break;
                         case SkillType.CriticalDamage:
-                            skills.Add(skill.skillType, new SkillCriticalHitDamage(skill.GetMaxLevel(), skill.GetBonusValue(), "MovementSpeed", "Critical Hit Damage", "%"));
+                            skills.Add(skill.skillType, new SkillCriticalHitDamage(skill.GetMaxLevel(), skill.GetBonusValue(), "CriticalHitDamage", "Critical Hit Damage", "%", 10f));
                             break;
                         default:
                             break;
@@ -184,6 +183,20 @@ namespace Cozyheim.LevelingSystem
             return unspendPoints > 0;
         }
 
+        public int GetSkillPointSpendOnCategory(SkillCategory category)
+        {
+            int count = 0;
+            foreach(SkillSettings skill in SkillConfig.skillSettings)
+            {
+                if(skill.category == category)
+                {
+                    count += GetSkillByType(skill.skillType).GetLevel();
+                }
+            }
+
+            return count;
+        }
+
         void Awake()
         {
             Instance = this;
@@ -198,7 +211,7 @@ namespace Cozyheim.LevelingSystem
             criticalHitText = PrefabManager.Instance.GetPrefab("CritDamageText");
         }
 
-        internal void UpdateUnspendPoints()
+        public void UpdateUnspendPoints()
         {
             if(XPManager.Instance != null && skills != null)
             {
@@ -210,6 +223,7 @@ namespace Cozyheim.LevelingSystem
 
                 unspendPoints = points;
                 UIManager.Instance.remainingPoints.text = "Remaining points: " + points;
+                UIManager.Instance.UpdateCategoryPoints();
 
                 SaveSkills();
                 UpdateAllSkillInformation();

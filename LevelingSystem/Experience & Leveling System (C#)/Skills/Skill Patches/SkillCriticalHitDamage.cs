@@ -11,7 +11,7 @@ namespace Cozyheim.LevelingSystem
     {
         public static SkillCriticalHitDamage Instance;
 
-        public SkillCriticalHitDamage(int maxLevel, float bonusPerLevel, string iconName, string displayName, string unit = "") : base(maxLevel, bonusPerLevel, iconName, displayName, unit)
+        public SkillCriticalHitDamage(int maxLevel, float bonusPerLevel, string iconName, string displayName, string unit = "", float baseBonus = 0f) : base(maxLevel, bonusPerLevel, iconName, displayName, unit, baseBonus)
         {
             skillType = SkillType.CriticalDamage;
             Instance = this;
