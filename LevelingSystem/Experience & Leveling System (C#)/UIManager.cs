@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static Skills;
 
 namespace Cozyheim.LevelingSystem
 {
@@ -39,6 +40,7 @@ namespace Cozyheim.LevelingSystem
         public RectTransform viewportContent;
         public ScrollRect skillsScrollRect;
         public Scrollbar skillsScrollbar;
+        public RectTransform buttonContainer;
 
         public GameObject skillPrefab;
 
@@ -52,7 +54,8 @@ namespace Cozyheim.LevelingSystem
 
         public static UIManager Instance;
 
-        private List<GameObject> skillGOsInUi = new List<GameObject>();
+        private List<Button> skillsCategoryButtons = new List<Button>();
+        private List<RectTransform> skillsCategories = new List<RectTransform>();
 
         public static void Init()
         {
@@ -101,8 +104,99 @@ namespace Cozyheim.LevelingSystem
             viewportContent = transform.Find("Skills UI/Scroll View/Viewport/Content").GetComponent<RectTransform>();
             skillsScrollRect = transform.Find("Skills UI").GetComponent<ScrollRect>();
             skillsScrollbar = transform.Find("Skills UI/Scrollbar").GetComponent<Scrollbar>();
+            buttonContainer = transform.Find("Skills UI/Scroll View/Category Buttons").GetComponent<RectTransform>();
 
             skillPrefab = PrefabManager.Instance.GetPrefab("SkillUI");
+
+            SetupAllUISkillButtons();
+        }
+
+        private void SetupAllUISkillButtons()
+        {
+            for (int i = 0; i < buttonContainer.childCount; i++)
+            {
+                Button button = buttonContainer.GetChild(i).GetComponent<Button>();
+                button.onClick.RemoveAllListeners();
+
+                int index = i;
+                button.onClick.AddListener(delegate ()
+                {
+                    OpenCategory(index);
+                });
+
+                skillsCategoryButtons.Add(button);
+            }
+
+            for (int i = 0; i < viewportContent.childCount; i++)
+            {
+                skillsCategories.Add(viewportContent.GetChild(i).GetComponent<RectTransform>());
+            }
+        }
+
+        public void OpenCategory(int index)
+        {
+            // Enable/Disable the categories
+            for (int i = 0; i < skillsCategories.Count; i++)
+            {
+                if (i == index)
+                {
+                    skillsCategories[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    skillsCategories[i].gameObject.SetActive(false);
+                }
+            }
+
+            // Resize the content transform
+            Transform[] skillsGenerated = GenerateSkills(index);
+            float height = Mathf.Ceil(skillsGenerated.Length / 3f) * 215f;
+
+            viewportContent.sizeDelta = new Vector2(viewportContent.sizeDelta.x, height);
+            viewportContent.anchoredPosition = Vector2.zero;
+
+            // Set the color of the skills to match the button
+            Color color = skillsCategoryButtons[index].GetComponent<Image>().color;
+            foreach (Transform t in skillsGenerated)
+            {
+                t.GetComponent<Image>().color = color;
+            }
+
+            UpdateUIInformation();
+        }
+
+        private Transform[] GenerateSkills(int index)
+        {
+            if(skillsCategories.Count > 0)
+            {
+                DeleteAllChildren(skillsCategories[index]);
+            }
+
+            List<Transform> list = new List<Transform>();
+
+            foreach (SkillSettings skillSetting in SkillConfig.skillSettings)
+            {
+                if(index == (int)skillSetting.category)
+                {
+                    SkillBase skill = SkillManager.Instance.GetSkillByType(skillSetting.skillType);
+                    GameObject newSkill = Instantiate(skillPrefab, skillsCategories[index]);
+                    list.Add(newSkill.GetComponent<Transform>());
+
+                    SkillOption option = newSkill.gameObject.AddComponent<SkillOption>();
+                    option.Setup();
+                    skill.SetSkillUI(option);
+                }
+            }
+            
+            return list.ToArray();
+        }
+
+        private void DeleteAllChildren(Transform trans)
+        {
+            foreach (Transform child in trans)
+            {
+                Destroy(child.gameObject);
+            }
         }
 
         void Start()
@@ -168,19 +262,8 @@ namespace Cozyheim.LevelingSystem
             }
         }
 
-        void ClearSkillUIGameObjects()
-        {
-            foreach(GameObject go in skillGOsInUi)
-            {
-                Destroy(go);
-            }
-
-            skillGOsInUi.Clear();
-        }
-
         public void ReloadSkillsUI()
         {
-            ClearSkillUIGameObjects();
             CreateSkillUI();
             UpdateUIInformation();
         }
@@ -193,26 +276,7 @@ namespace Cozyheim.LevelingSystem
             closeButton.onClick.RemoveAllListeners();
             resetPointsButton.onClick.RemoveAllListeners();
 
-            int skillsCount = SkillManager.Instance.GetTotalSkillsCount();
-
-            for (int i = 0; i < (int)SkillType.EndOfEnum; i++)
-            {
-                SkillBase skill = SkillManager.Instance.GetSkillByIndex(i);
-                if(skill != null) {
-                    GameObject newSkill = Instantiate(skillPrefab, viewportContent);
-                    skillGOsInUi.Add(newSkill);
-
-                    SkillOption option = newSkill.gameObject.AddComponent<SkillOption>();
-                    option.Setup();
-                    skill.SetSkillUI(option);
-                }
-            }
-
-            int skillsCeil = (int) Mathf.Ceil((float)skillsCount / 3f);
-
-            Vector2 tempSize = viewportContent.sizeDelta;
-            tempSize.y = 215f * skillsCeil;
-            viewportContent.sizeDelta = tempSize;
+            OpenCategory(0);
 
             // Add listener for the buttons
             closeButton.onClick.AddListener(delegate () {
@@ -238,12 +302,7 @@ namespace Cozyheim.LevelingSystem
             if(value)
             {
                 rpc_ReloadConfig.SendPackage(ZRoutedRpc.Everybody, new ZPackage());
-                ClearSkillUIGameObjects();
                 CreateSkillUI();
-                UpdateUIInformation();
-            } else
-            {
-                ClearSkillUIGameObjects();
             }
         }
 

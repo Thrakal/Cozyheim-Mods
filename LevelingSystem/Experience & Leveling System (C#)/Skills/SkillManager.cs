@@ -202,8 +202,6 @@ namespace Cozyheim.LevelingSystem
         {
             if(XPManager.Instance != null && skills != null)
             {
-                UIManager.Instance.ReloadSkillsUI();
-
                 int points = XPManager.Instance.GetPlayerLevel() - 1;
                 foreach (KeyValuePair<SkillType, SkillBase> kvp in skills)
                 {
@@ -214,6 +212,7 @@ namespace Cozyheim.LevelingSystem
                 UIManager.Instance.remainingPoints.text = "Remaining points: " + points;
 
                 SaveSkills();
+                UpdateAllSkillInformation();
             }
         }
 

@@ -53,7 +53,7 @@ namespace Cozyheim.LevelingSystem
         private void SetColorAndScale(float damage)
         {
             Text textComp = GetComponentInChildren<Text>();
-            Color color = textComp.color;
+            Color color = new Color(0.8f, 0.6f, 0.15f, 1f);
 
             // Fixed intervals of scale and color
             if(damage < 30f)
