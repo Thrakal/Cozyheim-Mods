@@ -42,18 +42,18 @@ namespace Cozyheim.LevelingSystem
         public float bonusPerLevel;
         public string bonusUnit;
         public string iconName;
+        public float baseBonus;
 
         protected int level {
             get {
                 return _level;
             }
             set {
-//                ConsoleLog.Print(skillType.ToString() + ": Level (" + _level + " -> " + value + ")");
                 _level = value;
             }
         }
 
-        public SkillBase(int maxLevel, float bonusPerLevel, string iconName, string displayName, string bonusUnit = "")
+        public SkillBase(int maxLevel, float bonusPerLevel, string iconName, string displayName, string bonusUnit = "", float baseBonus = 0f)
         {
             this.level = 0;
             this.maxLevel = maxLevel;
@@ -61,6 +61,7 @@ namespace Cozyheim.LevelingSystem
             this.bonusUnit = bonusUnit;
             this.displayName = displayName;
             this.iconName = iconName;
+            this.baseBonus = baseBonus;
         }
 
         public void SetSkillUI(SkillOption uiSettings)
@@ -143,7 +144,7 @@ namespace Cozyheim.LevelingSystem
 
         public float GetBonus()
         {
-            return bonusPerLevel * level;
+            return (bonusPerLevel * level) + baseBonus;
         }
 
         public string GetName() {

@@ -11,7 +11,7 @@ namespace Cozyheim.LevelingSystem
     {
         public static SkillEitrRegen Instance;
 
-        public SkillEitrRegen(int maxLevel, float bonusPerLevel, string iconName, string displayName, string unit = "") : base(maxLevel, bonusPerLevel, iconName, displayName, unit)
+        public SkillEitrRegen(int maxLevel, float bonusPerLevel, string iconName, string displayName, string unit = "", float baseBonus = 0f) : base(maxLevel, bonusPerLevel, iconName, displayName, unit, baseBonus)
         {
             skillType = SkillType.EitrRegen;
             Instance = this;

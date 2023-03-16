@@ -11,6 +11,9 @@ namespace Cozyheim.LevelingSystem
         public static SkillManager Instance;
 
         private GameObject criticalHitVFX;
+        private GameObject criticalHitText;
+        private float critTextOffsetY = 1f;
+        private float critTextOffsetTowardsCam = 0.75f;
 
         internal static Dictionary<SkillType, SkillBase> skills;
 
@@ -26,17 +29,17 @@ namespace Cozyheim.LevelingSystem
                         case SkillType.HP:
                             skills.Add(skill.skillType, new SkillHP(skill.GetMaxLevel(), skill.GetBonusValue(), "HP", "Health"));
                             break;
-                        case SkillType.HPRegen:
-                            skills.Add(skill.skillType, new SkillHPRegen(skill.GetMaxLevel(), skill.GetBonusValue(), "HPRegen", "Health Regen", "%"));
-                            break;
                         case SkillType.Stamina:
                             skills.Add(skill.skillType, new SkillStamina(skill.GetMaxLevel(), skill.GetBonusValue(), "Stamina", "Stamina"));
                             break;
-                        case SkillType.StaminaRegen:
-                            skills.Add(skill.skillType, new SkillStaminaRegen(skill.GetMaxLevel(), skill.GetBonusValue(), "StaminaRegen", "Stamina Regen", "%"));
-                            break;
                         case SkillType.Eitr:
                             skills.Add(skill.skillType, new SkillEitr(skill.GetMaxLevel(), skill.GetBonusValue(), "Eitr", "Eitr"));
+                            break;
+                        case SkillType.HPRegen:
+                            skills.Add(skill.skillType, new SkillHPRegen(skill.GetMaxLevel(), skill.GetBonusValue(), "HPRegen", "Health Regen", "%"));
+                            break;
+                        case SkillType.StaminaRegen:
+                            skills.Add(skill.skillType, new SkillStaminaRegen(skill.GetMaxLevel(), skill.GetBonusValue(), "StaminaRegen", "Stamina Regen", "%"));
                             break;
                         case SkillType.EitrRegen:
                             skills.Add(skill.skillType, new SkillEitrRegen(skill.GetMaxLevel(), skill.GetBonusValue(), "EitrRegen", "Eitr Regen", "%"));
@@ -66,10 +69,10 @@ namespace Cozyheim.LevelingSystem
                             skills.Add(skill.skillType, new SkillMovementSpeed(skill.GetMaxLevel(), skill.GetBonusValue(), "MovementSpeed", "Movement Speed", "%"));
                             break;
                         case SkillType.CriticalChance:
-                            skills.Add(skill.skillType, new SkillCriticalHitChance(skill.GetMaxLevel(), skill.GetBonusValue(), "MovementSpeed", "Critical Hit Chance", "%"));
+                            skills.Add(skill.skillType, new SkillCriticalHitChance(skill.GetMaxLevel(), skill.GetBonusValue(), "CriticalHitChance", "Critical Hit Chance", "%", 1f));
                             break;
                         case SkillType.CriticalDamage:
-                            skills.Add(skill.skillType, new SkillCriticalHitDamage(skill.GetMaxLevel(), skill.GetBonusValue(), "MovementSpeed", "Critical Hit Damage", "%"));
+                            skills.Add(skill.skillType, new SkillCriticalHitDamage(skill.GetMaxLevel(), skill.GetBonusValue(), "CriticalHitDamage", "Critical Hit Damage", "%", 10f));
                             break;
                         default:
                             break;
@@ -78,7 +81,7 @@ namespace Cozyheim.LevelingSystem
             }
         }
         
-        public void SpawnCriticalHitVFX(Vector3 position)
+        public void SpawnCriticalHitVFX(Vector3 position, float damage)
         {
             if (!Main.criticalHitVFX.Value)
             {
@@ -89,6 +92,12 @@ namespace Cozyheim.LevelingSystem
             {
                 GameCamera.instance.AddShake(Player.m_localPlayer.transform.position, 10f, Main.criticalHitShakeIntensity.Value, false);
             }
+
+            Vector3 dirToCamera = (GameCamera.instance.transform.position - position).normalized;
+            Vector3 critPos = position + Vector3.up * critTextOffsetY + dirToCamera * critTextOffsetTowardsCam;
+
+            GameObject critText = Instantiate(criticalHitText, critPos, Quaternion.identity);
+            critText.GetComponent<CritTextAnim>().SetText(damage, 1);
 
             GameObject newVFX = Instantiate(criticalHitVFX, position, Quaternion.identity);
             Destroy(newVFX, 4f);
@@ -174,6 +183,20 @@ namespace Cozyheim.LevelingSystem
             return unspendPoints > 0;
         }
 
+        public int GetSkillPointSpendOnCategory(SkillCategory category)
+        {
+            int count = 0;
+            foreach(SkillSettings skill in SkillConfig.skillSettings)
+            {
+                if(skill.category == category)
+                {
+                    count += GetSkillByType(skill.skillType).GetLevel();
+                }
+            }
+
+            return count;
+        }
+
         void Awake()
         {
             Instance = this;
@@ -185,14 +208,13 @@ namespace Cozyheim.LevelingSystem
             LoadSkills();
 
             criticalHitVFX = PrefabManager.Instance.GetPrefab("CriticalHitEffect");
+            criticalHitText = PrefabManager.Instance.GetPrefab("CritDamageText");
         }
 
-        internal void UpdateUnspendPoints()
+        public void UpdateUnspendPoints()
         {
             if(XPManager.Instance != null && skills != null)
             {
-                UIManager.Instance.ReloadSkillsUI();
-
                 int points = XPManager.Instance.GetPlayerLevel() - 1;
                 foreach (KeyValuePair<SkillType, SkillBase> kvp in skills)
                 {
@@ -201,8 +223,10 @@ namespace Cozyheim.LevelingSystem
 
                 unspendPoints = points;
                 UIManager.Instance.remainingPoints.text = "Remaining points: " + points;
+                UIManager.Instance.UpdateCategoryPoints();
 
                 SaveSkills();
+                UpdateAllSkillInformation();
             }
         }
 

@@ -11,7 +11,7 @@ namespace Cozyheim.LevelingSystem
     {
         public static SkillCriticalHitChance Instance;
 
-        public SkillCriticalHitChance(int maxLevel, float bonusPerLevel, string iconName, string displayName, string unit = "") : base(maxLevel, bonusPerLevel, iconName, displayName, unit)
+        public SkillCriticalHitChance(int maxLevel, float bonusPerLevel, string iconName, string displayName, string unit = "", float baseBonus = 0f) : base(maxLevel, bonusPerLevel, iconName, displayName, unit, baseBonus)
         {
             skillType = SkillType.CriticalChance;
             Instance = this;
@@ -54,7 +54,7 @@ namespace Cozyheim.LevelingSystem
                             hit.m_damage.m_poison *= critDamageMultiplier;
                             hit.m_damage.m_spirit *= critDamageMultiplier;
 
-                            SkillManager.Instance.SpawnCriticalHitVFX(hit.m_point);
+                            SkillManager.Instance.SpawnCriticalHitVFX(hit.m_point, hit.GetTotalDamage());
                         }
                     }
                 }

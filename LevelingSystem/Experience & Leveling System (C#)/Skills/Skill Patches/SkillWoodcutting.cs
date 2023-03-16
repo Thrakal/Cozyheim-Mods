@@ -12,7 +12,7 @@ namespace Cozyheim.LevelingSystem
     {
         public static SkillWoodcutting Instance;
 
-        public SkillWoodcutting(int maxLevel, float bonusPerLevel, string iconName, string displayName, string unit = "") : base(maxLevel, bonusPerLevel, iconName, displayName, unit)
+        public SkillWoodcutting(int maxLevel, float bonusPerLevel, string iconName, string displayName, string unit = "", float baseBonus = 0f) : base(maxLevel, bonusPerLevel, iconName, displayName, unit, baseBonus)
         {
             skillType = SkillType.Woodcutting;
             Instance = this;

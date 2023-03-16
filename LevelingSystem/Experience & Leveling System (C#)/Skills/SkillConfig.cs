@@ -13,111 +13,127 @@ namespace Cozyheim.LevelingSystem
                 skillType = SkillType.HP,
                 enabled = true,
                 defaultMaxLevel = 20,
-                defaultBonusValue = 5f
-            },
-            new SkillSettings() {
-                skillType = SkillType.HPRegen,
-                enabled = true,
-                defaultMaxLevel = 20,
-                defaultBonusValue = 5f
+                defaultBonusValue = 5f,
+                category = SkillCategory.Core
             },
             new SkillSettings()
             {
                 skillType = SkillType.Stamina,
                 enabled = true,
                 defaultMaxLevel = 20,
-                defaultBonusValue = 5f
-            },
-            new SkillSettings()
-            {
-                skillType = SkillType.StaminaRegen,
-                enabled = true,
-                defaultMaxLevel = 20,
-                defaultBonusValue = 5f
+                defaultBonusValue = 5f,
+                category = SkillCategory.Core
             },
             new SkillSettings()
             {
                 skillType = SkillType.Eitr,
                 enabled = true,
                 defaultMaxLevel = 20,
-                defaultBonusValue = 5f
+                defaultBonusValue = 5f,
+                category = SkillCategory.Core
+            },
+            new SkillSettings() {
+                skillType = SkillType.HPRegen,
+                enabled = true,
+                defaultMaxLevel = 20,
+                defaultBonusValue = 5f,
+                category = SkillCategory.Core
+            },
+            new SkillSettings()
+            {
+                skillType = SkillType.StaminaRegen,
+                enabled = true,
+                defaultMaxLevel = 20,
+                defaultBonusValue = 5f,
+                category = SkillCategory.Core
             },
             new SkillSettings()
             {
                 skillType = SkillType.EitrRegen,
                 enabled = true,
                 defaultMaxLevel = 20,
-                defaultBonusValue = 5f
+                defaultBonusValue = 5f,
+                category = SkillCategory.Core
             },
             new SkillSettings()
             {
                 skillType = SkillType.CarryWeight,
                 enabled = true,
                 defaultMaxLevel = 20,
-                defaultBonusValue = 7.5f
+                defaultBonusValue = 7.5f,
+                category = SkillCategory.Utility
             },
             new SkillSettings()
             {
                 skillType = SkillType.Woodcutting,
                 enabled = true,
                 defaultMaxLevel = 20,
-                defaultBonusValue = 1.5f
+                defaultBonusValue = 1.5f,
+                category = SkillCategory.Utility
             },
             new SkillSettings()
             {
                 skillType = SkillType.Mining,
                 enabled = true,
                 defaultMaxLevel = 20,
-                defaultBonusValue = 1.5f
+                defaultBonusValue = 1.5f,
+                category = SkillCategory.Utility
             },
             new SkillSettings()
             {
                 skillType = SkillType.PhysicalDamage,
                 enabled = true,
                 defaultMaxLevel = 20,
-                defaultBonusValue = 1.5f
+                defaultBonusValue = 1.5f,
+                category = SkillCategory.Offensive
             },
             new SkillSettings()
             {
                 skillType = SkillType.ElementalDamage,
                 enabled = true,
                 defaultMaxLevel = 20,
-                defaultBonusValue = 1.5f
+                defaultBonusValue = 1.5f,
+                category = SkillCategory.Offensive
             },
             new SkillSettings()
             {
                 skillType = SkillType.PhysicalResistance,
                 enabled = true,
                 defaultMaxLevel = 20,
-                defaultBonusValue = 1.5f
+                defaultBonusValue = 1.5f,
+                category = SkillCategory.Defensive
             },
             new SkillSettings()
             {
                 skillType = SkillType.ElementalResistance,
                 enabled = true,
                 defaultMaxLevel = 20,
-                defaultBonusValue = 1.5f
+                defaultBonusValue = 1.5f,
+                category = SkillCategory.Defensive
             },
             new SkillSettings()
             {
                 skillType = SkillType.MovementSpeed,
                 enabled = true,
                 defaultMaxLevel = 20,
-                defaultBonusValue = 1f
+                defaultBonusValue = 1f,
+                category = SkillCategory.Utility
             },
             new SkillSettings()
             {
                 skillType = SkillType.CriticalChance,
                 enabled = true,
                 defaultMaxLevel = 20,
-                defaultBonusValue = 0.5f
+                defaultBonusValue = 0.5f,
+                category = SkillCategory.Offensive
             },
             new SkillSettings()
             {
                 skillType = SkillType.CriticalDamage,
                 enabled = true,
                 defaultMaxLevel = 20,
-                defaultBonusValue = 5f
+                defaultBonusValue = 5f,
+                category = SkillCategory.Offensive
             }
         };
     
@@ -150,6 +166,7 @@ namespace Cozyheim.LevelingSystem
         public bool enabled;
         public int defaultMaxLevel;
         public float defaultBonusValue;
+        public SkillCategory category;
 
         private ConfigEntry<string> configSettings;
 
@@ -228,4 +245,12 @@ namespace Cozyheim.LevelingSystem
             return lowestValue;
         }
     }
+}
+
+public enum SkillCategory
+{
+    Offensive,
+    Defensive,
+    Core,
+    Utility
 }
