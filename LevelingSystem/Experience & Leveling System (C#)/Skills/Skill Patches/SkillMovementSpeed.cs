@@ -22,8 +22,8 @@ namespace Cozyheim.LevelingSystem
         private class PatchClass
         {
             [HarmonyPostfix]
-            [HarmonyPatch(typeof(Player), "UpdateMovementModifier")]
-            static void Player_UpdateMovementModifier_Postfix(Player __instance, ref float ___m_equipmentMovementModifier)
+            [HarmonyPatch(typeof(Player), "GetJogSpeedFactor")]
+            static void Player_GetJogSpeedFactor_Postfix(Player __instance, ref float __result)
             {
                 if (Instance == null)
                 {
@@ -32,9 +32,32 @@ namespace Cozyheim.LevelingSystem
 
                 if (__instance == Player.m_localPlayer)
                 {
-                    ___m_equipmentMovementModifier += (Instance.level * Instance.bonusPerLevel) / 100f;
+                    float bonusValue = (Instance.level * Instance.bonusPerLevel) / 100f;
+                    __result += bonusValue;
                 }
             }
+
+            [HarmonyPostfix]
+            [HarmonyPatch(typeof(Player), "GetRunSpeedFactor")]
+            static void Player_GetRunSpeedFactor_Postfix(Player __instance, ref float __result, float ___m_equipmentMovementModifier)
+            {
+                if (Instance == null)
+                {
+                    return;
+                }
+
+                if (__instance == Player.m_localPlayer)
+                {
+                    float bonusValue = (Instance.level * Instance.bonusPerLevel) / 100f;
+                    float threshold = bonusValue * 0.25f;
+
+                    float runValue = __result + (bonusValue * 0.25f);
+                    float jogValue = 1f + ___m_equipmentMovementModifier + bonusValue;
+
+                    __result = runValue > jogValue + threshold ? runValue : runValue + threshold;
+                }
+            }
+
         }
     }
 }
