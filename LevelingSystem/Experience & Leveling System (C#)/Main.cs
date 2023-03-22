@@ -59,6 +59,9 @@ namespace Cozyheim.LevelingSystem
         internal static ConfigEntry<Vector2> xpBarPosition;
         internal static ConfigEntry<Position> xpBarLevelTextPosition;
 
+        // Levels
+        internal static ConfigEntry<int> pointsPerLevel;
+
         // Skills Menu
         internal static ConfigEntry<bool> showScrollbar;
 
@@ -116,6 +119,9 @@ namespace Cozyheim.LevelingSystem
             xpBarPosition = CreateConfigEntry("XP Bar", "xpBarPosition", new Vector2(0f,0f), "The offset position in (x,y) coordinates, from its default position. (x: 0.0 = center of screen, y: 0.0 = bottom of screen, y: 950.0 = top of screen)", false);
             xpBarLevelTextPosition = CreateConfigEntry("XP Bar", "xpBarLevelTextPosition", Position.Above, "The position of the level text, relative to the xp bar.", false);
 
+            // Levels
+            pointsPerLevel = CreateConfigEntry("Levels", "pointsPerLevel", 1, "The amount of skill points gained per level", true);
+
             // Skills Menu
             showScrollbar = CreateConfigEntry("Skills Menu", "showScrollbar", true, "Display the scroll bar. (Setting to false only disables the graphics, you can still keep scrolling)", false);
 
@@ -123,7 +129,7 @@ namespace Cozyheim.LevelingSystem
             levelUpVFX = CreateConfigEntry("VFX", "levelUpVFX", true, "Display visual effects when leveling up", false);
             criticalHitVFX = CreateConfigEntry("VFX", "criticalHitVFX", true, "Display visual effects when dealing a critical hit", false);
             criticalHitShake = CreateConfigEntry("VFX", "criticalHitShake", true, "Shake the camera when dealing a critical hit", false);
-            criticalHitShakeIntensity = CreateConfigEntry("VFX", "criticalHitShakeIntensity", 3f, "Intensity of the camera shake", false);
+            criticalHitShakeIntensity = CreateConfigEntry("VFX", "criticalHitShakeIntensity", 2f, "Intensity of the camera shake", false);
 
             // XP Text
             displayXPInCorner = CreateConfigEntry("XP Text", "displayXPInCorner", true, "Display XP gained in top left corner", false);
@@ -180,6 +186,7 @@ namespace Cozyheim.LevelingSystem
             CommandManager.Instance.AddConsoleCommand(new ConsoleLog());
             ConsoleLog.Init();
 
+            NetworkHandler.Init();
             UIManager.Init();
             XPManager.Init();
         }

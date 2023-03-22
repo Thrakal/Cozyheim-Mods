@@ -36,6 +36,8 @@
   <ItemGroup>
     <Compile Include="Custom Effect Scripts\CritTextAnim.cs" />
     <Compile Include="LevelingDummy_Patch.cs" />
+    <Compile Include="Networking\RPC_LevelUpVFX.cs" />
+    <Compile Include="Networking\NetworkHandler.cs" />
     <Compile Include="Resources\ConfigSync.cs" />
     <Compile Include="Skills\Skill Patches\SkillCriticalHitDamage.cs" />
     <Compile Include="Skills\SkillConfig.cs" />

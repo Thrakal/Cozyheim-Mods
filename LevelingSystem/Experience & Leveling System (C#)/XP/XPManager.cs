@@ -22,7 +22,6 @@ namespace Cozyheim.LevelingSystem
         public static CustomRPC rpc_AddMonsterDamage = null;
         public static CustomRPC rpc_RewardXPMonster = null;
         public static CustomRPC rpc_RewardXP = null;
-        public static CustomRPC rpc_PlayerLevelUp = null;
 
         private static XPManager _instance;
         public static XPManager Instance {
@@ -41,31 +40,6 @@ namespace Cozyheim.LevelingSystem
             rpc_AddMonsterDamage = NetworkManager.Instance.AddRPC("AddMonsterDamage", RPC_AddMonsterDamage, RPC_AddMonsterDamage);
             rpc_RewardXPMonster = NetworkManager.Instance.AddRPC("RewardXPMonster", RPC_RewardXPMonsters, RPC_RewardXPMonsters);
             rpc_RewardXP = NetworkManager.Instance.AddRPC("RewardXP", RPC_RewardXP, RPC_RewardXP);
-            rpc_PlayerLevelUp = NetworkManager.Instance.AddRPC("LevelUp", RPC_LevelUp, RPC_LevelUp);
-        }
-
-        public void PlayerLevelUp(long playerID)
-        {
-            ZPackage package = new ZPackage();
-            package.Write(Player.m_localPlayer.GetPlayerID());
-            rpc_PlayerLevelUp.SendPackage(ZRoutedRpc.Everybody, package);
-        }
-
-        private static IEnumerator RPC_LevelUp(long sender, ZPackage package)
-        {
-            if (!ZNet.instance.IsServer())
-            {
-                yield break;
-            }
-
-            long playerID = package.ReadLong();
-            Player player = Player.GetPlayer(playerID);
-            ConsoleLog.Print("Player with ID " + playerID.ToString() + " (" + player.GetPlayerName() + ") leveled up!");
-
-            ZPackage newPackage = new ZPackage();
-            newPackage.Write(playerID);
-
-            UIManager.rpc_LevelUpEffect.SendPackage(ZRoutedRpc.Everybody, newPackage);
         }
 
         private static IEnumerator RPC_AddMonsterDamage(long sender, ZPackage package)

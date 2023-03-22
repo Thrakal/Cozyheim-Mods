@@ -42,15 +42,15 @@ namespace Cozyheim.LevelingSystem
             if (rpc_ReloadConfigClient == null) {
                 rpc_ReloadConfigClient = NetworkManager.Instance.AddRPC("ReloadConfigClient", RPC_ReloadConfigClient, RPC_ReloadConfigClient);
             }
-            if (rpc_SetLevel == null)
-            {
+            if (rpc_SetLevel == null) {
                 rpc_SetLevel = NetworkManager.Instance.AddRPC("SetLevel", RPC_SetLevel, RPC_SetLevel);
             }
         }
 
         public static void LevelUp()
         {
-            UIManager.Instance.LevelUpVFX();
+            ConsoleLog.Print("Console LevelUp Command");
+            NetworkHandler.LevelUpVFX();
         }
 
         public static void ReloadConfig()

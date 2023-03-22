@@ -7,3 +7,7 @@ D:\Cozyheim Mods\Cozyheim-Repository\LevelingSystem\Experience & Leveling System
 D:\Cozyheim Mods\Cozyheim-Repository\LevelingSystem\Experience & Leveling System (C#)\obj\Debug\LevelingSystem.csproj.CoreCompileInputs.cache
 D:\Cozyheim Mods\Cozyheim-Repository\LevelingSystem\Experience & Leveling System (C#)\obj\Debug\Cozyheim_LevelingSystem.dll
 D:\Cozyheim Mods\Cozyheim-Repository\_Builds\Cozyheim_LevelingSystem.dll
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\_Builds\Cozyheim_LevelingSystem.dll
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\LevelingSystem\Experience & Leveling System (C#)\obj\Debug\LevelingSystem.csproj.AssemblyReference.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\LevelingSystem\Experience & Leveling System (C#)\obj\Debug\LevelingSystem.csproj.CoreCompileInputs.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\LevelingSystem\Experience & Leveling System (C#)\obj\Debug\Cozyheim_LevelingSystem.dll
