@@ -20,7 +20,7 @@ namespace Cozyheim.NPCVendors
     internal class Main : BaseUnityPlugin
     {
         // Mod information
-        internal const string modName = "AddingNPCs";
+        internal const string modName = "NPCVendors";
         internal const string version = "0.0.1";
         internal const string GUID = "dk.thrakal." + modName;
 
@@ -36,7 +36,7 @@ namespace Cozyheim.NPCVendors
         void Awake()
         {
             harmony.PatchAll();
-            configFile = new ConfigFile(BepInEx.Paths.ConfigPath + "/Cozyheim/" + modName + "_Config.cfg", true);
+            configFile = new ConfigFile(Config.ConfigFilePath, true);
             configFile.SaveOnConfigSet = true;
 
             // Assigning config entries

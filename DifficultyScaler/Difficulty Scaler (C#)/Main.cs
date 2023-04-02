@@ -40,17 +40,17 @@ namespace Cozyheim.DifficultyScaler
         void Awake()
         {
             harmony.PatchAll();
-            configFile = new ConfigFile(BepInEx.Paths.ConfigPath + "/Cozyheim/" + modName + "_Config.cfg", true);
+            configFile = new ConfigFile(Config.ConfigFilePath, true);
             configFile.SaveOnConfigSet = true;
 
             // Assigning config entries
             modEnabled = CreateConfigEntry("00_General", "ModEnabled", true, "Enable this mod", false);
-            debugEnabled = CreateConfigEntry("00_General", "DebugEnabled", true, "Display debug messages in the console", true);
+            debugEnabled = CreateConfigEntry("00_General", "DebugEnabled", false, "Display debug messages in the console", true);
 
             overallHealthMultipler = CreateConfigEntry("01_Monsters", "overallHealthMultipler", 1f, "Increases the base health of all monsters in the game. (1 = No change, 1.5 = 50% more health). This stack with the individual monster modifiers.", true);
             overallDamageMultipler = CreateConfigEntry("01_Monsters", "overallDamageMultipler", 1f, "Increases the base damage of all monsters in the game. (1 = No change, 1.5 = 50% more damage). This stack with the individual monster modifiers.", true);
-            monsterHealthModifier = CreateConfigEntry("01_Monsters", "monsterBaseHealthModifier", "Skeleton:60,Greyling:25", "Set the base health (60 = 60 base health) of individual monsters. Format must follow: Monstername:Health (example: Skeleton:60,Greyling:25)", true);
-            monsterDamageModifier = CreateConfigEntry("01_Monsters", "monsterDamageModifier", "Skeleton:110,Greyling:120", "Set a damage multiplier (110 = +10% increased damage) of individual monsters. Format must follow: Monstername:Damage (example: Skeleton:110,Greyling:120)", true);
+            monsterHealthModifier = CreateConfigEntry("01_Monsters", "monsterBaseHealthModifier", "", "Set the base health (60 = 60 base health) of individual monsters. Format must follow: Monstername:Health (example: Skeleton:60,Greyling:25)", true);
+            monsterDamageModifier = CreateConfigEntry("01_Monsters", "monsterDamageModifier", "", "Set a damage multiplier (110 = +10% increased damage) of individual monsters. Format must follow: Monstername:Damage (example: Skeleton:110,Greyling:120)", true);
 
             CommandManager.Instance.AddConsoleCommand(new ConsoleLog());
 

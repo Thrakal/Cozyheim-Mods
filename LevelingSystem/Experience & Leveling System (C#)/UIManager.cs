@@ -249,12 +249,6 @@ namespace Cozyheim.LevelingSystem
             }
         }
 
-        public void ReloadSkillsUI()
-        {
-            CreateSkillUI();
-            UpdateUIInformation();
-        }
-
         void CreateSkillUI()
         {
             skillsScrollRect.verticalScrollbar = Main.showScrollbar.Value ? skillsScrollbar : null;
