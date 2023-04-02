@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGInventory", "RPGInventor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpgradeUnlimited", "UpgradeUnlimited\UpgradeUnlimited.csproj", "{9E410FC0-1E45-4E35-ACBA-BD3A43421E13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LessSmoke", "LessSmoke\LessSmoke.csproj", "{6E5413ED-4680-4095-982E-42CDAD642304}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{9E410FC0-1E45-4E35-ACBA-BD3A43421E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E410FC0-1E45-4E35-ACBA-BD3A43421E13}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{9E410FC0-1E45-4E35-ACBA-BD3A43421E13}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{6E5413ED-4680-4095-982E-42CDAD642304}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E5413ED-4680-4095-982E-42CDAD642304}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E5413ED-4680-4095-982E-42CDAD642304}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E5413ED-4680-4095-982E-42CDAD642304}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
