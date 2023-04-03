@@ -1,8 +1,6 @@
 ﻿using BepInEx.Configuration;
-using CozyheimTweaks.Resources;
 using HarmonyLib;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace CozyheimTweaks
@@ -41,11 +39,6 @@ namespace CozyheimTweaks
             {
                 if (enable.Value && !recipesDisabled)
                 {
-                    if(disabledVanillaRecipes == null)
-                    {
-                        disabledVanillaRecipes = AddRemoveItemsRecipesConfig.removedRecipes;
-                    }
-
                     int disableCount = 0;
                     List<Recipe> allRecipes = ObjectDB.instance.m_recipes;
 
@@ -73,11 +66,6 @@ namespace CozyheimTweaks
             {
                 if (enable.Value && !pieceTablesDisabled.Contains(__instance))
                 {
-                    if (disabledVanillaPieces == null)
-                    {
-                        disabledVanillaPieces = AddRemoveItemsRecipesConfig.removedItems;
-                    }
-
                     int disableCount = 0;
 
                     ToppLog.Print("Updating " + __instance.name + " (" + ___m_pieces.Count + " checked):", LogType.Message, debugMode.Value);

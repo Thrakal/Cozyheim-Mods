@@ -6,9 +6,7 @@ using Jotunn.Utils;
 using ServerSync;
 using System.Reflection;
 using System.Linq;
-using System.Collections.Generic;
 using UnityEngine;
-using CozyheimTweaks.Scripts;
 
 // To-Do List
 // - Claim bed only 1 within range of another bed
@@ -124,12 +122,8 @@ namespace CozyheimTweaks
 //            BoneReorder.ApplyOnEquipmentChanged();
 
             // Init all patches
-            CustomItems.Init();
-            SmokeFix.Init();
             RemoveVanillaItems.Init();
-            BuildMore.Init();
             OnlyOneBed.Init();
-            WardProtection.Instance.Init();
 
             CommandManager.Instance.AddConsoleCommand(new ToppLog());
         }
@@ -167,73 +161,5 @@ namespace CozyheimTweaks
 
         internal static ConfigEntry<T> CreateConfigEntry<T>(string group, string name, T value, string description, ConfigFile file) => CreateConfigEntry(group, name, value, description, true, file);
         #endregion
-    }
-
-    internal class PrefabItem
-    {
-        public string prefabName;
-        public string ingameName;
-        public Category category;
-        public Piece piece;
-        public List<ICustomUnityScript> components;
-
-        public PrefabItem(string prefabName, string ingameName, Category category, List<ICustomUnityScript> components = null)
-        {
-            this.prefabName = prefabName;
-            this.ingameName = ingameName;
-            this.category = category;
-            if(components == null)
-            {
-                this.components = new List<ICustomUnityScript>();
-            } else
-            {
-                this.components = components;
-            }            
-        }
-    }
-
-    internal class RecipeItem
-    {
-        public string recipeName;
-        public string globalKeyToUnlock;
-        public Recipe recipe;
-
-        public RecipeItem(string recipeName, BossToUnlock bossToUnlock)
-        {
-            string[] globalBossKeys = new string[]
-            {
-                "",
-                "defeated_eikthyr",
-                "defeated_gdking",
-                "defeated_bonemass",
-                "defeated_dragon",
-                "defeated_goblinking",
-                "defeated_queen"
-            };
-
-            this.recipeName = recipeName;
-            globalKeyToUnlock = globalBossKeys[(int) bossToUnlock];
-        }
-    }
-
-    public enum BossToUnlock
-    {
-        None = 0,
-        Eikthyr = 1,
-        Elder = 2,
-        Bonemass = 3,
-        Moder = 4,
-        Yagluth = 5,
-        Queen = 6
-    }
-
-    internal enum Category
-    {
-        Crafting = 0,
-        Building = 1,
-        Hoe = 2,
-        Recipe = 3,
-        None = 4,
-        NPC = 5
     }
 }

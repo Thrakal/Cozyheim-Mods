@@ -83,7 +83,7 @@ namespace Cozyheim.LessSmoke
 
         internal static void Print(object printMsg, LogType type = LogType.Info, bool debugMode = true)
         {
-            if (Main.debugEnabled.Value && debugMode)
+            if (ConfigSettings.debugEnabled.Value && debugMode)
             {
                 string textToPrint = printMsg.ToString();
                 switch (type)

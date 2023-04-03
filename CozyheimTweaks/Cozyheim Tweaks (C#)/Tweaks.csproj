@@ -104,22 +104,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuildMore.cs" />
-    <Compile Include="Resources\AddRemoveItemsRecipesConfig.cs" />
     <Compile Include="Resources\ConfigSync.cs" />
     <Compile Include="Useful scripts\SimpleJSON.cs" />
-    <Compile Include="Useful scripts\ICustomUnityScript.cs" />
-    <Compile Include="WardProtection\WardConsole.cs" />
-    <Compile Include="WardProtection\WardPlayerData.cs" />
-    <Compile Include="WardProtection\WardProtect.cs" />
     <Compile Include="OnlyOneBed.cs" />
-    <Compile Include="WardProtection\WardProtection.cs" />
     <Compile Include="RemoveVanillaItems.cs" />
-    <Compile Include="SmokeFix.cs" />
     <Compile Include="Useful scripts\ToppLog.cs" />
     <Compile Include="RemoveMistlandMist.cs" />
     <Compile Include="SleepBetter.cs" />
-    <Compile Include="CustomItems.cs" />
     <Compile Include="PlayerGamePatches.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

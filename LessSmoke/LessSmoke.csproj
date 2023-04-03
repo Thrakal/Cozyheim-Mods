@@ -96,6 +96,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigSettings.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="SmokeFix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
