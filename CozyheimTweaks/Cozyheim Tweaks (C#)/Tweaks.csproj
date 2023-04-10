@@ -104,10 +104,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Player_NoFoodLossOnDeath_Patch.cs" />
+    <Compile Include="CrossbowReloadSpeed_Patch.cs" />
+    <Compile Include="BowDrawSpeed_Patch.cs" />
     <Compile Include="Resources\ConfigSync.cs" />
     <Compile Include="Useful scripts\SimpleJSON.cs" />
     <Compile Include="OnlyOneBed.cs" />
-    <Compile Include="RemoveVanillaItems.cs" />
     <Compile Include="Useful scripts\ToppLog.cs" />
     <Compile Include="RemoveMistlandMist.cs" />
     <Compile Include="SleepBetter.cs" />

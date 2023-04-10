@@ -94,6 +94,10 @@
       <HintPath>..\..\_Reference DLLs\assembly_valheim.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Auga">
+      <HintPath>..\..\_Reference DLLs\Auga.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="BepInEx">
       <HintPath>..\..\_Reference DLLs\BepInEx.dll</HintPath>
       <Private>False</Private>

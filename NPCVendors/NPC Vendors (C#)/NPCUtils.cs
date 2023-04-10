@@ -93,7 +93,7 @@ namespace Cozyheim.NPCVendors
     internal enum NPCType
     {
         Vendor,
-        Blacksmith,
+        Smith,
         Farmer,
         Mason,
         Forester,

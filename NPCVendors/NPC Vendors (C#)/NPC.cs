@@ -93,7 +93,7 @@ namespace Cozyheim.NPCVendors
             Destroy(npcTemplate.GetComponentInChildren<CharacterAnimEvent>());
 
             // Load assets from AssetBundle
-            Sprite icon = Main.GetSpriteFromResources(iconName);
+            Sprite icon = Main.CreateSpriteFromFile(iconName);
 
             ZNetView zNetView = npcTemplate.GetComponent<ZNetView>();
             zNetView.m_persistent = true;

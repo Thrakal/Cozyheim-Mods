@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Linq;
 using UnityEngine;
 using System.IO;
-using System.Drawing;
 using System.Collections.Generic;
 using Jotunn;
 
@@ -51,6 +50,30 @@ namespace Cozyheim.NPCVendors
         void OnDestroy()
         {
             harmony.UnpatchSelf();
+        }
+
+        public static Sprite CreateSpriteFromFile(string filename) {
+            string path = BepInEx.Paths.ConfigPath + "/NPCVendors/Icons/" + filename;
+
+            if (!File.Exists(path)) {
+                ConsoleLog.Print("Icon not found: " + path + " (returns to default icon)", LogType.Error);
+                Texture2D emptySprite = new Texture2D(64, 64);
+                return Sprite.Create(emptySprite, new Rect(0, 0, emptySprite.width, emptySprite.height), new Vector2(0, 0), 100);
+            }
+
+            byte[] fileData = File.ReadAllBytes(path);
+            Texture2D texture = new Texture2D(2, 2);
+            texture.LoadImage(fileData);
+
+            RenderTexture rt = new RenderTexture(64, 64, 24);
+            RenderTexture.active = rt;
+            Graphics.Blit(texture, rt);
+
+            Texture2D resizedTexture = new Texture2D(64, 64);
+            resizedTexture.ReadPixels(new Rect(0, 0, 64, 64), 0, 0);
+            resizedTexture.Apply();
+
+            return Sprite.Create(resizedTexture, new Rect(0, 0, resizedTexture.width, resizedTexture.height), new Vector2(0, 0), 100);
         }
 
         public static Sprite GetSpriteFromResources(string fileName)

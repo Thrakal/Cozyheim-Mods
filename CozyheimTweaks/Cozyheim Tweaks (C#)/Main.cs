@@ -20,7 +20,7 @@ namespace CozyheimTweaks
     {
         // Mod information
         internal const string modName = "CozyheimTweaks";
-        internal const string version = "0.0.5";
+        internal const string version = "0.1.0";
         internal const string GUID = "dk.thrakal." + modName;
 
         // Core objects that is required to patch and configure the mod
@@ -30,10 +30,8 @@ namespace CozyheimTweaks
         // Config files
         internal static ConfigFile mainConfig;
         internal static ConfigFile playerTweaksConfig;
-        internal static ConfigFile customItemsConfig;
         internal static ConfigFile sleepBetterConfig;
         internal static ConfigFile mistlandsConfig;
-        internal static ConfigFile buildMoreConfig;
         internal static ConfigFile honeyConfig;
 
         // Config entries
@@ -71,17 +69,11 @@ namespace CozyheimTweaks
             playerTweaksConfig = new ConfigFile(BepInEx.Paths.ConfigPath + "/Cozyheim/playerTweaksConfig.cfg", true);
             playerTweaksConfig.SaveOnConfigSet = true;
 
-            customItemsConfig = new ConfigFile(BepInEx.Paths.ConfigPath + "/Cozyheim/customItemsConfig.cfg", true);
-            customItemsConfig.SaveOnConfigSet = true;
-
             sleepBetterConfig = new ConfigFile(BepInEx.Paths.ConfigPath + "/Cozyheim/sleepBetterConfig.cfg", true);
             sleepBetterConfig.SaveOnConfigSet = true;
 
             mistlandsConfig = new ConfigFile(BepInEx.Paths.ConfigPath + "/Cozyheim/mistlandsConfig.cfg", true);
             mistlandsConfig.SaveOnConfigSet = true;
-
-            buildMoreConfig = new ConfigFile(BepInEx.Paths.ConfigPath + "/Cozyheim/buildMoreConfig.cfg", true);
-            buildMoreConfig.SaveOnConfigSet = true;
 
             honeyConfig = new ConfigFile(BepInEx.Paths.ConfigPath + "/Cozyheim/honeyConfig.cfg", true);
             honeyConfig.SaveOnConfigSet = true;
@@ -94,10 +86,6 @@ namespace CozyheimTweaks
             pickupRadius = CreateConfigEntry("Player Tweaks", "pickupRadius", 3f, "Default for vanilla valheim is '2'", playerTweaksConfig);
             useDistance = CreateConfigEntry("Player Tweaks", "craftingStationInteractRadius", 4f, "Default for vanilla valheim is '2'", playerTweaksConfig);
             enableFastTelport = CreateConfigEntry("Player Tweaks", "fastTeleport", true, "Remove the teleport animation and makes it instant", playerTweaksConfig);
-            
-            // 02: Custom Items config
-            enableCraftingItems = CreateConfigEntry("Custom Items", "enableCustomCrafingItems", true, "Adds custom crafting items", customItemsConfig);
-            enableRecipes = CreateConfigEntry("Custom Items", "enableCustomRecipes", true, "Adds custom recipes", customItemsConfig);
             
             // 03: Sleep Better config
             useCustomSleepMessages = CreateConfigEntry("Sleep Better", "enableCustomSleepMessages", true, "Use custom sleep messages", sleepBetterConfig);
@@ -112,17 +100,12 @@ namespace CozyheimTweaks
             misterRadius = CreateConfigEntry("Mistlands Settings", "misterRadius", 50f, "Default for vanilla valheim is '35'", mistlandsConfig);
             enableLocalMist = CreateConfigEntry("Mistlands Settings", "enableLocalMist", false, "Default for vanilla valheim is 'true'. Enable locally generated mist when in Mistlands", mistlandsConfig);
 
-            // 05: Build/Material Settings (config found in BuildMore.cs)
-
             // 06: Honey/beehive config
             maxHoney = CreateConfigEntry("Honey/Beehive Settings", "maxHoney", 8f, "Default for vanilla valheim is '4'", honeyConfig);
             honeyGenerateTime = CreateConfigEntry("Honey/Beehive Settings", "honeyGenerateTime", 900f, "Default for vanilla valheim is '1200'", honeyConfig);
             resizeBeehive = CreateConfigEntry("Honey/Beehive Settings", "resizeBeehive", 0.6f, "Default for vanilla valheim is '1'", honeyConfig);
 
-//            BoneReorder.ApplyOnEquipmentChanged();
-
             // Init all patches
-            RemoveVanillaItems.Init();
             OnlyOneBed.Init();
 
             CommandManager.Instance.AddConsoleCommand(new ToppLog());

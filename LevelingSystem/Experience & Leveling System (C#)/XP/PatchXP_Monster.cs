@@ -126,12 +126,10 @@ namespace Cozyheim.LevelingSystem
 
             [HarmonyPrefix]
             [HarmonyPatch(typeof(Hud), "SetupPieceInfo")]
-            private static void Hud_SetupPieceInfo_Prefix(ref RectTransform ___m_staminaBar2Root, ref GameObject ___m_buildHud, ref Text ___m_buildSelection, ref Text ___m_pieceDescription, ref GameObject[] ___m_requirementItems)
-            {
+            static void Hud_SetupPieceInfo_Prefix(ref Text ___m_buildSelection, ref Text ___m_pieceDescription, ref GameObject[] ___m_requirementItems) {
                 Vector2 hudOffset = new Vector2(0f, 50f);
 
-                if(Main.modAugaLoaded)
-                {
+                if(Main.modAugaLoaded && Main.useAugaBuildMenuUI.Value) {
                     RectTransform buildSelection = ___m_buildSelection.GetComponent<RectTransform>();
                     buildSelection.anchoredPosition = new Vector2(214f, -23f) + hudOffset;
 
@@ -141,26 +139,19 @@ namespace Cozyheim.LevelingSystem
                     RectTransform background = buildSelection.parent.Find("Darken").GetComponent<RectTransform>();
                     background.anchoredPosition = new Vector2(0f, -10f) + hudOffset;
 
-                    for (int i = 0; i < ___m_requirementItems.Length; i++)
-                    {
-                        if (___m_requirementItems[i].activeSelf)
-                        {
+                    for(int i = 0; i < ___m_requirementItems.Length; i++) {
+                        if(___m_requirementItems[i].activeSelf) {
                             RectTransform rect = ___m_requirementItems[i].GetComponent<RectTransform>();
                             rect.anchoredPosition = new Vector2(32f + 70f * i, -32f) + hudOffset;
                         }
                     }
-                } else {
-                    RectTransform buildHUD = ___m_buildHud.GetComponent<RectTransform>();
-                    buildHUD.anchoredPosition = hudOffset;
-
-                    ___m_staminaBar2Root.anchorMin = new Vector2(0.5f, 0.05f);
-                    ___m_staminaBar2Root.anchorMax = new Vector2(0.5f, 0.05f);
                 }
             }
 
+
             private static bool CanTargetAwardXP(Character target)
             {
-                if(target.IsMonsterFaction() || target.IsBoss() || target.GetFaction() == Character.Faction.AnimalsVeg || target.GetFaction() == Character.Faction.Dverger)
+                if(target.IsMonsterFaction() || target.IsBoss() || target.GetFaction() == Character.Faction.AnimalsVeg || target.GetFaction() == Character.Faction.Dverger || target.GetFaction() == Character.Faction.Boss)
                 {
                     return true;
                 } else

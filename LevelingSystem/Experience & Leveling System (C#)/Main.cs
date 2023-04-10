@@ -28,7 +28,7 @@ namespace Cozyheim.LevelingSystem
 
         // Mod information
         internal const string modName = "LevelingSystem";
-        internal const string version = "0.3.1";
+        internal const string version = "0.3.2";
         internal const string GUID = "dk.thrakal." + modName;
 
         // Core objects that is required to patch and configure the mod
@@ -94,6 +94,9 @@ namespace Cozyheim.LevelingSystem
         internal static ConfigEntry<float> baseXpSpreadMin;
         internal static ConfigEntry<float> baseXpSpreadMax;
 
+        // Auga integration
+        internal static ConfigEntry<bool> useAugaBuildMenuUI;
+
         void Awake()
         {
             modAugaLoaded = CheckIfModIsLoaded("randyknapp.mods.auga");
@@ -143,11 +146,15 @@ namespace Cozyheim.LevelingSystem
             baseXpSpreadMin = CreateConfigEntry("XP Multipliers", "baseXpSpreadMin", 5f, "Base XP spread, Minimum. (0 = Same as XP table, 5 = -5% from XP table) Used to ensure that the same monster don't reward the exact same amount of XP every time.", true);
             baseXpSpreadMax = CreateConfigEntry("XP Multipliers", "baseXpSpreadMax", 5f, "Base XP spread, Maximum. (0 = Same as XP table, 5 = +5% from XP table) Used to ensure that the same monster don't reqard the exact same amount of XP every time.", true);
 
+            // Auga integration
+            useAugaBuildMenuUI = CreateConfigEntry("Auga Compatibility", "useAugaBuildMenuUI", true, "Using the Auga build menu HUD. Fixes compatibility issues. MUST be the same value as inthe Auga config. (Only required if you have Auga installed)", false);
+
+            
             SkillConfig.Init();
 
 
 
-            // Generate config entires for XP Tables
+            // Generate config entries for XP Tables
 
             // Player
             XPTable.GenerateDefaultPlayerXPTable();
