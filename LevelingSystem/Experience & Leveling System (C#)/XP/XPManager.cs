@@ -122,11 +122,12 @@ namespace Cozyheim.LevelingSystem
                 yield break;
             }
 
-            ConsoleLog.Print("Monster died (Server)");
 
             uint monsterID = package.ReadUInt();
             uint monsterLevel = package.ReadUInt();
             string monsterName = package.ReadString();
+
+            ConsoleLog.Print("Monster died (Server) - " + monsterName);
 
             MonsterXP obj = Instance.GetMonsterXP(monsterID);
             if (obj != null)
@@ -158,6 +159,7 @@ namespace Cozyheim.LevelingSystem
                     newPackage.Write((int)monsterLevelBonusXp);
                     newPackage.Write((int)restedBonusXp);
                     newPackage.Write(damage.playerID);
+                    newPackage.Write(monsterName);
 
 
                     ConsoleLog.Print("Sending " + (xpPercentage * 100f).ToString("N1") + "% xp to " + damage.playerName + ". (Awarded: " + (int)awardedXP + ", Level bonus: " + (int)monsterLevelBonusXp + ", Rested bonus: " + (int)restedBonusXp + ")");

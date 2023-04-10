@@ -451,17 +451,18 @@ namespace Cozyheim.LevelingSystem
 
         private static IEnumerator RPC_AddExperienceMonster(long sender, ZPackage package)
         {
-            ConsoleLog.Print("Received Expereience Monster");
-
             int awardedXP = package.ReadInt();
             int monsterLevelBonusXp = package.ReadInt();
             int restedBonusXp = package.ReadInt();
             long playerID = package.ReadLong();
- 
+            string monsterName = package.ReadString();
+
             if(Player.m_localPlayer != null)
             {
                 if(playerID == Player.m_localPlayer.GetPlayerID())
                 {
+                    ConsoleLog.Print("Received Expereience from " + monsterName);
+
                     int totalXpGained = 0;
 
                     StatusEffect SERested = Player.m_localPlayer.GetSEMan().GetStatusEffect("Rested");

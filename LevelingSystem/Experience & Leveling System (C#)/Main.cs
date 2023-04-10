@@ -49,6 +49,7 @@ namespace Cozyheim.LevelingSystem
         // General
         internal static ConfigEntry<bool> modEnabled;
         internal static ConfigEntry<bool> debugEnabled;
+        internal static ConfigEntry<bool> debugMonsterInternalName;
 
         // XP Bar
         internal static ConfigEntry<bool> showLevel;
@@ -112,6 +113,7 @@ namespace Cozyheim.LevelingSystem
             // Assigning config entries
             modEnabled = CreateConfigEntry("General", "modEnabled", true, "Enable this mod", true);
             debugEnabled = CreateConfigEntry("General", "debugEnabled", false, "Display debug messages in the console", false);
+            debugMonsterInternalName = CreateConfigEntry("General", "debugMonsterInternalName", false, "Display the internal ID (prefab name) of monsters in the console, when you hit them", false);
 
             // XP Bar
             showLevel = CreateConfigEntry("XP Bar", "showLevel", true, "Display Level text", false);

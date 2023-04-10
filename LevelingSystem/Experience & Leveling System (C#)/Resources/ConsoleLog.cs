@@ -246,6 +246,18 @@ namespace Cozyheim.LevelingSystem
             }
         }
         internal static void Print(object printMsg, bool debugMode) => Print(printMsg, LogType.Info, debugMode);
+
+        internal static void PrintOverrideDebugMode(object printMsg, LogType type = LogType.Info) {
+            string textToPrint = "[Time: " + Time.time.ToString("N0") + "] " + printMsg.ToString();
+            switch(type) {
+                case LogType.Info: Log.LogInfo(textToPrint); break;
+                case LogType.Message: Log.LogMessage(textToPrint); break;
+                case LogType.Warning: Log.LogWarning(textToPrint); break;
+                case LogType.Error: Log.LogError(textToPrint); break;
+                case LogType.Fatal: Log.LogFatal(textToPrint); break;
+                default: Log.LogInfo(textToPrint); break;
+            }
+        }
         #endregion
     }
 

@@ -486,6 +486,7 @@ namespace Cozyheim.LevelingSystem
         public static int GetMonsterXP(string name)
         {
             name = name.Replace("(Clone)", "");
+            ConsoleLog.Print("Monster XP Table -> Looking for " + name + " -> Found: " + monsterXPTable.ContainsKey(name));
             return monsterXPTable.ContainsKey(name) ? monsterXPTable[name] : 0;
         }
 

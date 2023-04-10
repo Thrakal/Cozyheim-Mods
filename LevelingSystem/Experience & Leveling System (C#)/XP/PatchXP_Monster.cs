@@ -79,6 +79,11 @@ namespace Cozyheim.LevelingSystem
                     return;
                 }
 
+                if(Main.debugMonsterInternalName.Value) {
+                    string monsterPrefabName = target.name.Replace("(Clone)", "");
+                    ConsoleLog.PrintOverrideDebugMode("Monster Internal ID: " + monsterPrefabName);
+                }
+
                 ConsoleLog.Print("Damage: Success! (Target = " + target.name + ", Attacker = " + player.GetPlayerName() + ", Damage: " + totalDamage.ToString("N1") + ")", LogType.Message);
                 XPManager.Instance.AddMonsterDamage(target, attacker, totalDamage);
             }
