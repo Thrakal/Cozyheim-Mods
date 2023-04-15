@@ -36,14 +36,9 @@ namespace Cozyheim.LevelingSystem
                     return;
                 }
 
-                int xp = XPTable.GetPickableXP(__instance.name) * honeyLevel;
-
-                ZPackage newPackage = new ZPackage();
+                // Get xp from server and send it to the player
                 long playerID = player.GetPlayerID();
-                newPackage.Write(playerID);
-                newPackage.Write(xp);
-
-                XPManager.rpc_RewardXP.SendPackage(ZRoutedRpc.Everybody, newPackage);
+                XPManager.Instance.GetXPFromServer(playerID, __instance.name, "Pickable", honeyLevel);
             }
 
 
@@ -82,14 +77,9 @@ namespace Cozyheim.LevelingSystem
                     return;
                 }
 
-                int xp = XPTable.GetPickableXP(__instance.name);
-
-                ZPackage newPackage = new ZPackage();
+                // Get xp from server and send it to the player
                 long playerID = player.GetPlayerID();
-                newPackage.Write(playerID);
-                newPackage.Write(xp);
-
-                XPManager.rpc_RewardXP.SendPackage(ZRoutedRpc.Everybody, newPackage);
+                XPManager.Instance.GetXPFromServer(playerID, __instance.name, "Pickable");
             }
         }
     }

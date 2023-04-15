@@ -102,20 +102,9 @@ namespace Cozyheim.LevelingSystem
                     return;
                 }
 
-                // Get xp from the table
-                int xp = XPTable.GetMiningXP(name);
-                if(xp <= 0)
-                {
-                    return;
-                }
-
-                // Send xp to the player
-                ZPackage newPackage = new ZPackage();
+                // Get xp from server and send it to the player
                 long playerID = player.GetPlayerID();
-                newPackage.Write(playerID);
-                newPackage.Write(xp);
-
-                XPManager.rpc_RewardXP.SendPackage(ZRoutedRpc.Everybody, newPackage);
+                XPManager.Instance.GetXPFromServer(playerID, name, "Mining");
             }
         }
     }

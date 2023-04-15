@@ -8,6 +8,7 @@ using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using UnityEngine;
+using Cozyheim.DifficultyScaler;
 
 namespace Cozyheim.LevelingSystem
 {
@@ -22,6 +23,7 @@ namespace Cozyheim.LevelingSystem
         public static CustomRPC rpc_AddMonsterDamage = null;
         public static CustomRPC rpc_RewardXPMonster = null;
         public static CustomRPC rpc_RewardXP = null;
+        public static CustomRPC rpc_GetXP = null;
 
         private static XPManager _instance;
         public static XPManager Instance {
@@ -40,6 +42,13 @@ namespace Cozyheim.LevelingSystem
             rpc_AddMonsterDamage = NetworkManager.Instance.AddRPC("AddMonsterDamage", RPC_AddMonsterDamage, RPC_AddMonsterDamage);
             rpc_RewardXPMonster = NetworkManager.Instance.AddRPC("RewardXPMonster", RPC_RewardXPMonsters, RPC_RewardXPMonsters);
             rpc_RewardXP = NetworkManager.Instance.AddRPC("RewardXP", RPC_RewardXP, RPC_RewardXP);
+            rpc_GetXP = NetworkManager.Instance.AddRPC("GetXP", RPC_GetXPFromServer, RPC_GetXPFromServer);
+
+            XPTable.UpdateMiningXPTable();
+            XPTable.UpdateMonsterXPTable();
+            XPTable.UpdatePickableXPTable();
+            XPTable.UpdatePlayerXPTable();
+            XPTable.UpdateWoodcuttingXPTable();
         }
 
         private static IEnumerator RPC_AddMonsterDamage(long sender, ZPackage package)
@@ -94,6 +103,56 @@ namespace Cozyheim.LevelingSystem
             return newObj;
         }
 
+        public void GetXPFromServer(long playerID, string itemName, string itemType, int xpMultiplier = 1) {
+            ConsoleLog.Print("Trying to get XP from server (" + itemName + " - " + itemType + " - " + xpMultiplier + ")");
+            ZPackage newPackage = new ZPackage();
+            newPackage.Write(playerID);
+            newPackage.Write(itemName);
+            newPackage.Write(itemType);
+            newPackage.Write(xpMultiplier);
+            rpc_GetXP.SendPackage(ZRoutedRpc.Everybody, newPackage);
+        }
+
+        private static IEnumerator RPC_GetXPFromServer(long sender, ZPackage package) {
+            if (!ZNet.instance.IsServer()) {
+                yield break;
+            }
+
+            long playerID = package.ReadLong();
+            string itemName = package.ReadString();
+            string itemType = package.ReadString();
+            int xpMultiplier = package.ReadInt();
+
+            ConsoleLog.Print("Server: Recieved GetXP Call (" + itemName + " - " + itemType + " - " + xpMultiplier + ")");
+
+            int xp;
+            switch(itemType) {
+                case "Woodcutting":
+                    xp = XPTable.GetWoodcuttingXP(itemName);
+                    break;
+                case "Mining":
+                    xp = XPTable.GetMiningXP(itemName);
+                    break;
+                case "Pickable":
+                    xp = XPTable.GetPickableXP(itemName);
+                    break;
+                default:
+                    yield break;
+            }
+
+            if(xp <= 0) {
+                yield break;
+            }
+
+            ConsoleLog.Print("Server: Found XP = " + xp);
+
+            ZPackage newPackage = new ZPackage();
+            newPackage.Write(playerID);
+            newPackage.Write(xp * xpMultiplier);
+
+            rpc_RewardXP.SendPackage(ZRoutedRpc.Everybody, newPackage);
+        }
+
         private static IEnumerator RPC_RewardXP(long sender, ZPackage package)
         {
             if (!ZNet.instance.IsServer())
@@ -109,8 +168,12 @@ namespace Cozyheim.LevelingSystem
             float baseXpSpreadMax = Mathf.Max(1 + (Main.baseXpSpreadMax.Value / 100f), 1f);
             float xpMultiplier = Mathf.Max(0f, Main.allXPMultiplier.Value / 100f);
 
+            int xp = (int)(xpAmount * xpMultiplier * Random.Range(baseXpSpreadMin, baseXpSpreadMax));
+
             newPackage.Write(playerID);
-            newPackage.Write((int)(xpAmount * xpMultiplier * Random.Range(baseXpSpreadMin, baseXpSpreadMax)));
+            newPackage.Write(xp);
+
+            ConsoleLog.Print("Server: Sending XP to Player (XP: " + xp);
 
             UIManager.rpc_AddExperience.SendPackage(ZRoutedRpc.Everybody, newPackage);
         } 
@@ -121,7 +184,6 @@ namespace Cozyheim.LevelingSystem
             {
                 yield break;
             }
-
 
             uint monsterID = package.ReadUInt();
             uint monsterLevel = package.ReadUInt();
@@ -150,8 +212,59 @@ namespace Cozyheim.LevelingSystem
                     float xpMultiplier = Mathf.Max(0f, Main.allXPMultiplier.Value / 100f);
                     float restedMultiplier = Mathf.Max(0f, Main.restedXPMultiplier.Value / 100f);
 
-
                     float awardedXP = XPTable.GetMonsterXP(monsterName) * xpPercentage * Random.Range(baseXpSpreadMin, baseXpSpreadMax) * xpMultiplier;
+
+                    if(Main.modDifficultyScalerLoaded && Main.enableDifficultyScalerXP.Value) {
+                        float dsHealthBonus = DifficultyScalerAPI.GetOverallHealthMultiplier();
+                        dsHealthBonus = dsHealthBonus * Main.difficultyScalerOverallHealthRatio.Value;
+
+                        float dsDamageBonus = DifficultyScalerAPI.GetOverallDamageMultiplier();
+                        dsDamageBonus = dsDamageBonus * Main.difficultyScalerOverallDamageRatio.Value;
+
+                        float dsBiomeBonus = DifficultyScalerAPI.GetBiomeMultiplier();
+                        dsBiomeBonus = (dsBiomeBonus - 1f) * Main.difficultyScalerBiomeRatio.Value + 1f;
+
+                        float dsBossBonus = DifficultyScalerAPI.GetBossKillMultiplier();
+                        dsBossBonus = (dsBossBonus - 1f) * Main.difficultyScalerBossRatio.Value + 1f;
+
+                        float dsNightBonus = DifficultyScalerAPI.GetNightMultiplier();
+                        dsNightBonus = (dsNightBonus - 1f) * Main.difficultyScalerBossRatio.Value + 1f;
+
+                        ConsoleLog.Print("XP before scaling: " + awardedXP);
+
+                        if(Main.difficultyScalerOverallHealth.Value) {
+                            float newXP = awardedXP * dsHealthBonus;
+                            ConsoleLog.Print("Health Scale (" + dsHealthBonus + "): " + awardedXP + " -> " + newXP);
+                            awardedXP = newXP;
+                        }
+
+                        if(Main.difficultyScalerOverallDamage.Value) {
+                            float newXP = awardedXP * dsDamageBonus;
+                            ConsoleLog.Print("Damage Scale (" + dsDamageBonus + "): " + awardedXP + " -> " + newXP);
+                            awardedXP = newXP;
+                        }
+
+                        if(Main.difficultyScalerBiome.Value) {
+                            float newXP = awardedXP * dsBiomeBonus;
+                            ConsoleLog.Print("Biome Scale (" + dsBiomeBonus + "): " + awardedXP + " -> " + newXP);
+                            awardedXP = newXP;
+                        }
+
+                        if(Main.difficultyScalerBoss.Value) {
+                            float newXP = awardedXP * dsBossBonus;
+                            ConsoleLog.Print("Boss Scale (" + dsBossBonus + "): " + awardedXP + " -> " + newXP);
+                            awardedXP = newXP;
+                        }
+
+                        if(Main.difficultyScalerNight.Value) {
+                            float newXP = awardedXP * dsNightBonus;
+                            ConsoleLog.Print("Night Scale (" + dsNightBonus + "): " + awardedXP + " -> " + newXP);
+                            awardedXP = newXP;
+                        }
+
+                        ConsoleLog.Print("XP after scaling: " + awardedXP);
+                    }
+
                     float monsterLevelBonusXp = (monsterLevel - 1) * monsterLvlMultiplier * awardedXP;
                     float restedBonusXp = awardedXP * restedMultiplier;
 

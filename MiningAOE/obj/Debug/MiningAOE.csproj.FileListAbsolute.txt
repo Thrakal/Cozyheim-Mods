@@ -1,0 +1,4 @@
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\_Builds\Cozyheim_MiningAOE.dll
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\MiningAOE\obj\Debug\MiningAOE.csproj.AssemblyReference.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\MiningAOE\obj\Debug\MiningAOE.csproj.CoreCompileInputs.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\MiningAOE\obj\Debug\Cozyheim_MiningAOE.dll

@@ -16,7 +16,7 @@ namespace Cozyheim.DifficultyScaler
     {
         // Mod information
         internal const string modName = "DifficultyScaler";
-        internal const string version = "0.0.1";
+        internal const string version = "0.1.0";
         internal const string GUID = "dk.thrakal." + modName;
 
         // Core objects that is required to patch and configure the mod
@@ -37,6 +37,25 @@ namespace Cozyheim.DifficultyScaler
         internal static Dictionary<string, float> monsterHealth;
         internal static Dictionary<string, float> monsterDamage;
 
+        internal static ConfigEntry<bool> enableBossKillDifficulty;
+        internal static ConfigEntry<float> bossKillMultiplier;
+        internal static ConfigEntry<string> bossGlobalKeys;
+
+        internal static ConfigEntry<bool> enableBiomeDifficulty;
+        internal static ConfigEntry<float> meadowsMultiplier;
+        internal static ConfigEntry<float> blackForestMultiplier;
+        internal static ConfigEntry<float> swampMultiplier;
+        internal static ConfigEntry<float> mountainMultiplier;
+        internal static ConfigEntry<float> plainsMultiplier;
+        internal static ConfigEntry<float> mistlandsMultiplier;
+        internal static ConfigEntry<float> oceanMultiplier;
+        internal static ConfigEntry<float> deepNorthMultiplier;
+        internal static ConfigEntry<float> ashlandsMultiplier;
+
+        internal static ConfigEntry<bool> enableNightDifficulty;
+        internal static ConfigEntry<float> nightMultiplier;
+
+
         void Awake()
         {
             harmony.PatchAll();
@@ -51,6 +70,27 @@ namespace Cozyheim.DifficultyScaler
             overallDamageMultipler = CreateConfigEntry("01_Monsters", "overallDamageMultipler", 1f, "Increases the base damage of all monsters in the game. (1 = No change, 1.5 = 50% more damage). This stack with the individual monster modifiers.", true);
             monsterHealthModifier = CreateConfigEntry("01_Monsters", "monsterBaseHealthModifier", "", "Set the base health (60 = 60 base health) of individual monsters. Format must follow: Monstername:Health (example: Skeleton:60,Greyling:25)", true);
             monsterDamageModifier = CreateConfigEntry("01_Monsters", "monsterDamageModifier", "", "Set a damage multiplier (110 = +10% increased damage) of individual monsters. Format must follow: Monstername:Damage (example: Skeleton:110,Greyling:120)", true);
+
+
+            enableBossKillDifficulty = CreateConfigEntry("02_Boss", "enableBossKillDifficulty", false, "Enables difficulty scaling after killing bosses", true);
+            bossKillMultiplier = CreateConfigEntry("02_Boss", "bossKillMultiplier", 0.2f, "Increases (multiplies) the health & damage of all monsters by this value, per boss you have killed. (0 = 0% increase per boss, 0.5 = 50% increase per boss)", true);
+            bossGlobalKeys = CreateConfigEntry("02_Boss", "bossGlobalKeys", "defeated_eikthyr, defeated_gdking, defeated_bonemass, defeated_dragon, defeated_goblinking, defeated_queen", "Global keys to check against for registering boss kills. Add custom boss keys to this list if you are using custom bosses.", true);
+
+
+            enableBiomeDifficulty = CreateConfigEntry("03_Biomes", "enableBiomeDifficulty", false, "Enables difficulty scaling for biomes", true);
+            meadowsMultiplier = CreateConfigEntry("03_Biomes", "meadowsMultiplier", 0f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
+            blackForestMultiplier = CreateConfigEntry("03_Biomes", "blackForestMultiplier", 0.2f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
+            swampMultiplier = CreateConfigEntry("03_Biomes", "swampMultiplier", 0.4f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
+            mountainMultiplier = CreateConfigEntry("03_Biomes", "mountainMultiplier", 0.6f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
+            plainsMultiplier = CreateConfigEntry("03_Biomes", "plainsMultiplier", 0.8f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
+            mistlandsMultiplier = CreateConfigEntry("03_Biomes", "mistlandsMultiplier", 1f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
+            oceanMultiplier = CreateConfigEntry("03_Biomes", "oceanMultiplier", 0.5f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
+            deepNorthMultiplier = CreateConfigEntry("03_Biomes", "deepNorthMultiplier", 2f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
+            ashlandsMultiplier = CreateConfigEntry("03_Biomes", "ashlandsMultiplier", 2f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
+
+            enableNightDifficulty = CreateConfigEntry("04_Night", "enableNightDifficulty", false, "Enables difficulty scaling during night", true);
+            nightMultiplier = CreateConfigEntry("04_Night", "nightMultiplier", 0.5f, "Increases (multiplies) the health & damage of all monsters during night (0 = 0% increase, 0.5 = 50% increase)", true);
+
 
             CommandManager.Instance.AddConsoleCommand(new ConsoleLog());
 

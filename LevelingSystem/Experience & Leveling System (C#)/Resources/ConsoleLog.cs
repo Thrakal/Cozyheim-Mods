@@ -58,19 +58,18 @@ namespace Cozyheim.LevelingSystem
             // Only admins may use this command
             if (!IsUserAdmin())
             {
+                ConsoleLog.Print("Reloading Configs: Client side");
                 ReloadAndUpdateAll();
             } else
             {
+                ConsoleLog.Print("Reloading Configs: Server side");
                 rpc_ReloadConfigServer.SendPackage(ZRoutedRpc.Everybody, new ZPackage());
             }
         }
 
         private static IEnumerator RPC_ReloadConfigClient(long sender, ZPackage package)
         {
-            if (Player.m_localPlayer != null)
-            {
-                ReloadAndUpdateAll();
-            }
+            ReloadAndUpdateAll();
             yield return null;
         }
 

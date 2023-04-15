@@ -215,7 +215,7 @@ namespace Cozyheim.LevelingSystem
         {
             if(XPManager.Instance != null && skills != null)
             {
-                int points = XPManager.Instance.GetPlayerLevel() * Main.pointsPerLevel.Value;
+                int points = Mathf.FloorToInt((float)XPManager.Instance.GetPlayerLevel() * Main.pointsPerLevel.Value);
                 foreach (KeyValuePair<SkillType, SkillBase> kvp in skills)
                 {
                     points -= kvp.Value.GetLevel();

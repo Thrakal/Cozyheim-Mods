@@ -102,6 +102,11 @@
       <HintPath>..\..\_Reference DLLs\BepInEx.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Cozyheim_DifficultyScaler, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\_Reference DLLs\Cozyheim_DifficultyScaler.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Jotunn">
       <HintPath>..\..\_Reference DLLs\Jotunn.dll</HintPath>
       <Private>False</Private>
