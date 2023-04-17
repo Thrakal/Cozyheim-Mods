@@ -6,7 +6,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Cozyheim.DifficultyScaler;
+using Cozyheim;
+using Cozyheim;
 
 namespace Cozyheim.LevelingSystem
 {
@@ -189,14 +190,19 @@ namespace Cozyheim.LevelingSystem
 
             ConsoleLog.Print("Monster died (Server) - " + monsterName);
 
-            MonsterXP obj = Instance.GetMonsterXP(monsterID);
-            if (obj != null)
+            MonsterXP monsterObj = Instance.GetMonsterXP(monsterID);
+            if (monsterObj != null)
             {
-                float totalDamage = obj.GetTotalDamageDealt();
+                float totalDamage = monsterObj.GetTotalDamageDealt();
 
+                float dsHealthMultiplier = 1f;
+                float dsDamageMultiplier = 1f;
+                float dsBiomeMultiplier = 1f;
+                float dsNightMultiplier = 1f;
+                float dsBossKillMultiplier = 1f;
 
                 // Find the correct monster in the list
-                foreach (PlayerDamage damage in obj.playerDamages)
+                foreach (PlayerDamage damage in monsterObj.playerDamages)
                 {
                     ZPackage newPackage = new ZPackage();
 
@@ -212,9 +218,12 @@ namespace Cozyheim.LevelingSystem
 
                     float awardedXP = XPTable.GetMonsterXP(monsterName) * xpPercentage * UnityEngine.Random.Range(baseXpSpreadMin, baseXpSpreadMax) * xpMultiplier;
 
+
+
                     if(Main.modDifficultyScalerLoaded) {
 
                         if(Main.enableDifficultyScalerXP.Value) {
+                            /*
                             float dsHealthBonus = DifficultyScalerAPI.GetOverallHealthMultiplier();
                             dsHealthBonus = dsHealthBonus * Main.difficultyScalerOverallHealthRatio.Value;
 
@@ -263,6 +272,7 @@ namespace Cozyheim.LevelingSystem
                             }
 
                             ConsoleLog.Print("XP after scaling: " + awardedXP);
+                            */
                         }
 
                     }
@@ -282,7 +292,7 @@ namespace Cozyheim.LevelingSystem
                     UIManager.rpc_AddExperienceMonster.SendPackage(ZRoutedRpc.Everybody, newPackage);
                 }
 
-                Instance.xpObjects.Remove(obj);
+                Instance.xpObjects.Remove(monsterObj);
             }
         }
 

@@ -5,8 +5,6 @@ using Jotunn.Managers;
 using Jotunn.Utils;
 using ServerSync;
 using System.Collections.Generic;
-using UnityEngine;
-using Cozyheim;
 
 namespace Cozyheim.DifficultyScaler
 {
@@ -15,11 +13,9 @@ namespace Cozyheim.DifficultyScaler
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
     internal class Main : BaseUnityPlugin
     {
-        DifficultyScalerMono difficultyScalerMono;
-
         // Mod information
         internal const string modName = "DifficultyScaler";
-        internal const string version = "0.1.0";
+        internal const string version = "0.1.1";
         internal const string GUID = "dk.thrakal." + modName;
 
         // Core objects that is required to patch and configure the mod
@@ -84,12 +80,12 @@ namespace Cozyheim.DifficultyScaler
             meadowsMultiplier = CreateConfigEntry("03_Biomes", "meadowsMultiplier", 0f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
             blackForestMultiplier = CreateConfigEntry("03_Biomes", "blackForestMultiplier", 0.2f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
             swampMultiplier = CreateConfigEntry("03_Biomes", "swampMultiplier", 0.4f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
+            oceanMultiplier = CreateConfigEntry("03_Biomes", "oceanMultiplier", 0.5f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
             mountainMultiplier = CreateConfigEntry("03_Biomes", "mountainMultiplier", 0.6f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
             plainsMultiplier = CreateConfigEntry("03_Biomes", "plainsMultiplier", 0.8f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
             mistlandsMultiplier = CreateConfigEntry("03_Biomes", "mistlandsMultiplier", 1f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
-            oceanMultiplier = CreateConfigEntry("03_Biomes", "oceanMultiplier", 0.5f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
-            deepNorthMultiplier = CreateConfigEntry("03_Biomes", "deepNorthMultiplier", 2f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
-            ashlandsMultiplier = CreateConfigEntry("03_Biomes", "ashlandsMultiplier", 2f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
+            deepNorthMultiplier = CreateConfigEntry("03_Biomes", "deepNorthMultiplier", 1f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
+            ashlandsMultiplier = CreateConfigEntry("03_Biomes", "ashlandsMultiplier", 1f, "Increases (multiplies) the health & damage of all monsters in this Biome (0 = 0% increase, 0.5 = 50% increase)", true);
 
             enableNightDifficulty = CreateConfigEntry("04_Night", "enableNightDifficulty", false, "Enables difficulty scaling during night", true);
             nightMultiplier = CreateConfigEntry("04_Night", "nightMultiplier", 0.5f, "Increases (multiplies) the health & damage of all monsters during night (0 = 0% increase, 0.5 = 50% increase)", true);
@@ -115,8 +111,8 @@ namespace Cozyheim.DifficultyScaler
                     if (float.TryParse(monsterData[1], out float health))
                     {
                         float originalHealth = PrefabManager.Instance.GetPrefab(monsterData[0]).GetComponent<Humanoid>().m_health;
-                        monsterHealth.Add(monsterData[0] + "(Clone)", health);
-                        ConsoleLog.Print(monsterData[0] + ": (" + originalHealth + " -> " + health + " HP)");
+                        monsterHealth.Add(monsterData[0].Trim() + "(Clone)", health);
+                        ConsoleLog.Print(monsterData[0].Trim() + ": (" + originalHealth + " -> " + health + " HP)");
                     }
                 }
             }
@@ -139,9 +135,9 @@ namespace Cozyheim.DifficultyScaler
                 {
                     if (float.TryParse(monsterData[1], out float damage))
                     {
-                        ConsoleLog.Print(monsterData[0] + ": " + damage + "% damage");
+                        ConsoleLog.Print(monsterData[0].Trim() + ": " + damage + "% damage");
                         damage /= 100f;
-                        monsterDamage.Add(monsterData[0] + "(Clone)", damage);
+                        monsterDamage.Add(monsterData[0].Trim() + "(Clone)", damage);
                     }
                 }
             }

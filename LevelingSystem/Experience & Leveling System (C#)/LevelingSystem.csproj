@@ -153,5 +153,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\leveling_system" />
   </ItemGroup>
+  <Import Project="..\..\CozyheimShared\CozyheimShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

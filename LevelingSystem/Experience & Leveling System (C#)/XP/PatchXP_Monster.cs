@@ -2,6 +2,7 @@
 using Jotunn.Managers;
 using UnityEngine;
 using UnityEngine.UI;
+using Cozyheim.API;
 
 namespace Cozyheim.LevelingSystem
 {
@@ -99,6 +100,9 @@ namespace Cozyheim.LevelingSystem
                     newPackage.Write(__instance.GetZDOID().id);
                     newPackage.Write(__instance.GetLevel());
                     newPackage.Write(__instance.name);
+
+                    DifficultyScalerComp comp = __instance.GetComponent<DifficultyScalerComp>();
+                    newPackage.Write(comp);
 
                     XPManager.rpc_RewardXPMonster.SendPackage(ZRoutedRpc.Everybody, newPackage);
                 }

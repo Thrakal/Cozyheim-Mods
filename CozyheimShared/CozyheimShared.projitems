@@ -6,8 +6,9 @@
     <SharedGUID>b87365fe-18de-4fbb-b15c-427cd082d2a6</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>CozyheimShared</Import_RootNamespace>
+    <Import_RootNamespace>CozyheimAPI</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)DifficultyScalerComp.cs" />
   </ItemGroup>
 </Project>
