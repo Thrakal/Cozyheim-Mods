@@ -112,5 +112,6 @@
     <Compile Include="Resources\SimpleJSON.cs" />
     <Compile Include="Resources\ConsoleLog.cs" />
   </ItemGroup>
+  <Import Project="..\..\CozyheimShared\CozyheimShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

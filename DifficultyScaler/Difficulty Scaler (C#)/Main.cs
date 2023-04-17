@@ -6,6 +6,7 @@ using Jotunn.Utils;
 using ServerSync;
 using System.Collections.Generic;
 using UnityEngine;
+using Cozyheim;
 
 namespace Cozyheim.DifficultyScaler
 {
@@ -14,6 +15,8 @@ namespace Cozyheim.DifficultyScaler
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
     internal class Main : BaseUnityPlugin
     {
+        DifficultyScalerMono difficultyScalerMono;
+
         // Mod information
         internal const string modName = "DifficultyScaler";
         internal const string version = "0.1.0";

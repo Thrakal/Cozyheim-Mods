@@ -94,16 +94,11 @@
       <HintPath>..\..\_Reference DLLs\assembly_valheim.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Auga">
-      <HintPath>..\..\_Reference DLLs\Auga.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="BepInEx">
       <HintPath>..\..\_Reference DLLs\BepInEx.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Cozyheim_DifficultyScaler, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Cozyheim_DifficultyScaler">
       <HintPath>..\..\_Reference DLLs\Cozyheim_DifficultyScaler.dll</HintPath>
       <Private>False</Private>
     </Reference>

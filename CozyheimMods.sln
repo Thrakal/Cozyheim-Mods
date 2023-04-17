@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AugaTextFix", "AugaTextFix\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiningAOE", "MiningAOE\MiningAOE.csproj", "{8A28E7CE-62C3-4339-BF7A-67C33D5CCE2F}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "_CozyheimShared", "CozyheimShared\_CozyheimShared.shproj", "{B87365FE-18DE-4FBB-B15C-427CD082D2A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,5 +125,10 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2B378024-B66E-4CAE-8F37-1AD9832497E4}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		CozyheimShared\CozyheimShared.projitems*{4d2a4a69-cbcf-4527-b504-7c1d1d3b3696}*SharedItemsImports = 4
+		CozyheimShared\CozyheimShared.projitems*{b87365fe-18de-4fbb-b15c-427cd082d2a6}*SharedItemsImports = 13
+		CozyheimShared\CozyheimShared.projitems*{bdde30d3-f108-465f-9a6f-5afbc030caeb}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal

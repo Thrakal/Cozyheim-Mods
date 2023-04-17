@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Jotunn.Entities;
 using System.IO;
 using BepInEx.Bootstrap;
+using System;
 
 namespace Cozyheim.LevelingSystem
 {
@@ -29,7 +30,7 @@ namespace Cozyheim.LevelingSystem
 
         // Mod information
         internal const string modName = "LevelingSystem";
-        internal const string version = "0.4.0";
+        internal const string version = "0.4.1";
         internal const string GUID = "dk.thrakal." + modName;
 
         // Core objects that is required to patch and configure the mod
@@ -112,8 +113,26 @@ namespace Cozyheim.LevelingSystem
         // Auga integration
         internal static ConfigEntry<bool> useAugaBuildMenuUI;
 
+        internal static ConfigEntry<int> nexusID;
+
         void Awake()
         {
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+            {
+                string resourceName = "LevelingSystem." +
+
+                   new AssemblyName(args.Name).Name + ".dll";
+
+                using(var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName)) {
+
+                    byte[] assemblyData = new byte[stream.Length];
+
+                    stream.Read(assemblyData, 0, assemblyData.Length);
+
+                    return Assembly.Load(assemblyData);
+                }
+            };
+
             modAugaLoaded = CheckIfModIsLoaded("randyknapp.mods.auga");
             modDifficultyScalerLoaded = CheckIfModIsLoaded("dk.thrakal.DifficultyScaler");
 
@@ -129,6 +148,9 @@ namespace Cozyheim.LevelingSystem
             modEnabled = CreateConfigEntry("General", "modEnabled", true, "Enable this mod", true);
             debugEnabled = CreateConfigEntry("General", "debugEnabled", false, "Display debug messages in the console", false);
             debugMonsterInternalName = CreateConfigEntry("General", "debugMonsterInternalName", false, "Display the internal ID (prefab name) of monsters in the console, when you hit them", false);
+
+            // Nexus ID
+            nexusID = Config.Bind<int>("General", "NexusID", 2282, "Nexus mod ID for updates");
 
             // XP Bar
             showLevel = CreateConfigEntry("XP Bar", "showLevel", true, "Display Level text", false);
@@ -186,31 +208,20 @@ namespace Cozyheim.LevelingSystem
             // Generate config entries for XP Tables
 
             // Player
-            XPTable.GenerateDefaultPlayerXPTable();
-            string playerTableDefault = "";
-            for (int i = 0; i < XPTable.playerXPTable.Length; i++)
-            {
-                playerTableDefault += i != 0 ? ", " : "";
-                playerTableDefault += "Lv" + (i + 1).ToString() + ":" + XPTable.playerXPTable[i];
-            }
             playerXpTable = CreateConfigEntry("XP Table", "playerXpTable", "", "(Obsolete! - Change the JSON file in the config folder instead) The xp needed for each level. To reach a higher max level, simply add more values to the table. (Changes requires to reload the config file, which can be done in two ways. 1. Restart the server.  -  2. Admins can open the console in-game and type LevelingSystem ReloadConfig)", true);
 
             // Monsters
-            string monsterTableDefault = GenerateXPTableString(XPTable.monsterXPTable);
             monsterXpTable = CreateConfigEntry("XP Table", "monsterXpTable", "", "(Obsolete! - Change the JSON file in the config folder instead) The base xp of monsters. (Changes requires to realod the config file)", true);
 
             // Pickables
-            string pickableTableDefault = GenerateXPTableString(XPTable.pickableXPTable);
             pickableXpEnabled = CreateConfigEntry("XP Table", "pickableXpEnabled", true, "Gain XP when interacting with Pickables", true);
             pickableXpTable = CreateConfigEntry("XP Table", "pickableXpTable", "", "(Obsolete! - Change the JSON file in the config folder instead) The base xp of pickables. (Changes requires to reload the config file)", true);
 
             // Mining
-            string miningTableDefault = GenerateXPTableString(XPTable.miningXPTable);
             miningXpEnabled = CreateConfigEntry("XP Table", "miningXpEnabled", true, "Gain XP when mining", true);
             miningXpTable = CreateConfigEntry("XP Table", "miningXpTable", "", "(Obsolete! - Change the JSON file in the config folder instead) The base xp for mining. (Changes requires to reload the config file)", true);
 
             // Woodcutting
-            string woodcuttingTableDefault = GenerateXPTableString(XPTable.woodcuttingXPTable);
             woodcuttingXpEnabled = CreateConfigEntry("XP Table", "woodcuttingXpEnabled", true, "Gain XP when chopping trees", true);
             woodcuttingXpTable = CreateConfigEntry("XP Table", "woodcuttingXpTable", "", "(Obsolete! - Change the JSON file in the config folder instead) The base xp for woodcutting. (Changes requires to reload the config file)", true);
 
@@ -221,6 +232,10 @@ namespace Cozyheim.LevelingSystem
             NetworkHandler.Init();
             UIManager.Init();
             XPManager.Init();
+
+
+            ConsoleLog.Print("Auga loaded: " + modAugaLoaded, LogType.Warning);
+            ConsoleLog.Print("ADifficulty Scaler loaded: " + modDifficultyScalerLoaded, LogType.Warning);
         }
 
         private string AddNewEntriesToXPTable(Dictionary<string, int> xpTable, string configEntry)
@@ -348,6 +363,8 @@ namespace Cozyheim.LevelingSystem
 
             return newSprite;
         }
+
+
 
         #region CreateConfigEntry Wrapper
         public static ConfigEntry<T> CreateConfigEntry<T>(string group, string name, T value, ConfigDescription description, bool synchronizedSetting = true)
