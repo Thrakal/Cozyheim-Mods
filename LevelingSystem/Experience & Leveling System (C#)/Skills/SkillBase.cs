@@ -27,6 +27,14 @@ namespace Cozyheim.LevelingSystem
         CriticalDamage,
         Hunting,
         Farming,
+        ResistanceSlash,
+        ResistanceBlunt,
+        ResistancePierce,
+        ResistanceFire,
+        ResistanceFrost,
+        ResistanceLightning,
+        ResistancePoison,
+        ResistanceSpirit,
         EndOfEnum
     }
 

@@ -105,12 +105,74 @@ namespace Cozyheim.LevelingSystem
             },
             new SkillSettings()
             {
+                skillType = SkillType.ResistanceBlunt,
+                enabled = true,
+                defaultMaxLevel = 30,
+                defaultBonusValue = 3f,
+                category = SkillCategory.Defensive
+            },
+            new SkillSettings()
+            {
+                skillType = SkillType.ResistanceSlash,
+                enabled = true,
+                defaultMaxLevel = 30,
+                defaultBonusValue = 3f,
+                category = SkillCategory.Defensive
+            },
+            new SkillSettings()
+            {
+                skillType = SkillType.ResistancePierce,
+                enabled = true,
+                defaultMaxLevel = 30,
+                defaultBonusValue = 3f,
+                category = SkillCategory.Defensive
+            },
+
+            // Elemental defense skills
+            new SkillSettings()
+            {
                 skillType = SkillType.ElementalResistance,
                 enabled = true,
                 defaultMaxLevel = 20,
                 defaultBonusValue = 1.5f,
                 category = SkillCategory.Defensive
             },
+            new SkillSettings() {
+                skillType = SkillType.ResistanceFire,
+                enabled = true,
+                defaultMaxLevel = 30,
+                defaultBonusValue = 3f,
+                category = SkillCategory.Defensive
+            },
+            new SkillSettings() {
+                skillType = SkillType.ResistanceFrost,
+                enabled = true,
+                defaultMaxLevel = 30,
+                defaultBonusValue = 3f,
+                category = SkillCategory.Defensive
+            },
+            new SkillSettings() {
+                skillType = SkillType.ResistanceLightning,
+                enabled = true,
+                defaultMaxLevel = 30,
+                defaultBonusValue = 3f,
+                category = SkillCategory.Defensive
+            },
+            new SkillSettings() {
+                skillType = SkillType.ResistancePoison,
+                enabled = true,
+                defaultMaxLevel = 30,
+                defaultBonusValue = 3f,
+                category = SkillCategory.Defensive
+            },
+            new SkillSettings() {
+                skillType = SkillType.ResistanceSpirit,
+                enabled = true,
+                defaultMaxLevel = 30,
+                defaultBonusValue = 3f,
+                category = SkillCategory.Defensive
+            },
+
             new SkillSettings()
             {
                 skillType = SkillType.MovementSpeed,

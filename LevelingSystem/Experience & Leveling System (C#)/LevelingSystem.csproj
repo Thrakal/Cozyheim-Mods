@@ -42,6 +42,14 @@
     <Compile Include="Networking\NetworkHandler.cs" />
     <Compile Include="Resources\ConfigSync.cs" />
     <Compile Include="Skills\Skill Patches\SkillCriticalHitDamage.cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistanceSpirit.cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistancePoison.cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistanceFrost.cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistanceLightning.cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistanceFire.cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistancePierce.cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistanceBlunt .cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistanceSlash.cs" />
     <Compile Include="Skills\SkillConfig.cs" />
     <Compile Include="Skills\Skill Patches\SkillCriticalHitChance.cs" />
     <Compile Include="Skills\Skill Patches\SkillEitrRegen.cs" />
