@@ -8,19 +8,7 @@ namespace Cozyheim.DifficultyScaler
         [HarmonyPatch]
         private class Patch
         {
-            [HarmonyPostfix]
-            [HarmonyPatch(typeof(Character), "Awake")]
-            private static void Character_Awake_Postfix(ref Character __instance) {
-                if(__instance.GetComponent<ZNetView>() == null) {
-                    return;
-                }
-
-                DifficultyScalerComp dsComp = __instance.GetComponent<DifficultyScalerComp>();
-
-                if(dsComp == null) {
-                    dsComp = __instance.gameObject.AddComponent<DifficultyScalerComp>();
-                }
-
+            private static void SetupDifficultyScalerComponent(Character __instance, ref DifficultyScalerBase dsComp) {
                 // Set the Biome Multiplier
                 Heightmap.Biome biome = Heightmap.FindBiome(__instance.transform.position);
                 switch(biome) {
@@ -59,7 +47,8 @@ namespace Cozyheim.DifficultyScaler
                 dsComp.SetBossKillMultiplier(1f + Main.bossKillMultiplier.Value * counter);
 
                 // Set the Night Multiplier
-                dsComp.SetNightMultiplier(1f + Main.nightMultiplier.Value);
+                float nightMultiplier = EnvMan.instance.IsNight() ? 1f + Main.nightMultiplier.Value : 1f;
+                dsComp.SetNightMultiplier(nightMultiplier);
 
                 // Set the Health Multiplier
                 dsComp.SetHealthMultiplier(Main.overallHealthMultipler.Value);
@@ -69,21 +58,57 @@ namespace Cozyheim.DifficultyScaler
             }
 
             [HarmonyPrefix]
+            [HarmonyPatch(typeof(Character), "Awake")]
+            private static void Character_Awake_Prefix(ref Character __instance) {
+                ZNetView nview = __instance.GetComponent<ZNetView>();
+                if(nview == null) {
+                    return;
+                }
+
+                if(nview.GetZDO() == null) {
+                    return;
+                }
+
+                if(__instance == null) {
+                    return;
+                }
+
+                if(ZNet.instance == null) {
+                    return;
+                }
+
+                if(__instance.m_faction == Character.Faction.Players) {
+                    return;
+                }
+
+                DifficultyScalerBase dsComp = __instance.GetComponent<DifficultyScalerBase>();
+                if(dsComp == null) {
+                    dsComp = __instance.gameObject.AddComponent<DifficultyScalerBase>();
+                    SetupDifficultyScalerComponent(__instance, ref dsComp);
+                }
+            }
+
+            [HarmonyPrefix]
             [HarmonyPatch(typeof(Character), "SetupMaxHealth")]
-            private static void Character_SetupMaxHealth_Prefix(Character __instance, ref float ___m_health)
+            private static void Character_SetupMaxHealth_Prefix(ref Character __instance, ref float ___m_health)
             {
                 if (__instance != null)
                 {
                     if (__instance.m_faction != Character.Faction.Players)
                     {
-                        if (Main.monsterHealth.TryGetValue(__instance.name, out float value))
+                        DifficultyScalerBase dsComp = __instance.GetComponent<DifficultyScalerBase>();
+
+                        if(dsComp == null) {
+                            ConsoleLog.Print("DSComp is Null!", LogType.Warning);
+                            return;
+                        }
+
+                        if(Main.monsterHealth.TryGetValue(__instance.name, out float value))
                         {
                             ___m_health = value;
                         }
 
                         float startHealth = ___m_health;
-
-                        DifficultyScalerComp dsComp = __instance.GetComponent<DifficultyScalerComp>();
 
                         float multiplier = 1f;
                         multiplier *= dsComp.GetHealthMultiplier();
@@ -95,9 +120,10 @@ namespace Cozyheim.DifficultyScaler
 
                         // print instance name and biome multiplier
                         ConsoleLog.Print(__instance.name + " -> (SetupMaxHealth) Health Multiplier: " + dsComp.GetHealthMultiplier(), LogType.Info);
-                        ConsoleLog.Print(__instance.name + " -> (SetupMaxHealth) Biome Multiplier (" + EnvMan.instance.GetCurrentBiome().ToString() + "): " + dsComp.GetBiomeMultiplier().ToString(), LogType.Info);
+                        ConsoleLog.Print(__instance.name + " -> (SetupMaxHealth) Biome Multiplier: " + dsComp.GetBiomeMultiplier().ToString(), LogType.Info);
                         ConsoleLog.Print(__instance.name + " -> (SetupMaxHealth) Boss Kill Multiplier: " + dsComp.GetBossKillMultiplier().ToString(), LogType.Info);
                         ConsoleLog.Print(__instance.name + " -> (SetupMaxHealth) Night Multiplier (" + EnvMan.instance.IsNight() + "): " + dsComp.GetNightMultiplier().ToString(), LogType.Info);
+                        ConsoleLog.Print(__instance.name + " -> (SetupMaxHealth) Total: " + multiplier.ToString("N4"), LogType.Info);
                         ConsoleLog.Print(__instance.name + " -> (SetupMaxHealth) Health: " + startHealth + " -> " + ___m_health, LogType.Info);
                     }
                 }
@@ -119,21 +145,23 @@ namespace Cozyheim.DifficultyScaler
                             multiplier *= value;
                         }
 
-                        DifficultyScalerComp dsComp = __instance.GetComponent<DifficultyScalerComp>();
+                        DifficultyScalerBase dsComp = hit.GetAttacker().GetComponent<DifficultyScalerBase>();
 
-                        multiplier *= dsComp.GetDamageMultiplier();
-                        multiplier *= dsComp.GetBiomeMultiplier();
-                        multiplier *= dsComp.GetBossKillMultiplier();
-                        multiplier *= dsComp.GetNightMultiplier();
+                        if(dsComp != null) {
+                            multiplier *= dsComp.GetDamageMultiplier();
+                            multiplier *= dsComp.GetBiomeMultiplier();
+                            multiplier *= dsComp.GetBossKillMultiplier();
+                            multiplier *= dsComp.GetNightMultiplier();
+
+                            // print instance name and biome multiplier
+                            ConsoleLog.Print(__instance.name + " -> (ApplyDamage) Damage Multiplier: " + dsComp.GetDamageMultiplier(), LogType.Info);
+                            ConsoleLog.Print(__instance.name + " -> (ApplyDamage) Biome Multiplier: " + dsComp.GetBiomeMultiplier().ToString(), LogType.Info);
+                            ConsoleLog.Print(__instance.name + " -> (ApplyDamage) Boss Kill Multiplier: " + dsComp.GetBossKillMultiplier().ToString(), LogType.Info);
+                            ConsoleLog.Print(__instance.name + " -> (ApplyDamage) Night Multiplier (" + EnvMan.instance.IsNight() + "): " + dsComp.GetNightMultiplier().ToString(), LogType.Info);
+                            ConsoleLog.Print(__instance.name + " -> (ApplyDamage) Total: " + multiplier.ToString("N4"), LogType.Info);
+                        }
 
                         hit.ApplyModifier(multiplier);
-
-                        // print instance name and biome multiplier
-                        ConsoleLog.Print(__instance.name + " -> (ApplyDamage) Damage Multiplier: " + dsComp.GetDamageMultiplier(), LogType.Info);
-                        ConsoleLog.Print(__instance.name + " -> (ApplyDamage) Biome Multiplier (" + EnvMan.instance.GetCurrentBiome().ToString() + "): " + dsComp.GetBiomeMultiplier().ToString(), LogType.Info);
-                        ConsoleLog.Print(__instance.name + " -> (ApplyDamage) Boss Kill Multiplier: " + dsComp.GetBossKillMultiplier().ToString(), LogType.Info);
-                        ConsoleLog.Print(__instance.name + " -> (ApplyDamage) Night Multiplier (" + EnvMan.instance.IsNight() + "): " + dsComp.GetNightMultiplier().ToString(), LogType.Info);
-                        ConsoleLog.Print(__instance.name + " -> (ApplyDamage) Total: " + multiplier.ToString("N4"), LogType.Info);
                     }
                 }
             }
@@ -160,21 +188,24 @@ namespace Cozyheim.DifficultyScaler
                     multiplier *= value;
                 }
 
-                DifficultyScalerComp dsComp = hit.GetAttacker().GetComponent<DifficultyScalerComp>();
+                DifficultyScalerBase dsComp = hit.GetAttacker().GetComponent<DifficultyScalerBase>();
 
-                multiplier *= dsComp.GetDamageMultiplier();
-                multiplier *= dsComp.GetBiomeMultiplier();
-                multiplier *= dsComp.GetBossKillMultiplier();
-                multiplier *= dsComp.GetNightMultiplier();
+                if(dsComp != null) {
+                    multiplier *= dsComp.GetDamageMultiplier();
+                    multiplier *= dsComp.GetBiomeMultiplier();
+                    multiplier *= dsComp.GetBossKillMultiplier();
+                    multiplier *= dsComp.GetNightMultiplier();
+
+                    // print instance name and biome multiplier
+                    ConsoleLog.Print(hit.GetAttacker().name + " -> (RPC_Damage) Damage Multiplier: " + dsComp.GetDamageMultiplier(), LogType.Info);
+                    ConsoleLog.Print(hit.GetAttacker().name + " -> (RPC_Damage) Biome Multiplier: " + dsComp.GetBiomeMultiplier().ToString(), LogType.Info);
+                    ConsoleLog.Print(hit.GetAttacker().name + " -> (RPC_Damage) Boss Kill Multiplier: " + dsComp.GetBossKillMultiplier().ToString(), LogType.Info);
+                    ConsoleLog.Print(hit.GetAttacker().name + " -> (RPC_Damage) Night Multiplier (" + EnvMan.instance.IsNight() + "): " + dsComp.GetNightMultiplier().ToString(), LogType.Info);
+                    ConsoleLog.Print(hit.GetAttacker().name + " -> (RPC_Damage) Total: " + multiplier.ToString("N4"), LogType.Info);
+                }
 
                 hit.ApplyModifier(1f / multiplier);
 
-                // print instance name and biome multiplier
-                ConsoleLog.Print(hit.GetAttacker().name + " -> (RPC_Damage) Damage Multiplier: " + dsComp.GetDamageMultiplier(), LogType.Info);
-                ConsoleLog.Print(hit.GetAttacker().name + " -> (RPC_Damage) Biome Multiplier (" + EnvMan.instance.GetCurrentBiome().ToString() + "): " + dsComp.GetBiomeMultiplier().ToString(), LogType.Info);
-                ConsoleLog.Print(hit.GetAttacker().name + " -> (RPC_Damage) Boss Kill Multiplier: " + dsComp.GetBossKillMultiplier().ToString(), LogType.Info);
-                ConsoleLog.Print(hit.GetAttacker().name + " -> (RPC_Damage) Night Multiplier (" + EnvMan.instance.IsNight() + "): " + dsComp.GetNightMultiplier().ToString(), LogType.Info);
-                ConsoleLog.Print(hit.GetAttacker().name + " -> (RPC_Damage) Total: " + multiplier.ToString("N4"), LogType.Info);
             }
         }
     }

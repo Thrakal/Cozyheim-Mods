@@ -5,6 +5,10 @@ using Jotunn.Managers;
 using Jotunn.Utils;
 using ServerSync;
 using System.Collections.Generic;
+using UnityEngine;
+using Cozyheim.API;
+using System.Reflection;
+using System.IO;
 
 namespace Cozyheim.DifficultyScaler
 {
@@ -94,6 +98,9 @@ namespace Cozyheim.DifficultyScaler
             CommandManager.Instance.AddConsoleCommand(new ConsoleLog());
 
             PrefabManager.OnVanillaPrefabsAvailable += CreateMonsterHealthDictionary;
+
+            GameObject newGO = new GameObject("Difficult Test");
+            newGO.AddComponent<DifficultyScalerBase>();
         }
 
         public static void CreateMonsterHealthDictionary()

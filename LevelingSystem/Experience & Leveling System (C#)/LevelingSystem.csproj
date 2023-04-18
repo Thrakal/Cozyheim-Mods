@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup>
     <LangVersion>10</LangVersion>
@@ -98,10 +100,6 @@
       <HintPath>..\..\_Reference DLLs\BepInEx.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Cozyheim_DifficultyScaler">
-      <HintPath>..\..\_Reference DLLs\Cozyheim_DifficultyScaler.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Jotunn">
       <HintPath>..\..\_Reference DLLs\Jotunn.dll</HintPath>
       <Private>False</Private>
@@ -153,6 +151,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\leveling_system" />
   </ItemGroup>
-  <Import Project="..\..\CozyheimShared\CozyheimShared.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\_CozyheimAPI\_CozyheimAPI.csproj">
+      <Project>{0b55e941-0eb5-4db8-8f44-211c3cbd7919}</Project>
+      <Name>_CozyheimAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

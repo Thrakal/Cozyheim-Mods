@@ -93,6 +93,10 @@ namespace Cozyheim.LevelingSystem
             [HarmonyPatch(typeof(Character), "OnDeath")]
             private static void Character_OnDeath_Prefix(Character __instance)
             {
+                if(Player.m_localPlayer == null) {
+                    return;
+                }
+
                 if (CanTargetAwardXP(__instance) && Player.m_localPlayer != null)
                 {
                     ZPackage newPackage = new ZPackage();
@@ -101,8 +105,19 @@ namespace Cozyheim.LevelingSystem
                     newPackage.Write(__instance.GetLevel());
                     newPackage.Write(__instance.name);
 
-                    DifficultyScalerComp comp = __instance.GetComponent<DifficultyScalerComp>();
-                    newPackage.Write(comp);
+                    DifficultyScalerBase comp = __instance.gameObject.GetComponent<DifficultyScalerBase>();
+                    bool dsFound = comp != null;
+                    newPackage.Write(dsFound);
+
+                    ConsoleLog.Print(__instance.name + ": Found DS = " + dsFound);
+
+                    if(comp != null) {
+                        newPackage.Write(comp.GetHealthMultiplier());
+                        newPackage.Write(comp.GetDamageMultiplier());
+                        newPackage.Write(comp.GetBiomeMultiplier());
+                        newPackage.Write(comp.GetNightMultiplier());
+                        newPackage.Write(comp.GetBossKillMultiplier());
+                    }
 
                     XPManager.rpc_RewardXPMonster.SendPackage(ZRoutedRpc.Everybody, newPackage);
                 }

@@ -1,13 +1,8 @@
-﻿using BepInEx.Configuration;
-using HarmonyLib;
-using Jotunn.Entities;
+﻿using Jotunn.Entities;
 using Jotunn.Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using Cozyheim;
-using Cozyheim;
 
 namespace Cozyheim.LevelingSystem
 {
@@ -201,6 +196,16 @@ namespace Cozyheim.LevelingSystem
                 float dsNightMultiplier = 1f;
                 float dsBossKillMultiplier = 1f;
 
+                bool dsFound = package.ReadBool();
+
+                if(dsFound) {
+                    dsHealthMultiplier = package.ReadSingle();
+                    dsDamageMultiplier = package.ReadSingle();
+                    dsBiomeMultiplier = package.ReadSingle();
+                    dsNightMultiplier = package.ReadSingle();
+                    dsBossKillMultiplier = package.ReadSingle();
+                }
+
                 // Find the correct monster in the list
                 foreach (PlayerDamage damage in monsterObj.playerDamages)
                 {
@@ -218,65 +223,51 @@ namespace Cozyheim.LevelingSystem
 
                     float awardedXP = XPTable.GetMonsterXP(monsterName) * xpPercentage * UnityEngine.Random.Range(baseXpSpreadMin, baseXpSpreadMax) * xpMultiplier;
 
-
-
-                    if(Main.modDifficultyScalerLoaded) {
-
+                    // Apply difficulty scaler xp
+                    if(dsFound && Main.modDifficultyScalerLoaded) {
                         if(Main.enableDifficultyScalerXP.Value) {
-                            /*
-                            float dsHealthBonus = DifficultyScalerAPI.GetOverallHealthMultiplier();
-                            dsHealthBonus = dsHealthBonus * Main.difficultyScalerOverallHealthRatio.Value;
-
-                            float dsDamageBonus = DifficultyScalerAPI.GetOverallDamageMultiplier();
-                            dsDamageBonus = dsDamageBonus * Main.difficultyScalerOverallDamageRatio.Value;
-
-                            float dsBiomeBonus = DifficultyScalerAPI.GetBiomeMultiplier();
-                            dsBiomeBonus = (dsBiomeBonus - 1f) * Main.difficultyScalerBiomeRatio.Value + 1f;
-
-                            float dsBossBonus = DifficultyScalerAPI.GetBossKillMultiplier();
-                            dsBossBonus = (dsBossBonus - 1f) * Main.difficultyScalerBossRatio.Value + 1f;
-
-                            float dsNightBonus = DifficultyScalerAPI.GetNightMultiplier();
-                            dsNightBonus = (dsNightBonus - 1f) * Main.difficultyScalerBossRatio.Value + 1f;
+                            float dsHealthBonus = (dsHealthMultiplier - 1f) * Main.difficultyScalerOverallHealthRatio.Value + 1f;
+                            float dsDamageBonus = (dsDamageMultiplier - 1f) * Main.difficultyScalerOverallDamageRatio.Value + 1f;
+                            float dsBiomeBonus = (dsBiomeMultiplier - 1f) * Main.difficultyScalerBiomeRatio.Value + 1f;
+                            float dsNightBonus = (dsNightMultiplier - 1f) * Main.difficultyScalerBossRatio.Value + 1f;
+                            float dsBossBonus = (dsBossKillMultiplier - 1f) * Main.difficultyScalerBossRatio.Value + 1f;
 
                             ConsoleLog.Print("XP before scaling: " + awardedXP);
 
                             if(Main.difficultyScalerOverallHealth.Value) {
                                 float newXP = awardedXP * dsHealthBonus;
-                                ConsoleLog.Print("Health Scale (" + dsHealthBonus + "): " + awardedXP + " -> " + newXP);
+                                ConsoleLog.Print("Health Scale (" + dsHealthBonus.ToString("N2") + "): " + awardedXP.ToString("N2") + " -> " + newXP.ToString("N2"));
                                 awardedXP = newXP;
                             }
 
                             if(Main.difficultyScalerOverallDamage.Value) {
                                 float newXP = awardedXP * dsDamageBonus;
-                                ConsoleLog.Print("Damage Scale (" + dsDamageBonus + "): " + awardedXP + " -> " + newXP);
+                                ConsoleLog.Print("Damage Scale (" + dsDamageBonus.ToString("N2") + "): " + awardedXP.ToString("N2") + " -> " + newXP.ToString("N2"));
                                 awardedXP = newXP;
                             }
 
                             if(Main.difficultyScalerBiome.Value) {
                                 float newXP = awardedXP * dsBiomeBonus;
-                                ConsoleLog.Print("Biome Scale (" + dsBiomeBonus + "): " + awardedXP + " -> " + newXP);
-                                awardedXP = newXP;
-                            }
-
-                            if(Main.difficultyScalerBoss.Value) {
-                                float newXP = awardedXP * dsBossBonus;
-                                ConsoleLog.Print("Boss Scale (" + dsBossBonus + "): " + awardedXP + " -> " + newXP);
+                                ConsoleLog.Print("Biome Scale (" + dsBiomeBonus.ToString("N2") + "): " + awardedXP.ToString("N2") + " -> " + newXP.ToString("N2"));
                                 awardedXP = newXP;
                             }
 
                             if(Main.difficultyScalerNight.Value) {
                                 float newXP = awardedXP * dsNightBonus;
-                                ConsoleLog.Print("Night Scale (" + dsNightBonus + "): " + awardedXP + " -> " + newXP);
+                                ConsoleLog.Print("Night Scale (" + dsNightBonus.ToString("N2") + "): " + awardedXP.ToString("N2") + " -> " + newXP.ToString("N2"));
+                                awardedXP = newXP;
+                            }
+
+                            if(Main.difficultyScalerBoss.Value) {
+                                float newXP = awardedXP * dsBossBonus;
+                                ConsoleLog.Print("Boss Scale (" + dsBossBonus.ToString("N2") + "): " + awardedXP.ToString("N2") + " -> " + newXP.ToString("N2"));
                                 awardedXP = newXP;
                             }
 
                             ConsoleLog.Print("XP after scaling: " + awardedXP);
-                            */
                         }
-
                     }
-    
+
                     float monsterLevelBonusXp = (monsterLevel - 1) * monsterLvlMultiplier * awardedXP;
                     float restedBonusXp = awardedXP * restedMultiplier;
 

@@ -2,7 +2,7 @@
 
 namespace Cozyheim.API {
 
-    internal class DifficultyScalerComp : MonoBehaviour {
+    public class DifficultyScalerComp : MonoBehaviour {
 
         private float damageMultiplier = 1f;
         private float healthMultiplier = 1f;
