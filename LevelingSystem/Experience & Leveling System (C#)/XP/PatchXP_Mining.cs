@@ -89,6 +89,11 @@ namespace Cozyheim.LevelingSystem
                     return;
                 }
 
+                Character attacker = hit.GetAttacker();
+                if(attacker == null) {
+                    return;
+                }
+
                 // Check if the attacker is a player
                 Player player = hit.GetAttacker().GetComponent<Player>();
                 if (player == null)

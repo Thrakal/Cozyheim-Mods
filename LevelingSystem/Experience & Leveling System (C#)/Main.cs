@@ -109,6 +109,9 @@ namespace Cozyheim.LevelingSystem
         internal static ConfigEntry<float> difficultyScalerBossRatio;
         internal static ConfigEntry<bool> difficultyScalerNight;
         internal static ConfigEntry<float> difficultyScalerNightRatio;
+        internal static ConfigEntry<bool> difficultyScalerStar;
+        internal static ConfigEntry<float> difficultyScalerStarRatio;
+        
 
         // Auga integration
         internal static ConfigEntry<bool> useAugaBuildMenuUI;
@@ -177,16 +180,24 @@ namespace Cozyheim.LevelingSystem
             // Difficulty Scaler integration
             if(modDifficultyScalerLoaded) {
                 enableDifficultyScalerXP = CreateConfigEntry("Difficulty Scaler", "enableDifficultyScalerXP", false, "[ServerSync] Enable Difficulty Scaler XP integration (Requires the Difficulty Scaler mod is installed)", true);
-                difficultyScalerOverallHealth = CreateConfigEntry("Difficulty Scaler", "difficultyScalerOverallHealth", true, "[ServerSync] Use Difficulty Scaler overall health difficulty multiplier", true);
+
+                difficultyScalerOverallHealth = CreateConfigEntry("Difficulty Scaler", "difficultyScalerOverallHealth", true, "[ServerSync] Use Difficulty Scaler's overall health difficulty multiplier", true);
                 difficultyScalerOverallHealthRatio = CreateConfigEntry("Difficulty Scaler", "difficultyScalerOverallHealthRatio", 0.5f, "[ServerSync] The ratio of the scaling multiplier that is applied as XP. (1 = the same as difficulty scaler, 0.5 = 50% of the scaling, 2 = 200% of the scaling", true);
-                difficultyScalerOverallDamage = CreateConfigEntry("Difficulty Scaler", "difficultyScalerOverallDamage", true, "[ServerSync] Use Difficulty Scaler overall damage difficulty multiplier", true);
+
+                difficultyScalerOverallDamage = CreateConfigEntry("Difficulty Scaler", "difficultyScalerOverallDamage", true, "[ServerSync] Use Difficulty Scaler's overall damage difficulty multiplier", true);
                 difficultyScalerOverallDamageRatio = CreateConfigEntry("Difficulty Scaler", "difficultyScalerOverallDamageRatio", 0.5f, "[ServerSync] The ratio of the scaling multiplier that is applied as XP. (1 = the same as difficulty scaler, 0.5 = 50% of the scaling, 2 = 200% of the scaling", true);
-                difficultyScalerBiome = CreateConfigEntry("Difficulty Scaler", "difficultyScalerBiome", true, "[ServerSync] Use Difficulty Scaler biome difficulty multiplier", true);
+
+                difficultyScalerBiome = CreateConfigEntry("Difficulty Scaler", "difficultyScalerBiome", true, "[ServerSync] Use Difficulty Scaler's biome difficulty multiplier", true);
                 difficultyScalerBiomeRatio = CreateConfigEntry("Difficulty Scaler", "difficultyScalerBiomeRatio", 1f, "[ServerSync] The ratio of the scaling multiplier that is applied as XP. (1 = the same as difficulty scaler, 0.5 = 50% of the scaling, 2 = 200% of the scaling", true);
-                difficultyScalerBoss = CreateConfigEntry("Difficulty Scaler", "difficultyScalerBoss", true, "[ServerSync] Use Difficulty Scaler boss difficulty multiplier", true);
+
+                difficultyScalerBoss = CreateConfigEntry("Difficulty Scaler", "difficultyScalerBoss", true, "[ServerSync] Use Difficulty Scaler's boss difficulty multiplier", true);
                 difficultyScalerBossRatio = CreateConfigEntry("Difficulty Scaler", "difficultyScalerBossRatio", 1f, "[ServerSync] The ratio of the scaling multiplier that is applied as XP. (1 = the same as difficulty scaler, 0.5 = 50% of the scaling, 2 = 200% of the scaling", true);
-                difficultyScalerNight = CreateConfigEntry("Difficulty Scaler", "difficultyScalerNight", true, "[ServerSync] Use Difficulty Scaler boss difficulty multiplier", true);
+
+                difficultyScalerNight = CreateConfigEntry("Difficulty Scaler", "difficultyScalerNight", true, "[ServerSync] Use Difficulty Scaler' night difficulty multiplier", true);
                 difficultyScalerNightRatio = CreateConfigEntry("Difficulty Scaler", "difficultyScalerNightRatio", 1f, "[ServerSync] The ratio of the scaling multiplier that is applied as XP. (1 = the same as difficulty scaler, 0.5 = 50% of the scaling, 2 = 200% of the scaling", true);
+
+                difficultyScalerStar = CreateConfigEntry("Difficulty Scaler", "difficultyScalerStar", true, "[ServerSync] Use Difficulty Scaler's star difficulty multiplier", true);
+                difficultyScalerStarRatio = CreateConfigEntry("Difficulty Scaler", "difficultyScalerStarRatio", 1f, "[ServerSync] The ratio of the scaling multiplier that is applied as XP. (1 = the same as difficulty scaler, 0.5 = 50% of the scaling, 2 = 200% of the scaling", true);
             }
 
             SkillConfig.Init();

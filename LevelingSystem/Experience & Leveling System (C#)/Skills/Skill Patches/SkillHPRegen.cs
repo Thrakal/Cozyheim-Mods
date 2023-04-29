@@ -23,17 +23,14 @@ namespace Cozyheim.LevelingSystem
         {
             [HarmonyPostfix]
             [HarmonyPatch(typeof(SEMan), "ModifyHealthRegen")]
-            static void SEMan_ModifyHealthRegen_Postfix(Character ___m_character, ref float regenMultiplier)
+            static void SEMan_ModifyHealthRegen_Postfix(ref float regenMultiplier)
             {
                 if (Instance == null)
                 {
                     return;
                 }
 
-                if (___m_character.IsPlayer())
-                {
-                    regenMultiplier += (Instance.level * Instance.bonusPerLevel) / 100f / 2f;
-                }
+                regenMultiplier += (Instance.level * Instance.bonusPerLevel) / 100f;
             }
         }
     }

@@ -33,6 +33,15 @@ namespace Cozyheim.UpgradeUnlimited {
 
             ConfigSettings.Init();
 
+            if(!ConfigSettings.modEnabled.Value) {
+                return;
+            }
+
+            // Create station list
+            Recipe_Patch.CreateCustomStationsList();
+            Recipe_Patch.AddStationToList("piece_workbench", ConfigSettings.workbenchUpgradeLevelLimit.Value);
+            Recipe_Patch.AddStationToList("forge", ConfigSettings.forgeUpgradeLevelLimit.Value);
+
             CommandManager.Instance.AddConsoleCommand(new ConsoleLog());
             PrefabManager.OnVanillaPrefabsAvailable += UpdateAllRecipes;
 

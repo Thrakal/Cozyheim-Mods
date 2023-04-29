@@ -10,7 +10,8 @@ namespace Cozyheim.UpgradeUnlimited {
         public static ConfigEntry<int> maxItemLevel;
         public static ConfigEntry<int> forgeUpgradeLevelLimit;
         public static ConfigEntry<int> workbenchUpgradeLevelLimit;
-        public static ConfigEntry<int> otherCraftingStationLevelLimit;
+        public static ConfigEntry<string> customCraftingStationUpgradeLevelLimit;
+        public static ConfigEntry<int> unknownCraftingStationLevelLimit;
         public static ConfigEntry<float> statsIncrease;
 
         public static void Init() {
@@ -21,8 +22,14 @@ namespace Cozyheim.UpgradeUnlimited {
             maxItemLevel = CreateConfigEntry("Settings", "maxItemLevel", 10, "Max item upgrade level", true);
             forgeUpgradeLevelLimit = CreateConfigEntry("Settings", "forgeUpgradeLevelLimit", 7, "When upgrading items, this is the level limit which is required. (1 = forge only has to be level 1 to upgrade unlimited)", true);
             workbenchUpgradeLevelLimit = CreateConfigEntry("Settings", "workbenchUpgradeLevelLimit", 5, "When upgrading items, this is the level limit which is required. (1 = workbench only has to be level 1 to upgrade unlimited)", true);
-            otherCraftingStationLevelLimit = CreateConfigEntry("Settings", "otherCraftingStationLevelLimit", 1, "When upgrading items, this is the level limit which is required. (1 = other crafting stations only has to be level 1 to upgrade unlimited)", true);
+            unknownCraftingStationLevelLimit = CreateConfigEntry("Settings", "unknownCraftingStationLevelLimit", 1, "When upgrading items, this is the level limit which is required. (1 = other crafting stations only has to be level 1 to upgrade unlimited)", true);
+            customCraftingStationUpgradeLevelLimit = CreateConfigEntry("Settings", "customCraftingStationUpgradeLevelLimit", "", "When upgrading items, this is the level limit which is required. Must follow this format -> craftingStationName:levelLimit. (1 = custom crafting station only has to be level 1 to upgrade unlimited)", true);
             statsIncrease = CreateConfigEntry("Settings", "statsIncrease", 1f, "A stats multiplier added for each upgrade. (1 = normal upgrade stats, 2 = 200% upgrade stats, 0.5 = 50% upgrade stats)", true);
+        }
+
+        public class Test {
+            public string name;
+            public int value;
         }
 
         #region CreateConfigEntry Wrapper

@@ -1,5 +1,6 @@
 ﻿using Jotunn.Configs;
 using System.Collections.Generic;
+using static Jotunn.Utils.GameConstants;
 
 namespace Cozyheim.CustomItems
 {
@@ -157,137 +158,82 @@ namespace Cozyheim.CustomItems
                 }
             },
 
-            // Raw Fish Recipes
+            // --------------------------------------
+            //  - Arrow recipes for Fletcher Table -
+            // --------------------------------------
             new RecipeConfig()
             {
-                Name = "Recipe_FishRaw_Fish1_New", // Perch
-                Item = "FishRaw",
-                Amount = 2,
-                CraftingStation = "ButchersBench_FYA",                
+                Name = "Recipe_ArrowWoodFletcher_Cozy",
+                Item = "ArrowWood",
+                Amount = 20,
+                CraftingStation = "FletcherTable_TW",
                 Requirements = new[]
                 {
-                    new RequirementConfig("Fish1", 1)
+                    new RequirementConfig("Wood", 8)
                 }
             },
             new RecipeConfig()
             {
-                Name = "Recipe_FishRaw_Fish2_New", // Pike
-                Item = "FishRaw",
-                Amount = 2,
-                CraftingStation = "ButchersBench_FYA",
+                Name = "Recipe_StoneheadArrowFletcher_Cozy",
+                Item = "StoneheadArrow",
+                Amount = 20,
+                CraftingStation = "FletcherTable_TW",
                 Requirements = new[]
                 {
-                    new RequirementConfig("Fish2", 1)
+                    new RequirementConfig("Wood", 8),
+                    new RequirementConfig("Stone", 4)
                 }
             },
             new RecipeConfig()
             {
-                Name = "Recipe_FishRaw_Fish3_New", // Tuna
-                Item = "FishRaw",
-                Amount = 6,
-                CraftingStation = "ButchersBench_FYA",
+                Name = "Recipe_ArrowFlintFletcher_Cozy",
+                Item = "ArrowFlint",
+                Amount = 20,
+                CraftingStation = "FletcherTable_TW",
                 Requirements = new[]
                 {
-                    new RequirementConfig("Fish3", 1)
+                    new RequirementConfig("Wood", 8),
+                    new RequirementConfig("Flint", 2),
+                    new RequirementConfig("Feathers", 2)
                 }
             },
             new RecipeConfig()
             {
-                Name = "Recipe_FishRaw_Fish4Cave_New", // Tetra
-                Item = "FishRaw",
-                Amount = 4,
-                CraftingStation = "ButchersBench_FYA",
+                Name = "Recipe_ArrowFireFletcher_Cozy",
+                Item = "ArrowFire",
+                Amount = 20,
+                CraftingStation = "FletcherTable_TW",                
                 Requirements = new[]
                 {
-                    new RequirementConfig("Fish4_cave", 1)
+                    new RequirementConfig("Wood", 8),
+                    new RequirementConfig("Resin", 4),
+                    new RequirementConfig("Feathers", 2)
                 }
             },
             new RecipeConfig()
             {
-                Name = "Recipe_FishRaw_Fish5_New", // Trollfish
-                Item = "FishRaw",
-                Amount = 3,
-                CraftingStation = "ButchersBench_FYA",
+                Name = "Recipe_BowFletcher_Cozy",
+                Item = "Bow",
+                Amount = 1,
+                CraftingStation = "FletcherTable_TW",
                 Requirements = new[]
                 {
-                    new RequirementConfig("Fish5", 1)
+                    new RequirementConfig("Wood", 10, 5),
+                    new RequirementConfig("LeatherScraps", 8, 4),
+                    new RequirementConfig("DeerHide", 0, 1)
                 }
             },
             new RecipeConfig()
             {
-                Name = "Recipe_FishRaw_Fish6_New", // Giant Herring
-                Item = "FishRaw",
-                Amount = 4,
-                CraftingStation = "ButchersBench_FYA",
+                Name = "Recipe_BowFinewoodFletcher_Cozy",
+                Item = "BowFineWood",
+                Amount = 1,
+                CraftingStation = "FletcherTable_TW",
                 Requirements = new[]
                 {
-                    new RequirementConfig("Fish6", 1)
-                }
-            },
-            new RecipeConfig()
-            {
-                Name = "Recipe_FishRaw_Fish7_New", // Grouper
-                Item = "FishRaw",
-                Amount = 5,
-                CraftingStation = "ButchersBench_FYA",
-                Requirements = new[]
-                {
-                    new RequirementConfig("Fish7", 1)
-                }
-            },
-            new RecipeConfig()
-            {
-                Name = "Recipe_FishRaw_Fish8_New", // Coral Cod
-                Item = "FishRaw",
-                Amount = 8,
-                CraftingStation = "ButchersBench_FYA",
-                Requirements = new[]
-                {
-                    new RequirementConfig("Fish8", 1)
-                }
-            },
-            new RecipeConfig()
-            {
-                Name = "Recipe_FishRaw_Fish9_New", // Anglerfish
-                Item = "FishRaw",
-                Amount = 6,
-                CraftingStation = "ButchersBench_FYA",
-                Requirements = new[]
-                {
-                    new RequirementConfig("Fish9", 1)
-                }
-            },
-            new RecipeConfig()
-            {
-                Name = "Recipe_FishRaw_Fish10_New", // Northern Salmon
-                Item = "FishRaw",
-                Amount = 10,
-                CraftingStation = "ButchersBench_FYA",
-                Requirements = new[]
-                {
-                    new RequirementConfig("Fish10", 1)
-                }
-            },
-            new RecipeConfig()
-            {
-                Name = "Recipe_FishRaw_Fish11_New", // Magmafish
-                Item = "FishRaw",
-                Amount = 10,
-                CraftingStation = "ButchersBench_FYA",
-                Requirements = new[]
-                {
-                    new RequirementConfig("Fish11", 1)
-                }
-            },
-            new RecipeConfig()
-            {
-                Name = "Recipe_FishRaw_Fish12_New", // Pufferfish
-                Item = "FishRaw",
-                Amount = 6,
-                CraftingStation = "ButchersBench_FYA",
-                Requirements = new[]
-                {
-                    new RequirementConfig("Fish12", 1)
+                    new RequirementConfig("FineWood", 10, 5),
+                    new RequirementConfig("RoundLog", 10, 5),
+                    new RequirementConfig("DeerHide", 2, 2)
                 }
             }
         };

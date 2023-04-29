@@ -1,0 +1,4 @@
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\_Builds\Cozyheim_AdjustUpgradeStats.dll
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\AdjustUpgradeStats\obj\Debug\AdjustUpgradeStats.csproj.AssemblyReference.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\AdjustUpgradeStats\obj\Debug\AdjustUpgradeStats.csproj.CoreCompileInputs.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\AdjustUpgradeStats\obj\Debug\Cozyheim_AdjustUpgradeStats.dll

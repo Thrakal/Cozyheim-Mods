@@ -41,6 +41,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiningAOE", "MiningAOE\Mini
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_CozyheimAPI", "_CozyheimAPI\_CozyheimAPI.csproj", "{0B55E941-0EB5-4DB8-8F44-211C3CBD7919}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GearWithPersonality", "GearWithPersonality\GearWithPersonality.csproj", "{96E18EFC-4932-4BFC-B8C3-9A1E5546F3E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookingRock", "CookingRock\CookingRock.csproj", "{959DF280-51E2-4EC4-9472-51C70ABCBD59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdjustUpgradeStats", "AdjustUpgradeStats\AdjustUpgradeStats.csproj", "{DE9882DF-E3D5-487E-A577-BDEACB5AC2A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +129,18 @@ Global
 		{0B55E941-0EB5-4DB8-8F44-211C3CBD7919}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B55E941-0EB5-4DB8-8F44-211C3CBD7919}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{0B55E941-0EB5-4DB8-8F44-211C3CBD7919}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{96E18EFC-4932-4BFC-B8C3-9A1E5546F3E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96E18EFC-4932-4BFC-B8C3-9A1E5546F3E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96E18EFC-4932-4BFC-B8C3-9A1E5546F3E3}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{96E18EFC-4932-4BFC-B8C3-9A1E5546F3E3}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{959DF280-51E2-4EC4-9472-51C70ABCBD59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{959DF280-51E2-4EC4-9472-51C70ABCBD59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{959DF280-51E2-4EC4-9472-51C70ABCBD59}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{959DF280-51E2-4EC4-9472-51C70ABCBD59}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{DE9882DF-E3D5-487E-A577-BDEACB5AC2A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE9882DF-E3D5-487E-A577-BDEACB5AC2A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE9882DF-E3D5-487E-A577-BDEACB5AC2A0}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE9882DF-E3D5-487E-A577-BDEACB5AC2A0}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

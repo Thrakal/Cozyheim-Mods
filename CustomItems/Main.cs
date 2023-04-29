@@ -15,6 +15,7 @@ namespace Cozyheim.CustomItems
 {
     [BepInPlugin(GUID, modName, version)]
     [BepInDependency(Jotunn.Main.ModGuid)]
+    [BepInDependency("randyknapp.mods.epicloot", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
     internal class Main : BaseUnityPlugin
     {
@@ -84,11 +85,39 @@ namespace Cozyheim.CustomItems
             };
         }
 
+
+        internal static void RegisterCustomClonedPieces() {
+            if(ConfigSettings.modEnabled.Value) {
+                // Epic Loot Items
+                foreach(CustomPieceClone piece in EpicLootItems.items) {
+                    piece.pieceConfig.Name = piece.newPieceName + "_Cozy";
+                    piece.pieceConfig.PieceTable = "Hammer";
+                    piece.pieceConfig.Category = "EpicLoot";
+                    bool success = PieceManager.Instance.AddPiece(new CustomPiece(piece.newPieceName, piece.vanillaPieceName, piece.pieceConfig));
+
+                    if(success) {
+                        ConsoleLog.Print(piece.newPieceName + " was added", LogType.Message);
+                    } else {
+                        ConsoleLog.Print(piece.newPieceName + " could not be added", LogType.Warning);
+                    }
+                }
+            }
+        }
+
         internal static void RegisterPieces()
         {
+            RegisterCustomClonedPieces();
+
             // Building Assets
             if (ConfigSettings.enableCraftingItems.Value)
             {
+                // Custom clones pieces
+                PieceConfig magicWeaponMats = new PieceConfig();
+                magicWeaponMats.Name = "MagicWeaponMats";
+                magicWeaponMats.PieceTable = "Hammer";
+
+
+
                 for (int i = 0; i < prefabsList.Count; i++)
                 {
                     GameObject prefab = assetBundle.LoadAsset<GameObject>(assetsPath + "Prefabs/" + prefabsList[i].prefabName + ".prefab");

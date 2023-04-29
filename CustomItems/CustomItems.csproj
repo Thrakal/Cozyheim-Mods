@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddRemoveItemsRecipesConfig.cs" />
+    <Compile Include="CustomPieceClone.cs" />
     <Compile Include="Patches\RemoveVanillaItems_Patch.cs" />
     <Compile Include="Patches\StackableChests_Patch.cs" />
     <Compile Include="Resources\Enums.cs" />

@@ -117,6 +117,7 @@ namespace Cozyheim.LevelingSystem
                         newPackage.Write(comp.GetBiomeMultiplier());
                         newPackage.Write(comp.GetNightMultiplier());
                         newPackage.Write(comp.GetBossKillMultiplier());
+                        newPackage.Write(comp.GetStarMultiplier());
                     }
 
                     XPManager.rpc_RewardXPMonster.SendPackage(ZRoutedRpc.Everybody, newPackage);
