@@ -1,0 +1,4 @@
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\_Builds\Cozyheim_GearWithPersonality.dll
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\GearWithPersonality\obj\Debug\GearWithPersonality.csproj.AssemblyReference.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\GearWithPersonality\obj\Debug\GearWithPersonality.csproj.CoreCompileInputs.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\GearWithPersonality\obj\Debug\Cozyheim_GearWithPersonality.dll

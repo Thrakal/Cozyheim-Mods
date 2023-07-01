@@ -56,15 +56,44 @@ namespace Cozyheim.LevelingSystem
                         case SkillType.PhysicalDamage:
                             skills.Add(skill.skillType, new SkillPhysicalDamage(skill.GetMaxLevel(), skill.GetBonusValue(), "PhysicalDamage", "Physical Damage", "%"));
                             break;
-                        case SkillType.PhysicalResistance:
-                            skills.Add(skill.skillType, new SkillPhysicalResistance(skill.GetMaxLevel(), skill.GetBonusValue(), "PhysicalResistance", "Physical Resistance", "%"));
-                            break;
                         case SkillType.ElementalDamage:
                             skills.Add(skill.skillType, new SkillElementalDamage(skill.GetMaxLevel(), skill.GetBonusValue(), "ElementalDamage", "Elemental Damage", "%"));
                             break;
+
+                        // Physical defense skills
+                        case SkillType.PhysicalResistance:
+                            skills.Add(skill.skillType, new SkillPhysicalResistance(skill.GetMaxLevel(), skill.GetBonusValue(), "PhysicalResistance", "Physical Resistance", "%"));
+                            break;
+                        case SkillType.ResistanceSlash:
+                            skills.Add(skill.skillType, new SkillResistanceSlash(skill.GetMaxLevel(), skill.GetBonusValue(), "PhysicalResistance", "Slash Resistance", "%"));
+                            break;
+                        case SkillType.ResistancePierce:
+                            skills.Add(skill.skillType, new SkillResistancePierce(skill.GetMaxLevel(), skill.GetBonusValue(), "PhysicalResistance", "Pierce Resistance", "%"));
+                            break;
+                        case SkillType.ResistanceBlunt:
+                            skills.Add(skill.skillType, new SkillResistanceBlunt(skill.GetMaxLevel(), skill.GetBonusValue(), "PhysicalResistance", "Blunt Resistance", "%"));
+                            break;
+
+                        // Elemental defense skills
                         case SkillType.ElementalResistance:
                             skills.Add(skill.skillType, new SkillElementalResistance(skill.GetMaxLevel(), skill.GetBonusValue(), "ElementalResistance", "Elemental Resistance", "%"));
                             break;
+                        case SkillType.ResistanceFire:
+                            skills.Add(skill.skillType, new SkillResistanceFire(skill.GetMaxLevel(), skill.GetBonusValue(), "ElementalResistance", "Fire Resistance", "%"));
+                            break;
+                        case SkillType.ResistanceFrost:
+                            skills.Add(skill.skillType, new SkillResistanceFrost(skill.GetMaxLevel(), skill.GetBonusValue(), "ElementalResistance", "Frost Resistance", "%"));
+                            break;
+                        case SkillType.ResistanceLightning:
+                            skills.Add(skill.skillType, new SkillResistanceLightning(skill.GetMaxLevel(), skill.GetBonusValue(), "ElementalResistance", "Lightning Resistance", "%"));
+                            break;
+                        case SkillType.ResistancePoison:
+                            skills.Add(skill.skillType, new SkillResistancePoison(skill.GetMaxLevel(), skill.GetBonusValue(), "ElementalResistance", "Poison Resistance", "%"));
+                            break;
+                        case SkillType.ResistanceSpirit:
+                            skills.Add(skill.skillType, new SkillResistanceSpirit(skill.GetMaxLevel(), skill.GetBonusValue(), "ElementalResistance", "Spirit Resistance", "%"));
+                            break;
+
                         case SkillType.MovementSpeed:
                             skills.Add(skill.skillType, new SkillMovementSpeed(skill.GetMaxLevel(), skill.GetBonusValue(), "MovementSpeed", "Movement Speed", "%"));
                             break;
@@ -138,23 +167,51 @@ namespace Cozyheim.LevelingSystem
             return skills[type];
         }
 
-        public bool SkillLevelUp(SkillType skill)
+        public void SkillLevelUp(SkillType skill)
         {
             if(!HasUnspendPoints())
             {
-                return false;
+                return;
             }
 
-            bool success = skills[skill].AddLevel();
+            int pointsToSpend = 1;
+
+            if(Input.GetKey(Main.addMultiplePointsKey.Value)) {
+                pointsToSpend = Mathf.Min(Main.addMultiplePointsAmount.Value, unspendPoints);
+            }
+
+            if(Input.GetKey(Main.addMaxPointsKey.Value)) {
+                pointsToSpend = unspendPoints;
+            }
+
+            for(int i = 0; i < pointsToSpend; i++) {
+                if(!skills[skill].AddLevel()) {
+                    break;
+                }
+            }
             UpdateUnspendPoints();
-            return success;
         }
 
-        public bool SkillLevelDown(SkillType skill)
+        public void SkillLevelDown(SkillType skill)
         {
-            bool success = skills[skill].RemoveLevel();
+            int pointsToRemove = 1;
+
+            if(Input.GetKey(Main.addMultiplePointsKey.Value)) {
+                pointsToRemove = Main.addMultiplePointsAmount.Value;
+            }
+
+            if(Input.GetKey(Main.addMaxPointsKey.Value)) {
+                SkillReset(skill);
+                return;
+            }
+
+            for(int i = 0; i < pointsToRemove; i++) {
+                if(!skills[skill].RemoveLevel()) {
+                    break;
+                }
+            }
+
             UpdateUnspendPoints();
-            return success;
         }
 
         public int SkillReset(SkillType skill)
@@ -215,19 +272,22 @@ namespace Cozyheim.LevelingSystem
         {
             if(XPManager.Instance != null && skills != null)
             {
-                int points = XPManager.Instance.GetPlayerLevel() - 1;
-                foreach (KeyValuePair<SkillType, SkillBase> kvp in skills)
-                {
-                    points -= kvp.Value.GetLevel();
-                }
+                RecalculateUnspendPoints();
 
-                unspendPoints = points;
-                UIManager.Instance.remainingPoints.text = "Remaining points: " + points;
+                UIManager.Instance.remainingPoints.text = "Remaining points: " + unspendPoints;
                 UIManager.Instance.UpdateCategoryPoints();
 
                 SaveSkills();
                 UpdateAllSkillInformation();
             }
+        }
+
+        public void RecalculateUnspendPoints() {
+            int points = Mathf.FloorToInt((float)XPManager.Instance.GetPlayerLevel() * Main.pointsPerLevel.Value);
+            foreach(KeyValuePair<SkillType, SkillBase> kvp in skills) {
+                points -= kvp.Value.GetLevel();
+            }
+            unspendPoints = points;
         }
 
         void LoadSkills()

@@ -1,0 +1,4 @@
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\_Builds\Cozyheim_JumpWithMount.dll
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\JumpWithMount\obj\Debug\JumpWithMount.csproj.AssemblyReference.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\JumpWithMount\obj\Debug\JumpWithMount.csproj.CoreCompileInputs.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\JumpWithMount\obj\Debug\Cozyheim_JumpWithMount.dll

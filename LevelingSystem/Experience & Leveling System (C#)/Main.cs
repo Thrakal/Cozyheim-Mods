@@ -11,12 +11,14 @@ using System.Collections.Generic;
 using Jotunn.Entities;
 using System.IO;
 using BepInEx.Bootstrap;
+using System;
 
 namespace Cozyheim.LevelingSystem
 {
     [BepInPlugin(GUID, modName, version)]
     [BepInDependency(Jotunn.Main.ModGuid)]
     [BepInDependency("randyknapp.mods.auga", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("dk.thrakal.DifficultyScaler", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
     internal class Main : BaseUnityPlugin
     {
@@ -28,7 +30,7 @@ namespace Cozyheim.LevelingSystem
 
         // Mod information
         internal const string modName = "LevelingSystem";
-        internal const string version = "0.3.1";
+        internal const string version = "0.5.1";
         internal const string GUID = "dk.thrakal." + modName;
 
         // Core objects that is required to patch and configure the mod
@@ -42,6 +44,7 @@ namespace Cozyheim.LevelingSystem
 
         // Check for other mods loaded
         internal static bool modAugaLoaded = false;
+        internal static bool modDifficultyScalerLoaded = false;
 
         // Config entries
         // -----------
@@ -49,6 +52,7 @@ namespace Cozyheim.LevelingSystem
         // General
         internal static ConfigEntry<bool> modEnabled;
         internal static ConfigEntry<bool> debugEnabled;
+        internal static ConfigEntry<bool> debugMonsterInternalName;
 
         // XP Bar
         internal static ConfigEntry<bool> showLevel;
@@ -59,8 +63,14 @@ namespace Cozyheim.LevelingSystem
         internal static ConfigEntry<Vector2> xpBarPosition;
         internal static ConfigEntry<Position> xpBarLevelTextPosition;
 
+        // Levels
+        internal static ConfigEntry<float> pointsPerLevel;
+
         // Skills Menu
         internal static ConfigEntry<bool> showScrollbar;
+        internal static ConfigEntry<KeyCode> addMaxPointsKey;
+        internal static ConfigEntry<KeyCode> addMultiplePointsKey;
+        internal static ConfigEntry<int> addMultiplePointsAmount;
 
         // VFX
         internal static ConfigEntry<bool> levelUpVFX;
@@ -91,9 +101,32 @@ namespace Cozyheim.LevelingSystem
         internal static ConfigEntry<float> baseXpSpreadMin;
         internal static ConfigEntry<float> baseXpSpreadMax;
 
+        internal static ConfigEntry<bool> enableDifficultyScalerXP;
+        internal static ConfigEntry<bool> difficultyScalerOverallHealth;
+        internal static ConfigEntry<float> difficultyScalerOverallHealthRatio;
+        internal static ConfigEntry<bool> difficultyScalerOverallDamage;
+        internal static ConfigEntry<float> difficultyScalerOverallDamageRatio;
+        internal static ConfigEntry<bool> difficultyScalerBiome;
+        internal static ConfigEntry<float> difficultyScalerBiomeRatio;
+        internal static ConfigEntry<bool> difficultyScalerBoss;
+        internal static ConfigEntry<float> difficultyScalerBossRatio;
+        internal static ConfigEntry<bool> difficultyScalerNight;
+        internal static ConfigEntry<float> difficultyScalerNightRatio;
+        internal static ConfigEntry<bool> difficultyScalerStar;
+        internal static ConfigEntry<float> difficultyScalerStarRatio;
+        
+
+        // Auga integration
+        internal static ConfigEntry<bool> useAugaBuildMenuUI;
+
+        internal static ConfigEntry<int> nexusID;
+
         void Awake()
         {
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
             modAugaLoaded = CheckIfModIsLoaded("randyknapp.mods.auga");
+            modDifficultyScalerLoaded = CheckIfModIsLoaded("dk.thrakal.DifficultyScaler");
 
             harmony.PatchAll();
             configFile = new ConfigFile(Config.ConfigFilePath, true);
@@ -104,8 +137,12 @@ namespace Cozyheim.LevelingSystem
             PrefabManager.OnVanillaPrefabsAvailable += LoadAssets;
 
             // Assigning config entries
-            modEnabled = CreateConfigEntry("General", "modEnabled", true, "Enable this mod", true);
+            modEnabled = CreateConfigEntry("General", "modEnabled", true, "[ServerSync] Enable this mod", true);
             debugEnabled = CreateConfigEntry("General", "debugEnabled", false, "Display debug messages in the console", false);
+            debugMonsterInternalName = CreateConfigEntry("General", "debugMonsterInternalName", false, "Display the internal ID (prefab name) of monsters in the console, when you hit them", false);
+
+            // Nexus ID
+            nexusID = Config.Bind<int>("General", "NexusID", 2282, "Nexus mod ID for updates");
 
             // XP Bar
             showLevel = CreateConfigEntry("XP Bar", "showLevel", true, "Display Level text", false);
@@ -116,14 +153,20 @@ namespace Cozyheim.LevelingSystem
             xpBarPosition = CreateConfigEntry("XP Bar", "xpBarPosition", new Vector2(0f,0f), "The offset position in (x,y) coordinates, from its default position. (x: 0.0 = center of screen, y: 0.0 = bottom of screen, y: 950.0 = top of screen)", false);
             xpBarLevelTextPosition = CreateConfigEntry("XP Bar", "xpBarLevelTextPosition", Position.Above, "The position of the level text, relative to the xp bar.", false);
 
+            // Levels
+            pointsPerLevel = CreateConfigEntry("Levels", "pointsPerLevel", 1f, "[ServerSync] The amount of skill points gained per level", true);
+
             // Skills Menu
             showScrollbar = CreateConfigEntry("Skills Menu", "showScrollbar", true, "Display the scroll bar. (Setting to false only disables the graphics, you can still keep scrolling)", false);
+            addMaxPointsKey = CreateConfigEntry("Skills Menu", "addMaxPointsKey", KeyCode.LeftControl, "By holding down this key, you will use as many points as you can on the skill.", false);
+            addMultiplePointsKey = CreateConfigEntry("Skills Menu", "addMultiplePointsKey", KeyCode.LeftShift, "By holding down this key, you will use 'addMultiplePointsAmount' points on each click.", false);
+            addMultiplePointsAmount = CreateConfigEntry("Skills Menu", "addMultiplePointsAmount", 10, "The amount of points used when holding down the 'addMultiplePointsKey' key", false);
 
             // VFX
             levelUpVFX = CreateConfigEntry("VFX", "levelUpVFX", true, "Display visual effects when leveling up", false);
             criticalHitVFX = CreateConfigEntry("VFX", "criticalHitVFX", true, "Display visual effects when dealing a critical hit", false);
             criticalHitShake = CreateConfigEntry("VFX", "criticalHitShake", true, "Shake the camera when dealing a critical hit", false);
-            criticalHitShakeIntensity = CreateConfigEntry("VFX", "criticalHitShakeIntensity", 3f, "Intensity of the camera shake", false);
+            criticalHitShakeIntensity = CreateConfigEntry("VFX", "criticalHitShakeIntensity", 2f, "Intensity of the camera shake", false);
 
             // XP Text
             displayXPInCorner = CreateConfigEntry("XP Text", "displayXPInCorner", true, "Display XP gained in top left corner", false);
@@ -131,57 +174,94 @@ namespace Cozyheim.LevelingSystem
             xpFontSize = CreateConfigEntry("XP Text", "xpFontSize", 100f, "The size  (in percentage) of the floating xp text. (100 = 100%, 50 = 50% etc.)", false);
 
             // XP Multipliers
-            allXPMultiplier = CreateConfigEntry("XP Multipliers", "XPMultipliers", 100f, "XP gained (in percentage) compared to the Monster XP Table. (100 = Same as XP table, 150 = +50%, 70 = -30%)", true);
-            monsterLvlXPMultiplier = CreateConfigEntry("XP Multipliers", "monsterLvlXPMultiplier", 50f, "Bonus XP gained per monster level. (0 = No Bonus, 50 = +50% per level)", true);
-            restedXPMultiplier = CreateConfigEntry("XP Multipliers", "restedXPMultiplier", 30f, "Bonus XP gained while rested. (0 = No Bonus, 30 = +30%)", true);
-            baseXpSpreadMin = CreateConfigEntry("XP Multipliers", "baseXpSpreadMin", 5f, "Base XP spread, Minimum. (0 = Same as XP table, 5 = -5% from XP table) Used to ensure that the same monster don't reward the exact same amount of XP every time.", true);
-            baseXpSpreadMax = CreateConfigEntry("XP Multipliers", "baseXpSpreadMax", 5f, "Base XP spread, Maximum. (0 = Same as XP table, 5 = +5% from XP table) Used to ensure that the same monster don't reqard the exact same amount of XP every time.", true);
+            allXPMultiplier = CreateConfigEntry("XP Multipliers", "XPMultipliers", 100f, "[ServerSync] XP gained (in percentage) compared to the Monster XP Table. (100 = Same as XP table, 150 = +50%, 70 = -30%)", true);
+            monsterLvlXPMultiplier = CreateConfigEntry("XP Multipliers", "monsterLvlXPMultiplier", 50f, "[ServerSync] Bonus XP gained per monster level. (0 = No Bonus, 50 = +50% per level)", true);
+            restedXPMultiplier = CreateConfigEntry("XP Multipliers", "restedXPMultiplier", 30f, "[ServerSync] Bonus XP gained while rested. (0 = No Bonus, 30 = +30%)", true);
+            baseXpSpreadMin = CreateConfigEntry("XP Multipliers", "baseXpSpreadMin", 5f, "[ServerSync] Base XP spread, Minimum. (0 = Same as XP table, 5 = -5% from XP table) Used to ensure that the same monster don't reward the exact same amount of XP every time.", true);
+            baseXpSpreadMax = CreateConfigEntry("XP Multipliers", "baseXpSpreadMax", 5f, "[ServerSync] Base XP spread, Maximum. (0 = Same as XP table, 5 = +5% from XP table) Used to ensure that the same monster don't reqard the exact same amount of XP every time.", true);
+
+            // Auga integration
+            useAugaBuildMenuUI = CreateConfigEntry("Auga Compatibility", "useAugaBuildMenuUI", true, "Using the Auga build menu HUD. Fixes compatibility issues. MUST be the same value as inthe Auga config. (Only required if you have Auga installed)", false);
+
+            // Difficulty Scaler integration
+            if(modDifficultyScalerLoaded) {
+                enableDifficultyScalerXP = CreateConfigEntry("Difficulty Scaler", "enableDifficultyScalerXP", false, "[ServerSync] Enable Difficulty Scaler XP integration (Requires the Difficulty Scaler mod is installed)", true);
+
+                difficultyScalerOverallHealth = CreateConfigEntry("Difficulty Scaler", "difficultyScalerOverallHealth", true, "[ServerSync] Use Difficulty Scaler's overall health difficulty multiplier", true);
+                difficultyScalerOverallHealthRatio = CreateConfigEntry("Difficulty Scaler", "difficultyScalerOverallHealthRatio", 0.5f, "[ServerSync] The ratio of the scaling multiplier that is applied as XP. (1 = the same as difficulty scaler, 0.5 = 50% of the scaling, 2 = 200% of the scaling", true);
+
+                difficultyScalerOverallDamage = CreateConfigEntry("Difficulty Scaler", "difficultyScalerOverallDamage", true, "[ServerSync] Use Difficulty Scaler's overall damage difficulty multiplier", true);
+                difficultyScalerOverallDamageRatio = CreateConfigEntry("Difficulty Scaler", "difficultyScalerOverallDamageRatio", 0.5f, "[ServerSync] The ratio of the scaling multiplier that is applied as XP. (1 = the same as difficulty scaler, 0.5 = 50% of the scaling, 2 = 200% of the scaling", true);
+
+                difficultyScalerBiome = CreateConfigEntry("Difficulty Scaler", "difficultyScalerBiome", true, "[ServerSync] Use Difficulty Scaler's biome difficulty multiplier", true);
+                difficultyScalerBiomeRatio = CreateConfigEntry("Difficulty Scaler", "difficultyScalerBiomeRatio", 1f, "[ServerSync] The ratio of the scaling multiplier that is applied as XP. (1 = the same as difficulty scaler, 0.5 = 50% of the scaling, 2 = 200% of the scaling", true);
+
+                difficultyScalerBoss = CreateConfigEntry("Difficulty Scaler", "difficultyScalerBoss", true, "[ServerSync] Use Difficulty Scaler's boss difficulty multiplier", true);
+                difficultyScalerBossRatio = CreateConfigEntry("Difficulty Scaler", "difficultyScalerBossRatio", 1f, "[ServerSync] The ratio of the scaling multiplier that is applied as XP. (1 = the same as difficulty scaler, 0.5 = 50% of the scaling, 2 = 200% of the scaling", true);
+
+                difficultyScalerNight = CreateConfigEntry("Difficulty Scaler", "difficultyScalerNight", true, "[ServerSync] Use Difficulty Scaler' night difficulty multiplier", true);
+                difficultyScalerNightRatio = CreateConfigEntry("Difficulty Scaler", "difficultyScalerNightRatio", 1f, "[ServerSync] The ratio of the scaling multiplier that is applied as XP. (1 = the same as difficulty scaler, 0.5 = 50% of the scaling, 2 = 200% of the scaling", true);
+
+                difficultyScalerStar = CreateConfigEntry("Difficulty Scaler", "difficultyScalerStar", true, "[ServerSync] Use Difficulty Scaler's star difficulty multiplier", true);
+                difficultyScalerStarRatio = CreateConfigEntry("Difficulty Scaler", "difficultyScalerStarRatio", 1f, "[ServerSync] The ratio of the scaling multiplier that is applied as XP. (1 = the same as difficulty scaler, 0.5 = 50% of the scaling, 2 = 200% of the scaling", true);
+            }
 
             SkillConfig.Init();
 
-
-
-            // Generate config entires for XP Tables
+            // Generate config entries for XP Tables
 
             // Player
-            XPTable.GenerateDefaultPlayerXPTable();
-            string playerTableDefault = "";
-            for (int i = 0; i < XPTable.playerXPTable.Length; i++)
-            {
-                playerTableDefault += i != 0 ? ", " : "";
-                playerTableDefault += "Lv" + (i + 1).ToString() + ":" + XPTable.playerXPTable[i];
-            }
-            playerXpTable = CreateConfigEntry("XP Table", "playerXpTable", playerTableDefault, "The xp needed for each level. To reach a higher max level, simply add more values to the table. (Changes requires to reload the config file, which can be done in two ways. 1. Restart the server.  -  2. Admins can open the console in-game and type LevelingSystem ReloadConfig)", true);
+            playerXpTable = CreateConfigEntry("XP Table", "playerXpTable", "", "(Obsolete! - Change the JSON file in the config folder instead) The xp needed for each level. To reach a higher max level, simply add more values to the table. (Changes requires to reload the config file, which can be done in two ways. 1. Restart the server.  -  2. Admins can open the console in-game and type LevelingSystem ReloadConfig)", true);
 
             // Monsters
-            string monsterTableDefault = GenerateXPTableString(XPTable.monsterXPTable);
-            monsterXpTable = CreateConfigEntry("XP Table", "monsterXpTable", monsterTableDefault, "The base xp of monsters. (Changes requires to realod the config file)", true);
-            monsterXpTable.Value = AddNewEntriesToXPTable(XPTable.monsterXPTable, monsterXpTable.Value);
+            monsterXpTable = CreateConfigEntry("XP Table", "monsterXpTable", "", "(Obsolete! - Change the JSON file in the config folder instead) The base xp of monsters. (Changes requires to realod the config file)", true);
 
             // Pickables
-            string pickableTableDefault = GenerateXPTableString(XPTable.pickableXPTable);
-            pickableXpEnabled = CreateConfigEntry("XP Table", "pickableXpEnabled", true, "Gain XP when interacting with Pickables", true);
-            pickableXpTable = CreateConfigEntry("XP Table", "pickableXpTable", pickableTableDefault, "The base xp of pickables. (Changes requires to reload the config file)", true);
-            pickableXpTable.Value = AddNewEntriesToXPTable(XPTable.pickableXPTable, pickableXpTable.Value);
+            pickableXpEnabled = CreateConfigEntry("XP Table", "pickableXpEnabled", true, "[ServerSync] Gain XP when interacting with Pickables", true);
+            pickableXpTable = CreateConfigEntry("XP Table", "pickableXpTable", "", "(Obsolete! - Change the JSON file in the config folder instead) The base xp of pickables. (Changes requires to reload the config file)", true);
 
             // Mining
-            string miningTableDefault = GenerateXPTableString(XPTable.miningXPTable);
-            miningXpEnabled = CreateConfigEntry("XP Table", "miningXpEnabled", true, "Gain XP when mining", true);
-            miningXpTable = CreateConfigEntry("XP Table", "miningXpTable", miningTableDefault, "The base xp for mining. (Changes requires to reload the config file)", true);
-            miningXpTable.Value = AddNewEntriesToXPTable(XPTable.miningXPTable, miningXpTable.Value);
+            miningXpEnabled = CreateConfigEntry("XP Table", "miningXpEnabled", true, "[ServerSync] Gain XP when mining", true);
+            miningXpTable = CreateConfigEntry("XP Table", "miningXpTable", "", "(Obsolete! - Change the JSON file in the config folder instead) The base xp for mining. (Changes requires to reload the config file)", true);
 
             // Woodcutting
-            string woodcuttingTableDefault = GenerateXPTableString(XPTable.woodcuttingXPTable);
-            woodcuttingXpEnabled = CreateConfigEntry("XP Table", "woodcuttingXpEnabled", true, "Gain XP when chopping trees", true);
-            woodcuttingXpTable = CreateConfigEntry("XP Table", "woodcuttingXpTable", woodcuttingTableDefault, "The base xp for woodcutting. (Changes requires to reload the config file)", true);
-            woodcuttingXpTable.Value = AddNewEntriesToXPTable(XPTable.woodcuttingXPTable, woodcuttingXpTable.Value);
+            woodcuttingXpEnabled = CreateConfigEntry("XP Table", "woodcuttingXpEnabled", true, "[ServerSync] Gain XP when chopping trees", true);
+            woodcuttingXpTable = CreateConfigEntry("XP Table", "woodcuttingXpTable", "", "(Obsolete! - Change the JSON file in the config folder instead) The base xp for woodcutting. (Changes requires to reload the config file)", true);
 
 
             CommandManager.Instance.AddConsoleCommand(new ConsoleLog());
             ConsoleLog.Init();
 
+            NetworkHandler.Init();
             UIManager.Init();
             XPManager.Init();
+
+            ConsoleLog.Print("Auga loaded: " + modAugaLoaded, LogType.Warning);
+        }
+
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {
+            string baseResourceName = Assembly.GetExecutingAssembly().GetName().Name + "." + new AssemblyName(args.Name).Name;
+            byte[] assemblyData = null;
+            byte[] symbolsData = null;
+            using(var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(baseResourceName + ".dll")) {
+                if(stream == null)
+                    return null;
+
+                assemblyData = new byte[stream.Length];
+                stream.Read(assemblyData, 0, assemblyData.Length);
+            }
+
+            using(var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(baseResourceName + ".pdb")) {
+                if(stream != null) {
+                    symbolsData = new Byte[stream.Length];
+                    stream.Read(symbolsData, 0, symbolsData.Length);
+                }
+            }
+
+            Assembly assembly = Assembly.Load(assemblyData, symbolsData);
+            ConsoleLog.Print("Assembly loaded: " + (assembly == null));
+
+            return assembly;
         }
 
         private string AddNewEntriesToXPTable(Dictionary<string, int> xpTable, string configEntry)
@@ -309,6 +389,8 @@ namespace Cozyheim.LevelingSystem
 
             return newSprite;
         }
+
+
 
         #region CreateConfigEntry Wrapper
         public static ConfigEntry<T> CreateConfigEntry<T>(string group, string name, T value, ConfigDescription description, bool synchronizedSetting = true)

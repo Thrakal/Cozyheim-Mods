@@ -19,7 +19,7 @@ namespace Cozyheim.NPCVendors
             customNPCs = new List<NPCItem>
             {
                 // Skarde, Egil, Lars, Svend, Frida, Leif, Asbjørn, Siri
-                new NPCItem(NPCType.Vendor, "Buy building materials for valuables", "Icon_Vendor.png", new NPCEquipment()
+                new NPCItem(NPCType.Vendor, "Buy building materials for valuables", "NPC_ICON_VENDOR.png", new NPCEquipment()
                 {
                     Gender = GenderNPC.Female,
                     Hair = HairNPC.Braided_4,
@@ -29,7 +29,7 @@ namespace Cozyheim.NPCVendors
                     Legs = LegsNPC.ArmorTrollLeatherLegs,
                     Height = NPCHeight.h160
                 }),
-                new NPCItem(NPCType.Blacksmith, "Buy mining materials for valuables", "Icon_Blacksmith.png", new NPCEquipment()
+                new NPCItem(NPCType.Smith, "Buy mining materials for valuables", "NPC_ICON_SMITH.png", new NPCEquipment()
                 {
                     Gender = GenderNPC.Male,
                     Hair = HairNPC.Braids_Gathered,
@@ -42,7 +42,7 @@ namespace Cozyheim.NPCVendors
                     Height = NPCHeight.h210
                     
                 }),
-                new NPCItem(NPCType.Farmer, "Buy farming materials for valuables", "Icon_Farmer.png", new NPCEquipment()
+                new NPCItem(NPCType.Farmer, "Buy farming materials for valuables", "NPC_ICON_FARMER.png", new NPCEquipment()
                 {
                     Gender = GenderNPC.Male,
                     Hair = HairNPC.NoHair,
@@ -56,7 +56,7 @@ namespace Cozyheim.NPCVendors
                     MainHand = NPCEquipment.GetItem(ToolNPC.Cultivator),
                     Height = NPCHeight.h190
                 }),
-                new NPCItem(NPCType.Mason, "Buy stone materials for valuables", "Icon_Vendor.png", new NPCEquipment()
+                new NPCItem(NPCType.Mason, "Buy stone materials for valuables", "NPC_ICON_MASON.png", new NPCEquipment()
                 {
                     Gender = GenderNPC.Male,
                     Hair = HairNPC.Long_1,
@@ -69,7 +69,7 @@ namespace Cozyheim.NPCVendors
                     MainHand = NPCEquipment.GetItem(ToolNPC.Hammer),
                     Height = NPCHeight.h205
                 }),
-                new NPCItem(NPCType.Forester, "Buy forest seeds for valuables", "Icon_Vendor.png", new NPCEquipment()
+                new NPCItem(NPCType.Forester, "Buy forest seeds for valuables", "NPC_ICON_FORESTER.png", new NPCEquipment()
                 {
                     Gender = GenderNPC.Female,
                     Hair = HairNPC.Curls_Pulled_Back,
@@ -83,7 +83,7 @@ namespace Cozyheim.NPCVendors
                     MainHand = NPCEquipment.GetItem(OneHandedWeaponNPC.KnifeChitin),
                     Height = NPCHeight.h170
                 }),
-                new NPCItem(NPCType.Hunter, "Buy animal materials for valuables", "Icon_Vendor.png", new NPCEquipment()
+                new NPCItem(NPCType.Hunter, "Buy animal materials for valuables", "NPC_ICON_HUNTER.png", new NPCEquipment()
                 {
                     Gender = GenderNPC.Female,
                     Hair = HairNPC.Ponytail_2,
@@ -96,7 +96,7 @@ namespace Cozyheim.NPCVendors
                     MainHandBack = NPCEquipment.GetItem(TrophyNPC.TrophySeekerBrute),
                     Height = NPCHeight.h170
                 }),
-                new NPCItem(NPCType.Butcher, "Buy meat materials for valuables", "Icon_Vendor.png", new NPCEquipment()
+                new NPCItem(NPCType.Butcher, "Buy meat materials for valuables", "NPC_ICON_BUTCHER.png", new NPCEquipment()
                 {
                     Gender = GenderNPC.Male,
                     Hair = HairNPC.NoHair,
@@ -109,7 +109,7 @@ namespace Cozyheim.NPCVendors
                     MainHandBack = NPCEquipment.GetItem(ToolNPC.AxeIron),
                     Height = NPCHeight.h195
                 }),
-                new NPCItem(NPCType.Völva, "Buy magic materials for valuables", "Icon_Vendor.png", new NPCEquipment()
+                new NPCItem(NPCType.Völva, "Buy magic materials for valuables", "NPC_ICON_VOLVA.png", new NPCEquipment()
                 {
                     Gender = GenderNPC.Female,
                     Hair = HairNPC.SideSwept_2,
@@ -122,7 +122,7 @@ namespace Cozyheim.NPCVendors
                     MainHandBack = NPCEquipment.GetItem(TrophyNPC.TrophyAbomination),
                     Height = NPCHeight.h180
                 }),
-                new NPCItem(NPCType.Fisher, "Buy fishing materials for valuables", "Icon_Vendor.png", new NPCEquipment()
+                new NPCItem(NPCType.Fisher, "Buy fishing materials for valuables", "NPC_ICON_FISHER.png", new NPCEquipment()
                 {
                     Gender = GenderNPC.Male,
                     Hair = HairNPC.NoHair,
@@ -136,7 +136,7 @@ namespace Cozyheim.NPCVendors
                     MainHand = NPCEquipment.GetItem(ToolNPC.FishingRod),
                     Height = NPCHeight.h185
                 }),
-                new NPCItem(NPCType.Woodcutter, "Buy wood materials for valuables", "Icon_Vendor.png", new NPCEquipment()
+                new NPCItem(NPCType.Woodcutter, "Buy wood materials for valuables", "NPC_ICON_WOODCUTTER.png", new NPCEquipment()
                 {
                     Gender = GenderNPC.Male,
                     Hair = HairNPC.SideSwept_3,
@@ -163,13 +163,13 @@ namespace Cozyheim.NPCVendors
                 new NPCRecipe(NPCType.Vendor, "ChickenEgg", 50, 2000, BossToUnlock.Yagluth),
 
 
-                new NPCRecipe(NPCType.Blacksmith, "TinOre", 30, 150, BossToUnlock.Elder),
-                new NPCRecipe(NPCType.Blacksmith, "CopperOre", 30, 150, BossToUnlock.Elder),
-                new NPCRecipe(NPCType.Blacksmith, "IronScrap", 30, 200, BossToUnlock.Bonemass),
-                new NPCRecipe(NPCType.Blacksmith, "SilverOre", 30, 250, BossToUnlock.Moder),
-                new NPCRecipe(NPCType.Blacksmith, "BlackMetalScrap", 30, 350, BossToUnlock.Yagluth),
-                new NPCRecipe(NPCType.Blacksmith, "FlametalOre", 30, 300, BossToUnlock.Queen),
-                new NPCRecipe(NPCType.Blacksmith, "Chain", 2, 50, BossToUnlock.Bonemass),
+                new NPCRecipe(NPCType.Smith, "TinOre", 30, 150, BossToUnlock.Elder),
+                new NPCRecipe(NPCType.Smith, "CopperOre", 30, 150, BossToUnlock.Elder),
+                new NPCRecipe(NPCType.Smith, "IronScrap", 30, 200, BossToUnlock.Bonemass),
+                new NPCRecipe(NPCType.Smith, "SilverOre", 30, 250, BossToUnlock.Moder),
+                new NPCRecipe(NPCType.Smith, "BlackMetalScrap", 30, 350, BossToUnlock.Yagluth),
+                new NPCRecipe(NPCType.Smith, "FlametalOre", 30, 300, BossToUnlock.Queen),
+                new NPCRecipe(NPCType.Smith, "Chain", 2, 50, BossToUnlock.Bonemass),
 
 
                 new NPCRecipe(NPCType.Farmer, "CarrotSeeds", 50, 50, BossToUnlock.Elder),

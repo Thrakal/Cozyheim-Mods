@@ -29,7 +29,7 @@ namespace Cozyheim.DeathChange
         void Awake()
         {
             harmony.PatchAll();
-            configFile = new ConfigFile(BepInEx.Paths.ConfigPath + "/Cozyheim/" + modName + "_Config.cfg", true);
+            configFile = new ConfigFile(Config.ConfigFilePath, true);
             configFile.SaveOnConfigSet = true;
 
             // Assigning config entries

@@ -6,9 +6,9 @@ using Jotunn.Utils;
 using ServerSync;
 using System.Reflection;
 using System.Linq;
-using System.Collections.Generic;
 using UnityEngine;
-using CozyheimTweaks.Scripts;
+using BepInEx.Bootstrap;
+using System.Collections.Generic;
 
 // To-Do List
 // - Claim bed only 1 within range of another bed
@@ -17,12 +17,13 @@ namespace CozyheimTweaks
 {
     [BepInPlugin(GUID, modName, version)]
     [BepInDependency(Jotunn.Main.ModGuid)]
+    [BepInDependency("com.undeadbits.valheimmods.portalstation", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
     internal class Main : BaseUnityPlugin
     {
         // Mod information
         internal const string modName = "CozyheimTweaks";
-        internal const string version = "0.0.5";
+        internal const string version = "0.1.0";
         internal const string GUID = "dk.thrakal." + modName;
 
         // Core objects that is required to patch and configure the mod
@@ -32,10 +33,8 @@ namespace CozyheimTweaks
         // Config files
         internal static ConfigFile mainConfig;
         internal static ConfigFile playerTweaksConfig;
-        internal static ConfigFile customItemsConfig;
         internal static ConfigFile sleepBetterConfig;
         internal static ConfigFile mistlandsConfig;
-        internal static ConfigFile buildMoreConfig;
         internal static ConfigFile honeyConfig;
 
         // Config entries
@@ -63,6 +62,8 @@ namespace CozyheimTweaks
         internal static ConfigEntry<float> misterRadius;
         internal static ConfigEntry<bool> enableLocalMist;
 
+        internal static bool isPortalStationsLoaded = false;
+
         void Awake()
         {
             harmony.PatchAll();
@@ -73,17 +74,11 @@ namespace CozyheimTweaks
             playerTweaksConfig = new ConfigFile(BepInEx.Paths.ConfigPath + "/Cozyheim/playerTweaksConfig.cfg", true);
             playerTweaksConfig.SaveOnConfigSet = true;
 
-            customItemsConfig = new ConfigFile(BepInEx.Paths.ConfigPath + "/Cozyheim/customItemsConfig.cfg", true);
-            customItemsConfig.SaveOnConfigSet = true;
-
             sleepBetterConfig = new ConfigFile(BepInEx.Paths.ConfigPath + "/Cozyheim/sleepBetterConfig.cfg", true);
             sleepBetterConfig.SaveOnConfigSet = true;
 
             mistlandsConfig = new ConfigFile(BepInEx.Paths.ConfigPath + "/Cozyheim/mistlandsConfig.cfg", true);
             mistlandsConfig.SaveOnConfigSet = true;
-
-            buildMoreConfig = new ConfigFile(BepInEx.Paths.ConfigPath + "/Cozyheim/buildMoreConfig.cfg", true);
-            buildMoreConfig.SaveOnConfigSet = true;
 
             honeyConfig = new ConfigFile(BepInEx.Paths.ConfigPath + "/Cozyheim/honeyConfig.cfg", true);
             honeyConfig.SaveOnConfigSet = true;
@@ -96,10 +91,6 @@ namespace CozyheimTweaks
             pickupRadius = CreateConfigEntry("Player Tweaks", "pickupRadius", 3f, "Default for vanilla valheim is '2'", playerTweaksConfig);
             useDistance = CreateConfigEntry("Player Tweaks", "craftingStationInteractRadius", 4f, "Default for vanilla valheim is '2'", playerTweaksConfig);
             enableFastTelport = CreateConfigEntry("Player Tweaks", "fastTeleport", true, "Remove the teleport animation and makes it instant", playerTweaksConfig);
-            
-            // 02: Custom Items config
-            enableCraftingItems = CreateConfigEntry("Custom Items", "enableCustomCrafingItems", true, "Adds custom crafting items", customItemsConfig);
-            enableRecipes = CreateConfigEntry("Custom Items", "enableCustomRecipes", true, "Adds custom recipes", customItemsConfig);
             
             // 03: Sleep Better config
             useCustomSleepMessages = CreateConfigEntry("Sleep Better", "enableCustomSleepMessages", true, "Use custom sleep messages", sleepBetterConfig);
@@ -114,25 +105,33 @@ namespace CozyheimTweaks
             misterRadius = CreateConfigEntry("Mistlands Settings", "misterRadius", 50f, "Default for vanilla valheim is '35'", mistlandsConfig);
             enableLocalMist = CreateConfigEntry("Mistlands Settings", "enableLocalMist", false, "Default for vanilla valheim is 'true'. Enable locally generated mist when in Mistlands", mistlandsConfig);
 
-            // 05: Build/Material Settings (config found in BuildMore.cs)
-
             // 06: Honey/beehive config
             maxHoney = CreateConfigEntry("Honey/Beehive Settings", "maxHoney", 8f, "Default for vanilla valheim is '4'", honeyConfig);
             honeyGenerateTime = CreateConfigEntry("Honey/Beehive Settings", "honeyGenerateTime", 900f, "Default for vanilla valheim is '1200'", honeyConfig);
             resizeBeehive = CreateConfigEntry("Honey/Beehive Settings", "resizeBeehive", 0.6f, "Default for vanilla valheim is '1'", honeyConfig);
 
-//            BoneReorder.ApplyOnEquipmentChanged();
-
             // Init all patches
-            CustomItems.Init();
-            SmokeFix.Init();
-            RemoveVanillaItems.Init();
-            BuildMore.Init();
             OnlyOneBed.Init();
-            WardProtection.Instance.Init();
+
+            isPortalStationsLoaded = CheckIfModIsLoaded("com.undeadbits.valheimmods.portalstation");
+
+            GameObject go = new GameObject();
+            go.AddComponent<PortalStationFix>();
 
             CommandManager.Instance.AddConsoleCommand(new ToppLog());
         }
+
+        private bool CheckIfModIsLoaded(string modGUID) {
+            foreach(KeyValuePair<string, PluginInfo> plugin in Chainloader.PluginInfos) {
+                BepInPlugin pluginData = plugin.Value.Metadata;
+                if(pluginData.GUID.Equals(modGUID)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         void OnDestroy()
         {
             harmony.UnpatchSelf();
@@ -167,73 +166,5 @@ namespace CozyheimTweaks
 
         internal static ConfigEntry<T> CreateConfigEntry<T>(string group, string name, T value, string description, ConfigFile file) => CreateConfigEntry(group, name, value, description, true, file);
         #endregion
-    }
-
-    internal class PrefabItem
-    {
-        public string prefabName;
-        public string ingameName;
-        public Category category;
-        public Piece piece;
-        public List<ICustomUnityScript> components;
-
-        public PrefabItem(string prefabName, string ingameName, Category category, List<ICustomUnityScript> components = null)
-        {
-            this.prefabName = prefabName;
-            this.ingameName = ingameName;
-            this.category = category;
-            if(components == null)
-            {
-                this.components = new List<ICustomUnityScript>();
-            } else
-            {
-                this.components = components;
-            }            
-        }
-    }
-
-    internal class RecipeItem
-    {
-        public string recipeName;
-        public string globalKeyToUnlock;
-        public Recipe recipe;
-
-        public RecipeItem(string recipeName, BossToUnlock bossToUnlock)
-        {
-            string[] globalBossKeys = new string[]
-            {
-                "",
-                "defeated_eikthyr",
-                "defeated_gdking",
-                "defeated_bonemass",
-                "defeated_dragon",
-                "defeated_goblinking",
-                "defeated_queen"
-            };
-
-            this.recipeName = recipeName;
-            globalKeyToUnlock = globalBossKeys[(int) bossToUnlock];
-        }
-    }
-
-    public enum BossToUnlock
-    {
-        None = 0,
-        Eikthyr = 1,
-        Elder = 2,
-        Bonemass = 3,
-        Moder = 4,
-        Yagluth = 5,
-        Queen = 6
-    }
-
-    internal enum Category
-    {
-        Crafting = 0,
-        Building = 1,
-        Hoe = 2,
-        Recipe = 3,
-        None = 4,
-        NPC = 5
     }
 }

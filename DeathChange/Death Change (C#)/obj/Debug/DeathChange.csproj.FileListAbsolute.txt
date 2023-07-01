@@ -2,3 +2,7 @@ D:\Cozyheim Mods\Cozyheim-Repository\_Builds\Cozyheim_DeathChange.dll
 D:\Cozyheim Mods\Cozyheim-Repository\DeathChange\Death Change (C#)\obj\Debug\DeathChange.csproj.AssemblyReference.cache
 D:\Cozyheim Mods\Cozyheim-Repository\DeathChange\Death Change (C#)\obj\Debug\DeathChange.csproj.CoreCompileInputs.cache
 D:\Cozyheim Mods\Cozyheim-Repository\DeathChange\Death Change (C#)\obj\Debug\Cozyheim_DeathChange.dll
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\_Builds\Cozyheim_DeathChange.dll
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\DeathChange\Death Change (C#)\obj\Debug\DeathChange.csproj.AssemblyReference.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\DeathChange\Death Change (C#)\obj\Debug\DeathChange.csproj.CoreCompileInputs.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\DeathChange\Death Change (C#)\obj\Debug\Cozyheim_DeathChange.dll

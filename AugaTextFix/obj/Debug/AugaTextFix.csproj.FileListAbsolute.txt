@@ -1,0 +1,5 @@
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\_Builds\Cozyheim_AugaTextFix.dll
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\AugaTextFix\obj\Debug\AugaTextFix.csproj.AssemblyReference.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\AugaTextFix\obj\Debug\AugaTextFix.csproj.CoreCompileInputs.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\AugaTextFix\obj\Debug\AugaTextFix.csproj.CopyComplete
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\AugaTextFix\obj\Debug\Cozyheim_AugaTextFix.dll

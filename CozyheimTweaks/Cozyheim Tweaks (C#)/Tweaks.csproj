@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup>
     <LangVersion>10</LangVersion>
@@ -56,6 +58,10 @@
     </Reference>
     <Reference Include="Jotunn">
       <HintPath>..\..\_Reference DLLs\Jotunn.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PortalStations">
+      <HintPath>..\..\_Reference DLLs\PortalStations.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -104,22 +110,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuildMore.cs" />
-    <Compile Include="Resources\AddRemoveItemsRecipesConfig.cs" />
+    <Compile Include="Player_NoFoodLossOnDeath_Patch.cs" />
+    <Compile Include="CrossbowReloadSpeed_Patch.cs" />
+    <Compile Include="BowDrawSpeed_Patch.cs" />
     <Compile Include="Resources\ConfigSync.cs" />
+    <Compile Include="PortalStationFix.cs" />
     <Compile Include="Useful scripts\SimpleJSON.cs" />
-    <Compile Include="Useful scripts\ICustomUnityScript.cs" />
-    <Compile Include="WardProtection\WardConsole.cs" />
-    <Compile Include="WardProtection\WardPlayerData.cs" />
-    <Compile Include="WardProtection\WardProtect.cs" />
     <Compile Include="OnlyOneBed.cs" />
-    <Compile Include="WardProtection\WardProtection.cs" />
-    <Compile Include="RemoveVanillaItems.cs" />
-    <Compile Include="SmokeFix.cs" />
     <Compile Include="Useful scripts\ToppLog.cs" />
     <Compile Include="RemoveMistlandMist.cs" />
     <Compile Include="SleepBetter.cs" />
-    <Compile Include="CustomItems.cs" />
     <Compile Include="PlayerGamePatches.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

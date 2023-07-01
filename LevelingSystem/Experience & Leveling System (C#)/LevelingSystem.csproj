@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup>
     <LangVersion>10</LangVersion>
@@ -36,8 +38,18 @@
   <ItemGroup>
     <Compile Include="Custom Effect Scripts\CritTextAnim.cs" />
     <Compile Include="LevelingDummy_Patch.cs" />
+    <Compile Include="Networking\RPC_LevelUpVFX.cs" />
+    <Compile Include="Networking\NetworkHandler.cs" />
     <Compile Include="Resources\ConfigSync.cs" />
     <Compile Include="Skills\Skill Patches\SkillCriticalHitDamage.cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistanceSpirit.cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistancePoison.cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistanceFrost.cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistanceLightning.cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistanceFire.cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistancePierce.cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistanceBlunt .cs" />
+    <Compile Include="Skills\Skill Patches\SkillResistanceSlash.cs" />
     <Compile Include="Skills\SkillConfig.cs" />
     <Compile Include="Skills\Skill Patches\SkillCriticalHitChance.cs" />
     <Compile Include="Skills\Skill Patches\SkillEitrRegen.cs" />
@@ -146,6 +158,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\leveling_system" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\_CozyheimAPI\_CozyheimAPI.csproj">
+      <Project>{0b55e941-0eb5-4db8-8f44-211c3cbd7919}</Project>
+      <Name>_CozyheimAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

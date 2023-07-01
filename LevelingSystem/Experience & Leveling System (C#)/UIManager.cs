@@ -50,7 +50,6 @@ namespace Cozyheim.LevelingSystem
         public static CustomRPC rpc_AddExperience;
         public static CustomRPC rpc_ReloadConfig;
         public static CustomRPC rpc_LevelUpEffect;
-        public static CustomRPC rpc_Test;
 
         public static UIManager Instance;
 
@@ -63,18 +62,6 @@ namespace Cozyheim.LevelingSystem
             rpc_AddExperience = NetworkManager.Instance.AddRPC("AddExperience", RPC_AddExperience, RPC_AddExperience);
             rpc_ReloadConfig = NetworkManager.Instance.AddRPC("ReloadConfig", RPC_ReloadConfig, RPC_ReloadConfig);
             rpc_LevelUpEffect = NetworkManager.Instance.AddRPC("LevelUpEffect", RPC_LevelUpEffect, RPC_LevelUpEffect);
-            rpc_Test = NetworkManager.Instance.AddRPC("Test", RPC_Test, RPC_Test);
-        }
-
-        public void CallRPCTest()
-        {
-            rpc_Test.SendPackage(ZRoutedRpc.Everybody, new ZPackage());
-        }
-
-        private static IEnumerator RPC_Test(long sender, ZPackage package)
-        {
-            ConsoleLog.Print("RPC Test called!", LogType.Message);
-            yield return null;
         }
 
         void Awake()
@@ -262,12 +249,6 @@ namespace Cozyheim.LevelingSystem
             }
         }
 
-        public void ReloadSkillsUI()
-        {
-            CreateSkillUI();
-            UpdateUIInformation();
-        }
-
         void CreateSkillUI()
         {
             skillsScrollRect.verticalScrollbar = Main.showScrollbar.Value ? skillsScrollbar : null;
@@ -308,9 +289,6 @@ namespace Cozyheim.LevelingSystem
 
         void UpdateUIInformation()
         {
-//            ConsoleLog.Print("UpdateUIInformation called");
-//            remainingPoints.text = "Remaining points: " + SkillManager.Instance.unspendPoints;
-
             SkillManager.Instance.UpdateAllSkillInformation();
             SkillManager.Instance.UpdateUnspendPoints();
         }
@@ -378,12 +356,14 @@ namespace Cozyheim.LevelingSystem
 
         private static IEnumerator RPC_LevelUpEffect(long sender, ZPackage package)
         {
+            ConsoleLog.Print("Level up VFX: " + Main.levelUpVFX.Value.ToString());
+
             if (Main.levelUpVFX.Value)
             {
-                ConsoleLog.Print(Main.levelUpVFX.Value.ToString());
-
+                ConsoleLog.Print("A");
                 if (Player.m_localPlayer != null)
                 {
+                    ConsoleLog.Print("B");
                     long playerID = package.ReadLong();
 
                     Collider[] colls = Physics.OverlapSphere(Player.m_localPlayer.transform.position, 40f);
@@ -398,6 +378,7 @@ namespace Cozyheim.LevelingSystem
                             continue;
                         }
 
+                        ConsoleLog.Print("C");
                         GameObject newEffect = Instantiate(levelUpEffect, player.GetCenterPoint(), Quaternion.identity, player.transform);
                         Destroy(newEffect, 6f);
                         break;
@@ -408,14 +389,9 @@ namespace Cozyheim.LevelingSystem
             yield return null;
         }
 
-        public void LevelUpVFX()
-        {
-            XPManager.Instance.PlayerLevelUp(Player.m_localPlayer.GetPlayerID());
-        }
-
         IEnumerator LevelUpFadeIn()
         {
-            LevelUpVFX();
+            NetworkHandler.LevelUpVFX();
 
             levelUpGroup.alpha = 0f;
             levelUpText.text = "Level " + playerLevel;
@@ -457,17 +433,14 @@ namespace Cozyheim.LevelingSystem
 
         private static IEnumerator RPC_AddExperience(long sender, ZPackage package)
         {
-            ConsoleLog.Print("Received Expereience");
-
             long playerID = package.ReadLong();
             int awardedXP = package.ReadInt();
 
             if (Player.m_localPlayer != null)
             {
-
                 if (playerID == Player.m_localPlayer.GetPlayerID())
                 {
-
+                    ConsoleLog.Print("Received Expereience");
                     Instance.AddExperience(awardedXP);
                     SpawnFloatingXPText(awardedXP);
                 }
@@ -478,17 +451,18 @@ namespace Cozyheim.LevelingSystem
 
         private static IEnumerator RPC_AddExperienceMonster(long sender, ZPackage package)
         {
-            ConsoleLog.Print("Received Expereience Monster");
-
             int awardedXP = package.ReadInt();
             int monsterLevelBonusXp = package.ReadInt();
             int restedBonusXp = package.ReadInt();
             long playerID = package.ReadLong();
- 
+            string monsterName = package.ReadString();
+
             if(Player.m_localPlayer != null)
             {
                 if(playerID == Player.m_localPlayer.GetPlayerID())
                 {
+                    ConsoleLog.Print("Received Expereience from " + monsterName);
+
                     int totalXpGained = 0;
 
                     StatusEffect SERested = Player.m_localPlayer.GetSEMan().GetStatusEffect("Rested");

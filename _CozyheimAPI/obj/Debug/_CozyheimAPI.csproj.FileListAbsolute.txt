@@ -1,0 +1,4 @@
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\_CozyheimAPI\obj\Debug\_CozyheimAPI.csproj.AssemblyReference.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\_CozyheimAPI\obj\Debug\_CozyheimAPI.csproj.CoreCompileInputs.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\_Builds\Cozyheim_CoreAPI.dll
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\_CozyheimAPI\obj\Debug\Cozyheim_CoreAPI.dll

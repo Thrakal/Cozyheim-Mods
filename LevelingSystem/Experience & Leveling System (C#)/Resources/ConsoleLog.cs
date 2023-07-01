@@ -42,15 +42,15 @@ namespace Cozyheim.LevelingSystem
             if (rpc_ReloadConfigClient == null) {
                 rpc_ReloadConfigClient = NetworkManager.Instance.AddRPC("ReloadConfigClient", RPC_ReloadConfigClient, RPC_ReloadConfigClient);
             }
-            if (rpc_SetLevel == null)
-            {
+            if (rpc_SetLevel == null) {
                 rpc_SetLevel = NetworkManager.Instance.AddRPC("SetLevel", RPC_SetLevel, RPC_SetLevel);
             }
         }
 
         public static void LevelUp()
         {
-            UIManager.Instance.LevelUpVFX();
+            ConsoleLog.Print("Console LevelUp Command");
+            NetworkHandler.LevelUpVFX();
         }
 
         public static void ReloadConfig()
@@ -58,19 +58,18 @@ namespace Cozyheim.LevelingSystem
             // Only admins may use this command
             if (!IsUserAdmin())
             {
+                ConsoleLog.Print("Reloading Configs: Client side");
                 ReloadAndUpdateAll();
             } else
             {
+                ConsoleLog.Print("Reloading Configs: Server side");
                 rpc_ReloadConfigServer.SendPackage(ZRoutedRpc.Everybody, new ZPackage());
             }
         }
 
         private static IEnumerator RPC_ReloadConfigClient(long sender, ZPackage package)
         {
-            if (Player.m_localPlayer != null)
-            {
-                ReloadAndUpdateAll();
-            }
+            ReloadAndUpdateAll();
             yield return null;
         }
 
@@ -91,7 +90,10 @@ namespace Cozyheim.LevelingSystem
             XPTable.UpdatePickableXPTable();
             XPTable.UpdateMiningXPTable();
             XPTable.UpdateWoodcuttingXPTable();
-            SkillManager.Instance.ReloadAllSkills();
+
+            if(SkillManager.Instance != null) {
+                SkillManager.Instance.ReloadAllSkills();
+            }
         }
 
         private static void GetAll()
@@ -111,12 +113,14 @@ namespace Cozyheim.LevelingSystem
 
         private static void SetPlayerLevel(int level)
         {
-            XPManager.Instance.SetPlayerLevel(level);
-            XPManager.Instance.SetPlayerXP(0);
-            UIManager.Instance.playerLevel = level;
-            UIManager.Instance.playerXP = 0;
-            SkillManager.Instance.SkillResetAll();
-            UIManager.Instance.UpdateUI(true);
+            if(XPManager.Instance != null && UIManager.Instance != null && SkillManager.Instance != null) {
+                XPManager.Instance.SetPlayerLevel(level);
+                XPManager.Instance.SetPlayerXP(0);
+                UIManager.Instance.playerLevel = level;
+                UIManager.Instance.playerXP = 0;
+                SkillManager.Instance.SkillResetAll();
+                UIManager.Instance.UpdateUI(true);
+            }
         }
 
         private static void SetLevel()
@@ -246,6 +250,18 @@ namespace Cozyheim.LevelingSystem
             }
         }
         internal static void Print(object printMsg, bool debugMode) => Print(printMsg, LogType.Info, debugMode);
+
+        internal static void PrintOverrideDebugMode(object printMsg, LogType type = LogType.Info) {
+            string textToPrint = "[Time: " + Time.time.ToString("N0") + "] " + printMsg.ToString();
+            switch(type) {
+                case LogType.Info: Log.LogInfo(textToPrint); break;
+                case LogType.Message: Log.LogMessage(textToPrint); break;
+                case LogType.Warning: Log.LogWarning(textToPrint); break;
+                case LogType.Error: Log.LogError(textToPrint); break;
+                case LogType.Fatal: Log.LogFatal(textToPrint); break;
+                default: Log.LogInfo(textToPrint); break;
+            }
+        }
         #endregion
     }
 

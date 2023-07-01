@@ -1,0 +1,4 @@
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\_Builds\Cozyheim_UpgradeUnlimited.dll
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\UpgradeGear\obj\Debug\UpgradeUnlimited.csproj.AssemblyReference.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\UpgradeGear\obj\Debug\UpgradeUnlimited.csproj.CoreCompileInputs.cache
+D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\UpgradeGear\obj\Debug\Cozyheim_UpgradeUnlimited.dll
