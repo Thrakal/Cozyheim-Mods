@@ -30,7 +30,7 @@ namespace Cozyheim.LevelingSystem
 
         // Mod information
         internal const string modName = "LevelingSystem";
-        internal const string version = "0.5.0";
+        internal const string version = "0.5.1";
         internal const string GUID = "dk.thrakal." + modName;
 
         // Core objects that is required to patch and configure the mod
@@ -68,6 +68,9 @@ namespace Cozyheim.LevelingSystem
 
         // Skills Menu
         internal static ConfigEntry<bool> showScrollbar;
+        internal static ConfigEntry<KeyCode> addMaxPointsKey;
+        internal static ConfigEntry<KeyCode> addMultiplePointsKey;
+        internal static ConfigEntry<int> addMultiplePointsAmount;
 
         // VFX
         internal static ConfigEntry<bool> levelUpVFX;
@@ -155,6 +158,9 @@ namespace Cozyheim.LevelingSystem
 
             // Skills Menu
             showScrollbar = CreateConfigEntry("Skills Menu", "showScrollbar", true, "Display the scroll bar. (Setting to false only disables the graphics, you can still keep scrolling)", false);
+            addMaxPointsKey = CreateConfigEntry("Skills Menu", "addMaxPointsKey", KeyCode.LeftControl, "By holding down this key, you will use as many points as you can on the skill.", false);
+            addMultiplePointsKey = CreateConfigEntry("Skills Menu", "addMultiplePointsKey", KeyCode.LeftShift, "By holding down this key, you will use 'addMultiplePointsAmount' points on each click.", false);
+            addMultiplePointsAmount = CreateConfigEntry("Skills Menu", "addMultiplePointsAmount", 10, "The amount of points used when holding down the 'addMultiplePointsKey' key", false);
 
             // VFX
             levelUpVFX = CreateConfigEntry("VFX", "levelUpVFX", true, "Display visual effects when leveling up", false);

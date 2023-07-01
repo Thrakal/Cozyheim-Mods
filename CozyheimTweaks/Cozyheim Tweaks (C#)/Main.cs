@@ -7,6 +7,8 @@ using ServerSync;
 using System.Reflection;
 using System.Linq;
 using UnityEngine;
+using BepInEx.Bootstrap;
+using System.Collections.Generic;
 
 // To-Do List
 // - Claim bed only 1 within range of another bed
@@ -15,6 +17,7 @@ namespace CozyheimTweaks
 {
     [BepInPlugin(GUID, modName, version)]
     [BepInDependency(Jotunn.Main.ModGuid)]
+    [BepInDependency("com.undeadbits.valheimmods.portalstation", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
     internal class Main : BaseUnityPlugin
     {
@@ -58,6 +61,8 @@ namespace CozyheimTweaks
 
         internal static ConfigEntry<float> misterRadius;
         internal static ConfigEntry<bool> enableLocalMist;
+
+        internal static bool isPortalStationsLoaded = false;
 
         void Awake()
         {
@@ -108,8 +113,25 @@ namespace CozyheimTweaks
             // Init all patches
             OnlyOneBed.Init();
 
+            isPortalStationsLoaded = CheckIfModIsLoaded("com.undeadbits.valheimmods.portalstation");
+
+            GameObject go = new GameObject();
+            go.AddComponent<PortalStationFix>();
+
             CommandManager.Instance.AddConsoleCommand(new ToppLog());
         }
+
+        private bool CheckIfModIsLoaded(string modGUID) {
+            foreach(KeyValuePair<string, PluginInfo> plugin in Chainloader.PluginInfos) {
+                BepInPlugin pluginData = plugin.Value.Metadata;
+                if(pluginData.GUID.Equals(modGUID)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         void OnDestroy()
         {
             harmony.UnpatchSelf();

@@ -167,23 +167,51 @@ namespace Cozyheim.LevelingSystem
             return skills[type];
         }
 
-        public bool SkillLevelUp(SkillType skill)
+        public void SkillLevelUp(SkillType skill)
         {
             if(!HasUnspendPoints())
             {
-                return false;
+                return;
             }
 
-            bool success = skills[skill].AddLevel();
+            int pointsToSpend = 1;
+
+            if(Input.GetKey(Main.addMultiplePointsKey.Value)) {
+                pointsToSpend = Mathf.Min(Main.addMultiplePointsAmount.Value, unspendPoints);
+            }
+
+            if(Input.GetKey(Main.addMaxPointsKey.Value)) {
+                pointsToSpend = unspendPoints;
+            }
+
+            for(int i = 0; i < pointsToSpend; i++) {
+                if(!skills[skill].AddLevel()) {
+                    break;
+                }
+            }
             UpdateUnspendPoints();
-            return success;
         }
 
-        public bool SkillLevelDown(SkillType skill)
+        public void SkillLevelDown(SkillType skill)
         {
-            bool success = skills[skill].RemoveLevel();
+            int pointsToRemove = 1;
+
+            if(Input.GetKey(Main.addMultiplePointsKey.Value)) {
+                pointsToRemove = Main.addMultiplePointsAmount.Value;
+            }
+
+            if(Input.GetKey(Main.addMaxPointsKey.Value)) {
+                SkillReset(skill);
+                return;
+            }
+
+            for(int i = 0; i < pointsToRemove; i++) {
+                if(!skills[skill].RemoveLevel()) {
+                    break;
+                }
+            }
+
             UpdateUnspendPoints();
-            return success;
         }
 
         public int SkillReset(SkillType skill)
@@ -244,19 +272,22 @@ namespace Cozyheim.LevelingSystem
         {
             if(XPManager.Instance != null && skills != null)
             {
-                int points = Mathf.FloorToInt((float)XPManager.Instance.GetPlayerLevel() * Main.pointsPerLevel.Value);
-                foreach (KeyValuePair<SkillType, SkillBase> kvp in skills)
-                {
-                    points -= kvp.Value.GetLevel();
-                }
+                RecalculateUnspendPoints();
 
-                unspendPoints = points;
-                UIManager.Instance.remainingPoints.text = "Remaining points: " + points;
+                UIManager.Instance.remainingPoints.text = "Remaining points: " + unspendPoints;
                 UIManager.Instance.UpdateCategoryPoints();
 
                 SaveSkills();
                 UpdateAllSkillInformation();
             }
+        }
+
+        public void RecalculateUnspendPoints() {
+            int points = Mathf.FloorToInt((float)XPManager.Instance.GetPlayerLevel() * Main.pointsPerLevel.Value);
+            foreach(KeyValuePair<SkillType, SkillBase> kvp in skills) {
+                points -= kvp.Value.GetLevel();
+            }
+            unspendPoints = points;
         }
 
         void LoadSkills()

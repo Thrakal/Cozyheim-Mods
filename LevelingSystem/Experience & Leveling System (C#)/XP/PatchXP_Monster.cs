@@ -173,16 +173,28 @@ namespace Cozyheim.LevelingSystem
                 }
             }
 
-
             private static bool CanTargetAwardXP(Character target)
             {
-                if(target.IsMonsterFaction() || target.IsBoss() || target.GetFaction() == Character.Faction.AnimalsVeg || target.GetFaction() == Character.Faction.Dverger || target.GetFaction() == Character.Faction.Boss)
-                {
-                    return true;
-                } else
-                {
-                    return false;
+                Character.Faction[] allowedFactions = {
+                    Character.Faction.ForestMonsters,
+                    Character.Faction.SeaMonsters,
+                    Character.Faction.MountainMonsters,
+                    Character.Faction.PlainsMonsters,
+                    Character.Faction.MistlandsMonsters,
+                    Character.Faction.Dverger,
+                    Character.Faction.Undead,
+                    Character.Faction.Demon,
+                    Character.Faction.AnimalsVeg,
+                    Character.Faction.Boss
+                };
+
+                foreach(Character.Faction faction in allowedFactions) {
+                    if(target.GetFaction() == faction) {
+                        return true;
+                    }
                 }
+
+                return false;
             }
         }
     }

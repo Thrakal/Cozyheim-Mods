@@ -90,7 +90,10 @@ namespace Cozyheim.LevelingSystem
             XPTable.UpdatePickableXPTable();
             XPTable.UpdateMiningXPTable();
             XPTable.UpdateWoodcuttingXPTable();
-            SkillManager.Instance.ReloadAllSkills();
+
+            if(SkillManager.Instance != null) {
+                SkillManager.Instance.ReloadAllSkills();
+            }
         }
 
         private static void GetAll()
@@ -110,12 +113,14 @@ namespace Cozyheim.LevelingSystem
 
         private static void SetPlayerLevel(int level)
         {
-            XPManager.Instance.SetPlayerLevel(level);
-            XPManager.Instance.SetPlayerXP(0);
-            UIManager.Instance.playerLevel = level;
-            UIManager.Instance.playerXP = 0;
-            SkillManager.Instance.SkillResetAll();
-            UIManager.Instance.UpdateUI(true);
+            if(XPManager.Instance != null && UIManager.Instance != null && SkillManager.Instance != null) {
+                XPManager.Instance.SetPlayerLevel(level);
+                XPManager.Instance.SetPlayerXP(0);
+                UIManager.Instance.playerLevel = level;
+                UIManager.Instance.playerXP = 0;
+                SkillManager.Instance.SkillResetAll();
+                UIManager.Instance.UpdateUI(true);
+            }
         }
 
         private static void SetLevel()

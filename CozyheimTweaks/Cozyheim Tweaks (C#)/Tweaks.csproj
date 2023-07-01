@@ -60,6 +60,10 @@
       <HintPath>..\..\_Reference DLLs\Jotunn.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="PortalStations">
+      <HintPath>..\..\_Reference DLLs\PortalStations.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -110,6 +114,7 @@
     <Compile Include="CrossbowReloadSpeed_Patch.cs" />
     <Compile Include="BowDrawSpeed_Patch.cs" />
     <Compile Include="Resources\ConfigSync.cs" />
+    <Compile Include="PortalStationFix.cs" />
     <Compile Include="Useful scripts\SimpleJSON.cs" />
     <Compile Include="OnlyOneBed.cs" />
     <Compile Include="Useful scripts\ToppLog.cs" />
