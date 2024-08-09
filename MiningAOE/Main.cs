@@ -13,7 +13,7 @@ namespace Cozyheim.MiningAOE {
     internal class Main : BaseUnityPlugin {
         // Mod information
         internal const string modName = "MiningAOE";
-        internal const string version = "0.0.1";
+        internal const string version = "0.1.0";
         internal const string GUID = "dk.thrakal." + modName;
 
         // Core objects that is required to patch and configure the mod

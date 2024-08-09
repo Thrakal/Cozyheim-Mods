@@ -2,3 +2,8 @@ D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\_Builds\Cozyheim_Tweaks.dll
 D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\CozyheimTweaks\Cozyheim Tweaks (C#)\obj\Debug\Tweaks.csproj.AssemblyReference.cache
 D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\CozyheimTweaks\Cozyheim Tweaks (C#)\obj\Debug\Tweaks.csproj.CoreCompileInputs.cache
 D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\CozyheimTweaks\Cozyheim Tweaks (C#)\obj\Debug\Cozyheim_Tweaks.dll
+C:\Users\toppk\Documents\Cozyheim-Mods\CozyheimTweaks\Cozyheim Tweaks (C#)\obj\Debug\Tweaks.csproj.AssemblyReference.cache
+C:\Users\toppk\Documents\Cozyheim-Mods\CozyheimTweaks\Cozyheim Tweaks (C#)\obj\Debug\Tweaks.csproj.CoreCompileInputs.cache
+C:\Users\toppk\Documents\Cozyheim-Mods\CozyheimTweaks\Cozyheim Tweaks (C#)\obj\Debug\Cozyheim_Tweaks.dll
+C:\Users\toppk\Documents\Cozyheim-Mods\_Builds\Cozyheim_Tweaks.dll
+C:\Users\toppk\Documents\Cozyheim-Mods\CozyheimTweaks\Cozyheim Tweaks (C#)\obj\Debug\Tweaks.csproj.Up2Date

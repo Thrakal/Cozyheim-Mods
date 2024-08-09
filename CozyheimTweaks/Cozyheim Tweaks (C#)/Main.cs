@@ -23,7 +23,7 @@ namespace CozyheimTweaks
     {
         // Mod information
         internal const string modName = "CozyheimTweaks";
-        internal const string version = "0.1.0";
+        internal const string version = "0.1.1";
         internal const string GUID = "dk.thrakal." + modName;
 
         // Core objects that is required to patch and configure the mod
