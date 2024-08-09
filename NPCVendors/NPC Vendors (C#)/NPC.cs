@@ -39,6 +39,7 @@ namespace Cozyheim.NPCVendors
 
                     npc.piece = newNPC.GetComponent<Piece>();
                     npc.piece.m_enabled = false;
+                    npc.piece.m_category = Piece.PieceCategory.Misc;
 
                     newNPC.AddComponent<NpcZDO>();
 

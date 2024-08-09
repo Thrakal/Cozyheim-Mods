@@ -6,3 +6,7 @@ D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\_Builds\Cozyheim_NPCVendors.dll
 D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\NPCVendors\NPC Vendors (C#)\obj\Debug\NPCVendors.csproj.AssemblyReference.cache
 D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\NPCVendors\NPC Vendors (C#)\obj\Debug\NPCVendors.csproj.CoreCompileInputs.cache
 D:\Cozyheim Mods (Valheim)\Cozyheim-Repository\NPCVendors\NPC Vendors (C#)\obj\Debug\Cozyheim_NPCVendors.dll
+C:\Users\toppk\Documents\Cozyheim-Mods\NPCVendors\NPC Vendors (C#)\obj\Debug\NPCVendors.csproj.AssemblyReference.cache
+C:\Users\toppk\Documents\Cozyheim-Mods\NPCVendors\NPC Vendors (C#)\obj\Debug\NPCVendors.csproj.CoreCompileInputs.cache
+C:\Users\toppk\Documents\Cozyheim-Mods\NPCVendors\NPC Vendors (C#)\obj\Debug\Cozyheim_NPCVendors.dll
+C:\Users\toppk\Documents\Cozyheim-Mods\_Builds\Cozyheim_NPCVendors.dll

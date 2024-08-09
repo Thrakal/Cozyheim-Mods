@@ -48,7 +48,7 @@ namespace Cozyheim.NPCVendors
                     Hair = HairNPC.NoHair,
                     Beard = BeardNPC.Long_2,
                     HairColor = ColorNPC.Ginger,
-                    SkinColor = ColorNPC.BrownLight,
+                    SkinColor = ColorNPC.SkinLight,
                     Helmet = HelmetNPC.HelmetLeather,
                     Chest = ChestNPC.ArmorLeatherChest,
                     Legs = LegsNPC.ArmorLeatherLegs,
